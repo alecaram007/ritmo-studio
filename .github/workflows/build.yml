@@ -1,0 +1,114 @@
+# Builds Ritmo Studio for macOS (Apple Silicon + Intel), Windows and Linux, each with its native engine.
+# Run it from the Actions tab ("Run workflow") or by pushing a tag like v1.0.1; the installers are attached
+# to a GitHub Release named after the tag (v + the version in desktop/package.json when run by hand).
+name: Build installers
+
+on:
+  workflow_dispatch:
+    inputs:
+      targets:
+        description: 'Sistemi da compilare, separati da virgola (mac, win, linux)'
+        default: 'win,linux'
+      release:
+        description: 'Release in cui caricare gli installer (vuoto = v + versione di desktop/package.json)'
+        default: ''
+  push:
+    tags: ['v*']
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.pick.outputs.matrix }}
+    steps:
+      - id: pick
+        env:
+          TARGETS: ${{ inputs.targets || 'mac,win,linux' }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          all_targets = [
+              {"os": "macos-14", "name": "mac", "engine_dir": "build-universal", "cmake_extra": "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64", "dist": "dist:mac"},
+              {"os": "windows-2022", "name": "win", "engine_dir": "build-win", "cmake_extra": "", "dist": "dist:win"},
+              {"os": "ubuntu-22.04", "name": "linux", "engine_dir": "build-linux", "cmake_extra": "", "dist": "dist:linux"},
+          ]
+          wanted = {t.strip() for t in os.environ["TARGETS"].split(",") if t.strip()}
+          print("matrix=" + json.dumps({"include": [t for t in all_targets if t["name"] in wanted]}))
+          PY
+
+  build:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get JUCE 9.0.4
+        shell: bash
+        run: |
+          if [ ! -f engine/third_party/JUCE/CMakeLists.txt ]; then
+            git clone --depth 1 --branch 9.0.4 https://github.com/juce-framework/JUCE.git engine/third_party/JUCE
+          fi
+
+      - name: Linux build dependencies
+        if: matrix.name == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libasound2-dev libjack-jackd2-dev ladspa-sdk libfreetype6-dev \
+            libfontconfig1-dev libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev \
+            libxrandr-dev libxrender-dev libglu1-mesa-dev mesa-common-dev libgtk-3-dev
+
+      - name: macOS build tools
+        if: matrix.name == 'mac'
+        run: brew install ninja
+
+      - name: Build the native engine
+        shell: bash
+        run: |
+          if [ "${{ matrix.name }}" = "win" ]; then
+            cmake -S engine -B engine/${{ matrix.engine_dir }} -G "Visual Studio 17 2022" -A x64
+            cmake --build engine/${{ matrix.engine_dir }} --config Release --target RitmoEngine
+          else
+            cmake -S engine -B engine/${{ matrix.engine_dir }} -G Ninja -DCMAKE_BUILD_TYPE=Release "${{ matrix.cmake_extra }}"
+            cmake --build engine/${{ matrix.engine_dir }} --target RitmoEngine
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build the single-file app
+        run: python build.py
+
+      - name: Build the installers
+        working-directory: desktop
+        run: |
+          npm ci
+          npm run ${{ matrix.dist }}
+
+      - name: Attach the installers to the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG_INPUT: ${{ github.ref_type == 'tag' && github.ref_name || inputs.release }}
+        run: |
+          VERSION=$(node -p "require('./desktop/package.json').version")
+          TAG="${TAG_INPUT:-v$VERSION}"
+          # Both build jobs get here; whichever comes second just finds the release already there.
+          gh release create "$TAG" -R "$REPO" --target "${{ github.sha }}" --title "Ritmo Studio $VERSION" \
+            --notes "Installer di Ritmo Studio $VERSION. Istruzioni per il primo avvio nel file LEGGIMI." \
+            || gh release view "$TAG" -R "$REPO" > /dev/null
+          shopt -s nullglob
+          files=(desktop/release/*.dmg desktop/release/*.zip desktop/release/*.exe desktop/release/*.AppImage desktop/release/*.deb)
+          if [ ${#files[@]} -eq 0 ]; then echo "No installers found"; exit 1; fi
+          ls -l "${files[@]}"
+          gh release upload "$TAG" -R "$REPO" --clobber "${files[@]}"

@@ -1,0 +1,1034 @@
+<title>Ritmo Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Ritmo Studio: una DAW gratuita con Channel Rack, Piano Roll, Playlist e Mixer.">
+<!--FONTS-->
+<style>
+/* Layout of a classic pattern-based DAW: two dense toolbar rows on top, folder browser on the left,
+   the playlist filling the desk behind floating tool windows (channel rack, piano roll, mixer, plug-ins). */
+:root {
+  color-scheme: dark;
+  --ground: #2c353a;
+  --panel: #3b454c;
+  --panel-2: #343e44;
+  --raise: #4d5961;
+  --line: #5a6870;
+  --line-soft: #252d32;
+  --text: #d2dce1;
+  --dim: #9babb3;
+  --faint: #6c7b84;
+  --brass: #f6a43c;
+  --brass-ink: #2a1904;
+  --signal: #95d84c;
+  --signal-ink: #182409;
+  --signal-glow: rgba(149, 216, 76, .5);
+  --alert: #ec5f55;
+  --lcd: #273035;
+  --sel-row: #47535a;
+  --bar-hi: #4a545b;
+  --bar-lo: #3c464d;
+  --step-a: #4f5c64;
+  --step-b: #6b4f56;
+  --step-on-a: #d3dce0;
+  --step-on-b: #eec8cb;
+  --step-border: #263035;
+  --knob-track: #222a2e;
+  --knob-body: #434e55;
+  --cap-hi: #6c7981;
+  --cap-lo: #525e65;
+  --title-hi: #414c53;
+  --title-lo: #3a444b;
+  --title-focus-hi: #4b575f;
+  --title-focus-lo: #434f57;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .55);
+  --cv-grid: #34424a;
+  --cv-grid-black: #2f3c43;
+  --cv-scale-in: #3c4c55;
+  --cv-scale-root: #4a4a3c;
+  --cv-loop: rgba(246, 164, 60, .12);
+  --cv-line-bar: #212a2f;
+  --cv-line-beat: #2b373e;
+  --cv-line-step: #303d45;
+  --cv-outside: rgba(18, 23, 26, .45);
+  --note-ink: #17110a;
+  --key-white: #dfe5e8;
+  --key-black: #26313a;
+  --key-line: #a7b2b8;
+  --meter-bg: #1d2428;
+  --tone-project: #f0a24e;
+  --tone-recent: #8fd06a;
+  --tone-plugins: #7ea9e6;
+  --tone-presets: #e08abd;
+  --tone-scores: #b48cf0;
+  --tone-folder: #c9d4d9;
+  --f-display: "Unbounded", "Barlow Condensed", system-ui, sans-serif;
+  --f-label: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --f-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font: 14px/1.35 var(--f-body);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: .45; }
+input[type="text"], input[type="number"] { user-select: text; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 1px; }
+select, input[type="text"], input[type="number"] {
+  background: var(--lcd);
+  border: 1px solid var(--line-soft);
+  border-radius: 2px;
+  height: 22px;
+  padding: 0 4px;
+  font: 500 13px/1 var(--f-label);
+  min-width: 0;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--panel-2); }
+::-webkit-scrollbar-thumb { background: var(--raise); border-radius: 5px; border: 2px solid var(--panel-2); }
+::-webkit-scrollbar-corner { background: var(--panel-2); }
+
+.shell {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* ---------- Toolbars ---------- */
+.bars { background: linear-gradient(var(--bar-hi), var(--bar-lo)); border-bottom: 1px solid var(--line-soft); }
+.bar { display: flex; align-items: center; gap: 6px; min-width: 0; padding: 0 6px; }
+.bar1 { height: 38px; }
+.bar2 { height: 40px; padding-bottom: 3px; }
+.menu-bar { display: flex; align-items: center; gap: 0; }
+.menu-btn {
+  height: 26px;
+  padding: 0 5px;
+  border: 0;
+  background: transparent;
+  border-radius: 2px;
+  font: 500 15px/1 var(--f-label);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: #c8d3d8;
+}
+.menu-btn:hover, .menu-btn[aria-expanded="true"] { background: var(--raise); color: #fff; }
+.tgroup { display: flex; align-items: center; gap: 3px; }
+.tgroup.sep { padding-left: 6px; border-left: 1px solid rgba(0, 0, 0, .25); }
+.tbtn {
+  height: 26px;
+  min-width: 26px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #262e33;
+  background: linear-gradient(#3a444a, #30393e);
+  border-radius: 3px;
+  font: 600 12px/1 var(--f-label);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #cdd7dc;
+  white-space: nowrap;
+}
+.tbtn:hover:not(:disabled) { background: linear-gradient(#48535a, #3d474d); color: #fff; }
+.tbtn svg { width: 15px; height: 15px; flex: none; }
+.tbtn.small { height: 22px; min-width: 22px; padding: 0 5px; }
+.tbtn.flat { border-color: transparent; background: transparent; color: #d7e0e4; }
+.tbtn.flat:hover:not(:disabled) { background: rgba(255, 255, 255, .08); }
+.tbtn.flat svg { width: 18px; height: 18px; }
+.tbtn[aria-pressed="true"] { background: var(--brass); color: var(--brass-ink); border-color: #9b6420; }
+.tbtn.play[aria-pressed="true"] { background: var(--signal); color: var(--signal-ink); border-color: transparent; }
+.tbtn.rec { color: var(--alert); }
+.tbtn.rec[aria-pressed="true"] { background: var(--alert); color: #fff; border-color: transparent; }
+.tbtn.danger:hover { color: var(--alert); border-color: var(--alert); }
+.patsong {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  height: 28px;
+  width: 34px;
+  padding: 0;
+  border: 1px solid #262e33;
+  border-radius: 3px;
+  background: #2b3338;
+  overflow: hidden;
+}
+.patsong span { display: grid; place-items: center; font: 700 9px/1 var(--f-label); letter-spacing: .08em; color: var(--faint); }
+.patsong span.on { background: var(--brass); color: var(--brass-ink); }
+.tempo { display: flex; align-items: center; height: 28px; padding: 0 4px 0 6px; background: #252d31; border-radius: 3px; border: 1px solid #1f262a; }
+.tempo label { font: 700 9px/1 var(--f-label); letter-spacing: .1em; color: var(--faint); cursor: ns-resize; touch-action: none; writing-mode: vertical-rl; transform: rotate(180deg); }
+.tempo input { width: 74px; height: 26px; border: 0; background: transparent; padding: 0; font: 500 17px/1 var(--f-label); color: #e6edf0; text-align: right; font-variant-numeric: tabular-nums; }
+.lcd { display: flex; align-items: flex-start; gap: 4px; height: 34px; padding: 0 8px; cursor: pointer; }
+.lcd-big { font: 500 32px/34px var(--f-label); color: #e8eef1; font-variant-numeric: tabular-nums; min-width: 96px; text-align: right; }
+.lcd-side { display: grid; gap: 3px; padding-top: 3px; font: 700 8px/1 var(--f-label); letter-spacing: .08em; color: var(--dim); text-transform: uppercase; }
+.lcd-side b { font: 500 10px/1 var(--f-mono); color: var(--signal); letter-spacing: 0; }
+.scope { width: 128px; height: 30px; border-radius: 2px; border: 1px solid #20272b; background: #2a3237; display: block; }
+.sys {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1px 8px;
+  align-items: center;
+  height: 30px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  background: #2a3237;
+  border: 1px solid #20272b;
+  font: 500 10px/1.15 var(--f-mono);
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.sys b { color: var(--text); font-weight: 600; white-space: nowrap; }
+.brand { display: flex; align-items: center; gap: 6px; padding: 0 4px; }
+.brand-mark { width: 26px; height: 26px; flex: none; }
+.logo { font: 600 12px/1 var(--f-display); letter-spacing: .05em; color: var(--brass); }
+.hint-panel {
+  width: 286px;
+  height: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: 2px;
+  background: #2a3237;
+  border: 1px solid #20272b;
+  min-width: 0;
+}
+.proj-name { width: 100%; height: 14px !important; border: 0 !important; background: transparent !important; padding: 0 !important; font: 600 12px/1 var(--f-label) !important; letter-spacing: .02em; color: #e5ecef; }
+#hint { font: 500 11px/1.2 var(--f-label); color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.field { display: inline-flex; align-items: center; gap: 4px; font: 600 11px/1 var(--f-label); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+.field select { text-transform: none; letter-spacing: 0; color: var(--text); }
+.snap { display: inline-flex; align-items: center; gap: 2px; }
+.snap svg { width: 16px; height: 16px; color: var(--dim); }
+.snap select { width: 78px; height: 26px; background: #2a3237; font-size: 14px; }
+.pat-picker { display: flex; align-items: center; gap: 2px; }
+.pat-picker select { width: 112px; height: 28px; font: 500 17px/1 var(--f-label); color: #e6edf0; background: linear-gradient(#56626a, #4a565d); border: 1px solid #2a3237; border-radius: 3px; padding: 0 6px; }
+.winbtns .tbtn { width: 30px; height: 28px; padding: 0; }
+.winbtns .tbtn svg { width: 18px; height: 18px; }
+.push { margin-left: auto; }
+
+/* ---------- Main area ---------- */
+.app { min-height: 0; min-width: 0; display: grid; grid-template-columns: 244px minmax(0, 1fr); position: relative; }
+.app.hide-browser { grid-template-columns: minmax(0, 1fr); }
+.app.hide-browser .browser { display: none; }
+
+/* Browser: folder tree */
+.browser { background: #2d363b; border-right: 1px solid var(--line-soft); display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.br-head { display: flex; align-items: center; gap: 8px; height: 26px; padding: 0 8px; border-bottom: 1px solid var(--line-soft); font: 500 13px/1 var(--f-label); color: var(--faint); background: linear-gradient(var(--title-hi), var(--title-lo)); }
+.br-head svg { width: 13px; height: 13px; color: var(--dim); }
+.br-tools { display: flex; justify-content: space-around; padding: 3px 8px; border-bottom: 1px solid var(--line-soft); color: var(--dim); }
+.br-tools svg { width: 15px; height: 15px; }
+.tree { overflow: auto; padding: 4px 0 10px; flex: 1; }
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 23px;
+  padding: 1px 8px 1px calc(8px + var(--d, 0) * 16px);
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font: 500 15px/1.1 var(--f-label);
+  letter-spacing: .02em;
+  color: #b9cad2;
+}
+.tree-row:hover { background: rgba(255, 255, 255, .06); color: #e6eef2; }
+.tree-row.item { color: #a9bac2; font-size: 14px; }
+.tree-row.sel { background: var(--sel-row); color: #fff; }
+.tree-row svg { width: 15px; height: 15px; flex: none; color: var(--tone, var(--tone-folder)); }
+.tree-row .caret { display: none; }
+.tree-row.folder[aria-expanded="true"] { color: #dfe8ec; }
+.tree-row .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tree-row .meta { font: 500 10px/1 var(--f-mono); color: var(--faint); }
+.tree-row .pdot { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.tree-note { padding: 2px 10px 4px calc(8px + var(--d, 0) * 16px); font-size: 12px; color: var(--faint); line-height: 1.4; }
+.tree-row[draggable="true"] { cursor: grab; }
+.tree-row .star { width: 14px; flex: none; font-size: 12px; color: var(--faint); opacity: 0; text-align: center; }
+.tree-row:hover .star, .tree-row .star.on { opacity: 1; }
+.tree-row .star.on { color: var(--brass); }
+.br-search { flex: 1; min-width: 0; height: 20px !important; font: 500 13px/1 var(--f-label) !important; background: #262e33 !important; }
+.br-head .tbtn.flat.small { width: 22px; height: 22px; padding: 0; }
+.br-head .tbtn.flat.small svg { width: 15px; height: 15px; }
+.pv-bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 8px; border-top: 1px solid var(--line-soft); background: linear-gradient(var(--title-hi), var(--title-lo)); flex: none; }
+.pv-play { width: 22px; height: 22px; border-radius: 50%; border: 1px solid #20282c; background: #2a3237; color: var(--signal); font-size: 10px; padding: 0; flex: none; }
+.pv-play:disabled { color: var(--faint); }
+.pv-name { flex: 1; min-width: 0; font: 500 13px/1 var(--f-label); color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pv-bar input[type="range"] { width: 64px; accent-color: var(--brass); }
+
+/* Desk with the playlist behind the floating windows */
+.desk { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+.pl-win { position: absolute; inset: 0; display: flex; flex-direction: column; background: var(--panel); overflow: hidden; }
+
+/* Floating windows */
+.win {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid #20282c;
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+  resize: both;
+  overflow: hidden;
+  min-width: 300px;
+  min-height: 120px;
+  max-width: 100%;
+  max-height: 100%;
+}
+.win.max { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; resize: none; }
+.win-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 27px;
+  padding: 1px 3px 1px 4px;
+  background: linear-gradient(var(--title-hi), var(--title-lo));
+  border-bottom: 1px solid var(--line-soft);
+  flex: none;
+  flex-wrap: wrap;
+}
+.win .win-title { cursor: move; touch-action: none; }
+.win.focused .win-title { background: linear-gradient(var(--title-focus-hi), var(--title-focus-lo)); }
+.win-title .t { font: 500 15px/1 var(--f-label); letter-spacing: .01em; color: var(--dim); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.win.focused .win-title .t, .pl-win .win-title .t { color: #e3eaee; }
+.win-title .t small { color: var(--faint); font-weight: 500; font-size: 14px; }
+.win-title .t svg { width: 15px; height: 15px; color: var(--dim); }
+.win-title .tools { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; cursor: default; }
+.win-menu { width: 16px; height: 22px; border: 0; padding: 0; background: transparent; color: var(--dim); font-size: 10px; display: grid; place-items: center; }
+.win-menu:hover { color: #fff; }
+.win-ctl { display: flex; align-items: center; gap: 1px; margin-left: auto; }
+.tool-group { display: inline-flex; gap: 1px; }
+.tbtn.icon { width: 24px; padding: 0; border-color: transparent; background: transparent; }
+.tbtn.icon:hover:not(:disabled) { background: rgba(255, 255, 255, .08); }
+.tbtn.icon[aria-pressed="true"] { background: transparent; color: var(--brass); border-color: transparent; }
+.tbtn.icon svg { width: 16px; height: 16px; }
+.win-x { width: 22px; height: 22px; border: 0; border-radius: 2px; background: transparent; color: var(--dim); display: grid; place-items: center; padding: 0; }
+.win-x:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+.win-x[data-close]:hover { background: var(--alert); }
+.win-x svg { width: 11px; height: 11px; }
+.win-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.chip { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border-radius: 11px; background: var(--lcd); border: 1px solid var(--line-soft); font-size: 12px; color: var(--dim); }
+.chip b { color: var(--text); font-weight: 600; }
+
+/* ---------- Channel rack ---------- */
+#win-rack { max-height: calc(100% - 4px); }
+.rack-filter { height: 22px; width: 92px; background: #2a3237; }
+.rack-body { overflow: auto; min-height: 0; flex: 1; background: var(--panel); padding: 4px 0; }
+.ch-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 8px;
+  width: max-content;
+  min-width: 100%;
+}
+.ch-led { width: 11px; height: 11px; padding: 0; flex: none; border-radius: 50%; border: 1px solid #1d2428; background: #2b3337; }
+.ch-led.on { background: var(--signal); border-color: #3d6b1c; box-shadow: 0 0 5px var(--signal-glow); }
+.ch-led.solo { background: var(--brass); border-color: transparent; }
+.ch-mix { width: 28px; height: 20px; padding: 0; flex: none; font: 500 13px/1 var(--f-label); border: 1px solid #20282c; background: #283035; border-radius: 3px; color: #d6dfe3; cursor: ns-resize; }
+.ch-name {
+  width: 108px; height: 22px; flex: none;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 0 6px;
+  border: 1px solid #252d32;
+  background: linear-gradient(#6a777e, #58646b);
+  border-radius: 3px;
+  font: 500 13px/1 var(--f-label);
+  letter-spacing: .02em;
+  color: #eef3f5;
+}
+.ch-row.sel .ch-name { background: linear-gradient(#83919a, #6c7a82); color: #fff; }
+.ch-name .dot { display: none; }
+.ch-name .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ch-act { width: 7px; height: 20px; border-radius: 2px; border: 1px solid #6a8a50; background: transparent; flex: none; transition: background .08s; margin-right: 4px; }
+.ch-row.sel .ch-act { background: var(--signal); border-color: var(--signal); }
+.ch-act.hit { box-shadow: 0 0 6px var(--signal-glow); border-color: var(--signal); }
+.steps { display: flex; gap: 2px; padding-left: 2px; }
+.step { width: 13px; height: 22px; padding: 0; flex: none; border-radius: 2px; border: 1px solid var(--step-border); background: var(--step-a); }
+.step.alt { background: var(--step-b); }
+.step.on { background: var(--step-on-a); border-color: #8d999f; }
+.step.alt.on { background: var(--step-on-b); border-color: #a58a8d; }
+.step:nth-child(4n+1):not(:first-child) { margin-left: 3px; }
+.step:hover { filter: brightness(1.15); }
+.step.now { box-shadow: inset 0 -3px 0 var(--signal); }
+.mini-roll { height: 22px; border-radius: 2px; background: #2a3237; border: 1px solid var(--line-soft); cursor: pointer; display: block; margin-left: 2px; }
+.rack-empty { padding: 18px 14px; color: var(--dim); font-size: 13px; }
+.graph-row { padding: 0 8px 6px; width: max-content; min-width: 100%; background: var(--sel-row); }
+.graph-cv { display: block; border-radius: 2px; cursor: ns-resize; touch-action: none; }
+.rack-foot { display: flex; justify-content: center; padding: 2px 4px 6px; background: var(--panel); flex: none; }
+.rack-add { width: 40px; height: 20px; border: 1px solid #252d32; border-radius: 3px; background: linear-gradient(#56626a, #4a565d); color: #e3eaee; font: 600 15px/1 var(--f-label); padding: 0; }
+
+/* ---------- Canvas views ---------- */
+.scroller { overflow: auto; position: relative; min-height: 0; min-width: 0; }
+.sizer { position: relative; }
+.sizer > canvas { position: sticky; top: 0; left: 0; display: block; }
+.cell { position: relative; overflow: hidden; min-height: 0; min-width: 0; }
+.cell > canvas { position: absolute; left: 0; top: 0; display: block; }
+
+.pl { flex: 1; min-height: 0; display: grid; grid-template-columns: 140px 106px minmax(0, 1fr); grid-template-rows: 32px minmax(0, 1fr); background: var(--cv-grid); }
+.pl-pats { grid-row: 1 / span 2; background: #2f383d; border-right: 1px solid var(--line-soft); overflow: auto; padding: 3px; display: grid; align-content: start; gap: 1px; }
+.pl-pat { display: flex; align-items: center; gap: 6px; height: 23px; padding: 0 6px; border: 0; border-radius: 2px; background: transparent; text-align: left; font: 500 14px/1 var(--f-label); color: var(--dim); min-width: 0; }
+.pl-pat:hover { background: var(--raise); color: var(--text); }
+.pl-pat.sel { background: #3f4a51; color: #fff; box-shadow: inset 3px 0 0 var(--alert); }
+.pl-pat .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pl-pat .pdot { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+.pl-corner { background: var(--panel); border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.pl-heads { overflow: hidden; position: relative; border-right: 1px solid var(--line-soft); background: #3a454b; }
+.pl-heads-inner { position: absolute; left: 0; right: 0; top: 0; }
+.pl-head { position: relative; height: 48px; display: flex; flex-direction: column; justify-content: space-between; padding: 4px 6px 4px 8px; border-bottom: 1px solid #2b3439; background: linear-gradient(#3f4a51, #384349); box-shadow: inset 4px 0 0 var(--tc, transparent); overflow: hidden; box-sizing: border-box; }
+.pl-head-top { display: flex; align-items: center; gap: 3px; min-width: 0; }
+.pl-head .nm { flex: 1; min-width: 0; font: 500 13px/1 var(--f-label); color: #77878f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: text; }
+.pl-head .ch-led { align-self: flex-end; }
+.pl-head.muted .nm { color: #59666d; }
+.pl-head.sub { padding-left: 18px; background: linear-gradient(#3a454b, #343e44); }
+.pl-head.group .nm { color: #c9d3d8; font-weight: 600; }
+.pl-fold { width: 14px; height: 14px; padding: 0; border: 0; background: none; color: #c9d3d8; font: 600 10px/1 var(--f-label); flex: none; }
+.pl-grip { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; cursor: ns-resize; }
+.pl-grip:hover { background: #ffffff22; }
+.pl-arr { height: 20px; padding: 0 6px; border: 1px solid #252d32; border-radius: 2px; background: #2a3237; color: #e3eaee; font: 500 12px/1 var(--f-label); }
+.pl-arr:hover { background: #333d43; }
+
+.pr { flex: 1; min-height: 0; display: grid; grid-template-columns: 58px minmax(0, 1fr); grid-template-rows: 20px minmax(0, 1fr) 76px; background: var(--cv-grid); }
+.pr-corner, .vel-label { background: var(--panel-2); border-right: 1px solid var(--line-soft); }
+.vel-label { display: grid; place-items: center; font: 700 10px/1 var(--f-label); letter-spacing: .14em; color: var(--faint); border-top: 1px solid var(--line-soft); }
+#pr-vel-cell { border-top: 1px solid var(--line-soft); }
+.vel-label select { width: 54px; height: 20px; padding: 0 2px; font: 600 10px/1 var(--f-label); }
+.pr-color .sw { display: block; width: 14px; height: 12px; border-radius: 2px; background: var(--nc, #7ec7f0); border: 1px solid #0006; }
+.note-props { position: fixed; z-index: 160; width: 280px; padding: 8px 10px 10px; background: var(--panel-2); border: 1px solid #20282c; border-radius: 3px; box-shadow: var(--shadow); display: grid; gap: 5px; font: 500 12px/1.2 var(--f-label); color: var(--text); }
+.np-title { font-weight: 600; color: #e3eaee; margin-bottom: 2px; }
+.np-row { display: grid; grid-template-columns: 92px 1fr 62px; align-items: center; gap: 6px; }
+.np-row input { width: 100%; accent-color: var(--brass); }
+.np-lbl { color: var(--dim); }
+.np-val { text-align: right; font-family: var(--f-mono); font-size: 11px; color: #e3eaee; }
+.np-colors { display: grid; grid-template-columns: repeat(16, 1fr); gap: 2px; margin-top: 3px; }
+.np-swatch { height: 14px; padding: 0; border: 1px solid #0006; border-radius: 2px; }
+.np-swatch.on { outline: 2px solid #fff; outline-offset: -1px; }
+.np-flags { display: flex; align-items: center; gap: 12px; margin-top: 2px; }
+.np-flags .tbtn { margin-left: auto; }
+
+/* ---------- Mixer ---------- */
+.mx { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 232px; }
+.mx-strips { display: flex; overflow-x: auto; overflow-y: hidden; padding: 0 0 4px; align-items: stretch; background: #30393e; }
+.strip { position: relative; width: 44px; flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 0 4px; background: linear-gradient(#3f4a51, #353f45); border-right: 1px solid #262e33; }
+.strip.master { width: 48px; margin-right: 8px; border-right: 0; box-shadow: 4px 0 0 #262e33; }
+.strip.sel { background: linear-gradient(#56636b, #46525a); }
+.strip-num { width: 100%; text-align: center; padding: 3px 0 2px; font: 500 12px/1 var(--f-label); color: #c7d1d6; background: #384248; border-bottom: 1px solid #262e33; }
+.strip.sel .strip-num { color: #fff; }
+.strip-name { height: 96px; width: 28px; margin-top: 2px; display: flex; align-items: center; justify-content: flex-start; writing-mode: vertical-rl; transform: rotate(180deg); font: 500 13px/1 var(--f-label); color: #8a9aa2; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; border: 1px solid transparent; border-radius: 2px; padding: 4px 0; cursor: text; }
+.strip.sel .strip-name { border-color: var(--signal); color: #e9f0f3; }
+.strip.used .strip-name { color: #d2dce1; }
+.strip-mute { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #1d2428; background: #2b3337; padding: 0; }
+.strip-mute.on { background: var(--signal); border-color: #3d6b1c; box-shadow: 0 0 5px var(--signal-glow); }
+.strip-flags { display: flex; gap: 2px; }
+.strip-flag { width: 16px; height: 14px; padding: 0; border: 0; background: transparent; color: #7f8e96; display: grid; place-items: center; }
+.strip-flag svg { width: 11px; height: 11px; }
+.strip-flag.on { color: var(--brass); }
+.strip-body { display: flex; gap: 2px; align-items: stretch; flex: 1; min-height: 80px; }
+.strip-meter { width: 7px; height: 100%; border-radius: 1px; display: block; }
+.strip-route { display: grid; justify-items: center; gap: 2px; min-height: 34px; align-content: end; }
+.route-btn { width: 18px; height: 12px; padding: 0; border: 0; background: transparent; color: #5c6a72; display: grid; place-items: center; }
+.route-btn svg { width: 12px; height: 9px; }
+.route-btn.out { color: var(--brass); }
+.route-btn.send { color: var(--signal); }
+.route-btn:hover { color: #fff; }
+.fader { position: relative; width: 22px; height: 100%; min-height: 80px; touch-action: none; cursor: ns-resize; }
+.fader-track { position: absolute; left: 50%; top: 6px; bottom: 6px; width: 3px; transform: translateX(-50%); background: #1d2428; border-radius: 2px; }
+.fader-zero { position: absolute; left: 4px; right: 4px; height: 1px; background: var(--faint); bottom: calc(6px + var(--z) * (100% - 12px)); }
+.fader-cap { position: absolute; left: 1px; right: 1px; height: 12px; bottom: calc(var(--n) * (100% - 12px)); border-radius: 2px; background: linear-gradient(#e2e8eb, #9eabb2); border: 1px solid #2a3237; box-shadow: 0 2px 3px rgba(0, 0, 0, .4); }
+.fader-cap::after { content: ""; position: absolute; left: 3px; right: 3px; top: 5px; height: 1px; background: #39444a; }
+.strip-db { font: 500 9px/1 var(--f-mono); color: var(--dim); font-variant-numeric: tabular-nums; }
+.mx-side { border-left: 1px solid #262e33; overflow: auto; display: flex; flex-direction: column; gap: 6px; padding: 6px; background: var(--panel); }
+.side-title { font: 500 14px/1 var(--f-label); color: var(--dim); padding: 2px 2px 0; display: flex; align-items: center; gap: 6px; }
+.side-title b { color: #e3eaee; font-weight: 500; }
+.side-select { display: flex; align-items: center; gap: 4px; height: 24px; padding: 0 4px; border-radius: 2px; background: #2a3237; border: 1px solid #20272b; font: 500 13px/1 var(--f-label); color: var(--text); width: 100%; text-align: left; }
+.side-select svg { width: 14px; height: 14px; color: var(--dim); flex: none; }
+.side-select span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.side-select:hover { border-color: var(--line); }
+.slots { display: grid; gap: 1px; background: #262e33; border: 1px solid #20272b; border-radius: 2px; }
+.slot { display: flex; align-items: center; gap: 4px; height: 21px; padding: 0 3px 0 4px; background: #343e44; }
+.slot.sel { background: #44515a; }
+.slot-open { width: 12px; height: 18px; border: 0; padding: 0; background: transparent; color: var(--faint); font-size: 9px; }
+.slot-name { flex: 1; min-width: 0; height: 19px; border: 0; padding: 0 2px; background: transparent; text-align: left; font: 500 13px/1 var(--f-label); color: #dfe7eb; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slot-name.empty { color: #6e7d85; font-style: italic; }
+.slot .knob { cursor: ns-resize; }
+.slot-on { width: 11px; height: 11px; border-radius: 50%; padding: 0; border: 1px solid #1d2428; background: #2b3337; flex: none; }
+.slot-on.on { background: var(--signal); border-color: #3d6b1c; }
+.eq-box { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px; }
+.eq-graph { width: 100%; height: 84px; display: block; border-radius: 2px; background: #252d31; border: 1px solid #20272b; }
+.eq-faders { display: flex; gap: 3px; }
+.eq-faders .fader { width: 16px; height: 84px; min-height: 0; }
+.eq-faders .fader-cap { height: 9px; bottom: calc(var(--n) * (100% - 9px)); }
+.eq-knobs { display: flex; align-items: center; justify-content: space-between; gap: 4px; font: 500 13px/1 var(--f-label); color: var(--dim); }
+.side-row { display: flex; align-items: center; gap: 6px; font: 500 12px/1 var(--f-label); color: var(--dim); }
+.side-row .tbtn { height: 20px; }
+.sends { display: grid; gap: 2px; }
+.send-row { display: flex; align-items: center; gap: 4px; font: 500 13px/1 var(--f-label); color: var(--text); background: #2f383d; border-radius: 2px; padding: 1px 4px; }
+.send-row span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fx-params { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 12px 4px; align-items: start; }
+.fx-body { overflow: auto; padding: 12px; display: grid; gap: 12px; align-content: start; flex: 1; min-height: 0; }
+.fx-head { display: flex; align-items: center; gap: 6px; }
+.fx-on { height: 22px; padding: 0 8px; border-radius: 2px; border: 1px solid var(--line-soft); background: var(--lcd); font: 600 11px/1 var(--f-label); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+.fx-on.on { color: var(--signal); border-color: var(--signal); }
+.sel-param { display: grid; gap: 4px; font: 600 10px/1.1 var(--f-label); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); grid-column: span 2; }
+.sel-param select { text-transform: none; letter-spacing: 0; color: var(--text); }
+
+/* ---------- Knob ---------- */
+.knob { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; touch-action: none; cursor: ns-resize; user-select: none; flex: none; border-radius: 50%; }
+.knob svg { width: var(--size); height: var(--size); display: block; }
+.k-track { stroke: var(--knob-track); stroke-width: 3; fill: none; stroke-linecap: round; }
+.k-val { stroke: var(--brass); stroke-width: 3; fill: none; stroke-linecap: round; }
+.k-body { fill: var(--knob-body); stroke: #1e2529; stroke-width: 1; }
+.k-ptr { stroke: #e6edf0; stroke-width: 2; stroke-linecap: round; }
+.knob.drag .k-val { stroke: var(--signal); }
+/* Small desk knobs (rack, mixer): a plain dark disc with a light pointer */
+.rack-body .k-track, .rack-body .k-val, .mx .k-track, .mx .k-val, .rack-swing .k-track, .rack-swing .k-val, #master-knob .k-track, #master-knob .k-val { stroke: none; }
+.rack-body .k-body, .mx .k-body, .rack-swing .k-body, #master-knob .k-body { r: 12.5px; fill: url(#knob-grad); stroke: #161c1f; stroke-width: 1.2; }
+.rack-body .k-ptr, .mx .k-ptr, .rack-swing .k-ptr, #master-knob .k-ptr { stroke: #f2f6f8; stroke-width: 2.4; }
+.rack-body .knob.drag .k-body, .mx .knob.drag .k-body { stroke: var(--signal); }
+.k-label { font: 600 10px/1.1 var(--f-label); letter-spacing: .06em; text-transform: uppercase; color: var(--dim); max-width: 76px; text-align: center; }
+.k-value { font: 500 10px/1 var(--f-mono); color: var(--text); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---------- Instrument window ---------- */
+.inst-body { overflow: auto; padding: 12px; display: grid; gap: 14px; align-content: start; flex: 1; min-height: 0; }
+.inst-name { flex: 1; min-width: 80px; font-weight: 600; }
+.ed-swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.ed-type { font: 700 11px/1 var(--f-label); letter-spacing: .18em; text-transform: uppercase; color: var(--brass); }
+.ed-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ed-row label, .ed-field { display: grid; gap: 4px; font: 600 11px/1 var(--f-label); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.ed-row select { text-transform: none; letter-spacing: 0; color: var(--text); }
+.param-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 14px 6px; align-items: start; }
+.swatches { display: flex; flex-wrap: wrap; gap: 6px; }
+.swatches button { width: 22px; height: 22px; border-radius: 4px; border: 2px solid transparent; padding: 0; }
+.swatches button[aria-pressed="true"] { border-color: var(--text); }
+.sample-box { display: grid; gap: 8px; }
+.sample-wave { width: 100%; height: 64px; border-radius: 2px; background: var(--lcd); border: 1px solid var(--line-soft); display: block; }
+.sample-name { font: 500 12px/1.3 var(--f-mono); color: var(--dim); overflow-wrap: anywhere; }
+.mini-kb { position: relative; height: 74px; display: flex; touch-action: none; user-select: none; }
+.mini-kb .wk { flex: 1; border: 1px solid var(--key-line); border-radius: 0 0 3px 3px; background: var(--key-white); margin-right: -1px; }
+.mini-kb .bk { position: absolute; top: 0; height: 46px; background: var(--key-black); border-radius: 0 0 3px 3px; z-index: 1; border: 1px solid var(--ground); }
+.mini-kb .down { background: var(--brass) !important; }
+.ed-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.ed-tabs { display: flex; gap: 1px; border-bottom: 1px solid var(--line-soft); margin: -12px -12px 0; padding: 6px 8px 0; background: var(--panel-2); position: sticky; top: -12px; z-index: 1; }
+.ed-tab { height: 26px; padding: 0 12px; border: 1px solid transparent; border-bottom: 0; border-radius: 3px 3px 0 0; background: transparent; font: 600 13px/1 var(--f-label); letter-spacing: .04em; text-transform: uppercase; color: var(--dim); }
+.ed-tab:hover { color: var(--text); }
+.ed-tab.on { background: var(--panel); border-color: var(--line-soft); color: var(--brass); }
+.ed-page, .ed-misc { display: grid; gap: 14px; }
+.ed-section { display: grid; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--line-soft); }
+.ed-section:last-child { border-bottom: 0; }
+.ed-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; font: 500 13px/1.2 var(--f-label); color: var(--text); }
+.ed-line select { min-width: 140px; }
+.env-view { width: 100%; height: 70px; display: block; border-radius: 2px; border: 1px solid var(--line-soft); }
+
+/* ---------- Tool windows ---------- */
+.tool-body { overflow: auto; padding: 12px 14px 14px; display: grid; gap: 12px; align-content: start; }
+.tool-body label { display: grid; gap: 4px; font: 600 11px/1 var(--f-label); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.tool-body select { text-transform: none; letter-spacing: 0; color: var(--text); width: 100%; }
+.tool-intro { margin: 0; font-size: 13px; color: var(--dim); max-width: 60ch; line-height: 1.45; }
+.pair { display: flex; gap: 4px; }
+.tool-body label.check, .check { display: flex; align-items: center; gap: 8px; font: 500 13px/1.3 var(--f-body); letter-spacing: 0; text-transform: none; color: var(--text); }
+.parts { display: grid; gap: 4px; }
+.part { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px; border-radius: 2px; background: var(--panel-2); }
+.part-name { font: 600 14px/1 var(--f-label); }
+.chord-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chord-chip { height: 30px; padding: 0 12px; font: 600 15px/1 var(--f-label); color: var(--text); cursor: pointer; border-color: var(--line); }
+.chord-chip:hover { border-color: var(--brass); color: var(--brass); }
+.chords-body { justify-items: center; text-align: center; padding-block: 18px; }
+.chords-name { font: 600 40px/1 var(--f-label); color: var(--brass); letter-spacing: .02em; min-height: 40px; }
+.chords-notes { font: 500 12px/1.4 var(--f-mono); color: var(--text); max-width: 32ch; }
+.chords-source { font: 600 10px/1 var(--f-label); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+.welcome-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; }
+.welcome-btn { display: grid; gap: 4px; text-align: left; padding: 12px; border-radius: 3px; border: 1px solid var(--line-soft); background: linear-gradient(var(--raise), var(--panel-2)); color: var(--text); }
+.welcome-btn:hover { border-color: var(--brass); }
+.welcome-btn b { font: 600 16px/1.1 var(--f-label); color: var(--brass); }
+.welcome-btn span { font-size: 12px; color: var(--dim); line-height: 1.35; }
+.welcome-tips { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; color: var(--dim); line-height: 1.4; }
+.form-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 12px; align-items: center; font: 500 13px/1.2 var(--f-label); color: var(--dim); }
+.form-grid select, .form-grid input { width: 100%; }
+.form-actions { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+
+/* ---------- Help window ---------- */
+.help-body { overflow: auto; padding: 12px 14px; display: grid; gap: 12px; align-content: start; }
+.keys-help { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 13px; color: var(--dim); margin: 0; }
+.keys-help dt { font: 500 12px/1.4 var(--f-mono); color: var(--text); white-space: nowrap; }
+.keys-help dd { margin: 0; }
+.legal { font-size: 12px; color: var(--faint); line-height: 1.5; margin: 0; max-width: 60ch; }
+
+/* ---------- Menu, toast ---------- */
+.menu { position: fixed; z-index: 1000; display: flex; align-items: stretch; max-height: calc(100% - 16px); background: #3a444a; border: 1px solid #1f262a; border-radius: 2px; box-shadow: var(--shadow); }
+.menu-col { min-width: 190px; padding: 3px 0; overflow: auto; max-height: calc(100vh - 16px); }
+.menu-col + .menu-col { border-left: 1px solid #2a3237; }
+.menu-item { display: flex; width: 100%; align-items: center; gap: 6px; height: 21px; padding: 0 10px 0 4px; border: 0; background: transparent; text-align: left; font: 500 14px/1 var(--f-label); letter-spacing: .01em; color: #dfe7eb; }
+.menu-item::before { content: ""; width: 14px; flex: none; text-align: center; color: #e9f0f3; font-size: 12px; }
+.menu-item.checked::before { content: "✓"; }
+.menu-item:hover:not(:disabled), .menu-item:focus-visible, .menu-item.open { background: #56636b; color: #fff; outline: none; }
+.menu-item:disabled { color: #737f86; opacity: 1; }
+.menu-item .mi-label { flex: 1; white-space: nowrap; }
+.menu-item kbd { font: italic 500 12px/1 var(--f-label); color: #9aa8b0; padding-left: 16px; }
+.menu-item .sub { color: var(--dim); padding-left: 12px; }
+.menu-item.danger { color: #f29a93; }
+.menu-item .swatch { width: 12px; height: 12px; border-radius: 2px; flex: none; }
+.menu-title { padding: 6px 10px 3px 22px; font: 700 10px/1 var(--f-label); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+.menu hr { border: 0; border-top: 1px solid #2c353a; border-bottom: 1px solid #455158; margin: 3px 4px; }
+.inline-edit { background: var(--lcd); border: 1px solid var(--brass); border-radius: 2px; padding: 0 6px; font-size: 13px; color: var(--text); }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 8px); opacity: 0; pointer-events: none; background: var(--raise); border: 1px solid var(--line); color: var(--text); padding: 8px 14px; border-radius: 3px; transition: opacity .2s, transform .2s; z-index: 2000; max-width: calc(100% - 32px); font-size: 13px; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.drop-veil { position: fixed; inset: 0; background: rgba(28, 35, 40, .85); border: 2px dashed var(--brass); z-index: 3000; display: grid; place-items: center; font: 600 20px/1.3 var(--f-label); letter-spacing: .08em; text-transform: uppercase; color: var(--brass); pointer-events: none; }
+
+.mac-desktop .bar1 { padding-left: 78px; }
+.mac-desktop .bars { -webkit-app-region: drag; }
+.mac-desktop .bars button, .mac-desktop .bars input, .mac-desktop .bars select, .mac-desktop .bars label, .mac-desktop .bars .knob, .mac-desktop .bars canvas, .mac-desktop .lcd, .mac-desktop .hint-panel { -webkit-app-region: no-drag; }
+
+@media (max-width: 1500px) {
+  .scope { width: 92px; }
+  .hint-panel { width: 220px; }
+}
+@media (max-width: 1280px) {
+  .sys, .scope { display: none; }
+  .lcd-side { display: none; }
+}
+@media (max-width: 1100px) {
+  .bar { flex-wrap: wrap; height: auto; padding-block: 3px; }
+  .menu-btn { font-size: 14px; padding: 0 4px; }
+  .lcd-big { min-width: 0; font-size: 26px; }
+}
+@media (max-width: 860px) {
+  .app, .app.hide-browser { grid-template-columns: minmax(0, 1fr); }
+  .browser { position: absolute; left: 0; top: 0; bottom: 0; width: min(280px, 90%); z-index: 900; box-shadow: var(--shadow); }
+  .app:not(.show-browser) .browser { display: none; }
+  .app.show-browser .browser { display: flex; }
+  .win { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; resize: none; }
+  .mx { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(260px, 1fr) auto; overflow: auto; }
+  .mx-side { border-left: 0; border-top: 1px solid var(--line-soft); overflow: visible; }
+  .pl { grid-template-columns: 0 90px minmax(0, 1fr); }
+  .pl-pats { display: none; }
+  .hint-panel { width: 100%; order: 10; }
+  .bar { padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><radialGradient id="knob-grad" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#58646b"/><stop offset=".6" stop-color="#363f45"/><stop offset="1" stop-color="#262d31"/></radialGradient></defs>
+</svg>
+<div class="shell">
+  <div class="bars">
+    <div class="bar bar1">
+      <nav class="menu-bar" aria-label="Menu principale">
+        <button class="menu-btn" type="button" data-menu="file">File</button>
+        <button class="menu-btn" type="button" data-menu="edit">Modifica</button>
+        <button class="menu-btn" type="button" data-menu="add">Aggiungi</button>
+        <button class="menu-btn" type="button" data-menu="patterns">Pattern</button>
+        <button class="menu-btn" type="button" data-menu="view">Vista</button>
+        <button class="menu-btn" type="button" data-menu="options">Opzioni</button>
+        <button class="menu-btn" type="button" data-menu="tools">Strumenti</button>
+        <button class="menu-btn" type="button" data-menu="help">Aiuto</button>
+      </nav>
+      <div class="tgroup">
+        <button class="patsong" id="btn-patsong" type="button" title="Modalità pattern o brano (L)" aria-label="Modalità di riproduzione">
+          <span id="mode-pat">PAT</span><span id="mode-song">SONG</span>
+        </button>
+        <button class="tbtn play" id="btn-play" type="button" title="Play / Pausa (Spazio)" aria-label="Play" aria-pressed="false">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4.5 2.8v10.4L13 8z"/></svg>
+        </button>
+        <button class="tbtn" id="btn-stop" type="button" title="Stop (premi di nuovo per tornare all'inizio)" aria-label="Stop">
+          <svg viewBox="0 0 16 16" fill="currentColor"><rect x="3.5" y="3.5" width="9" height="9" rx="1"/></svg>
+        </button>
+        <button class="tbtn rec" id="btn-rec" type="button" title="Registra: note dalla tastiera o dal MIDI, oppure audio dall'ingresso (vedi Opzioni)" aria-label="Registra" aria-pressed="false">
+          <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4.6"/></svg>
+        </button>
+        <div class="tempo">
+          <label for="bpm" id="bpm-label" title="Trascina in verticale per cambiare il tempo">BPM</label>
+          <input type="number" id="bpm" min="40" max="300" step="0.001">
+        </div>
+      </div>
+      <div class="tgroup sep">
+        <button class="tbtn flat" id="btn-metro" type="button" title="Metronomo" aria-label="Metronomo" aria-pressed="false">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M5.8 2h4.4l2.6 11.8H3.2z"/><path d="M8 10.5 11.8 4"/></svg>
+        </button>
+        <button class="tbtn flat" id="btn-recmode" type="button" title="Cosa registra il tasto Rec: note o audio" aria-label="Modalità di registrazione">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="5.5" y="1.8" width="5" height="8" rx="2.5"/><path d="M3.5 8a4.5 4.5 0 0 0 9 0M8 12.5v2"/></svg>
+        </button>
+      </div>
+      <div class="lcd" id="lcd" title="Clic: alterna minuti:secondi e battute:battiti">
+        <span class="lcd-big" id="lcd-big">0:00:00</span>
+        <span class="lcd-side"><span id="lcd-unit">M:S:CS</span><b id="lcd-small">1:1:1</b></span>
+      </div>
+      <canvas class="scope" id="scope" aria-hidden="true"></canvas>
+      <div class="sys" id="sys" aria-label="Stato audio">
+        <span>Audio</span><b id="sys-audio">spento</b>
+        <span>Memoria</span><b id="sys-mem">—</b>
+      </div>
+      <div class="tgroup sep">
+        <button class="tbtn flat" id="btn-new" type="button" title="Nuovo progetto" aria-label="Nuovo progetto">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 1.8h5.2L12.5 5v9.2h-8.5z"/><path d="M9 1.8V5.2h3.4"/></svg>
+        </button>
+        <button class="tbtn flat" id="btn-open" type="button" title="Apri progetto (Ctrl+O)" aria-label="Apri">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M1.8 4.2h4.4l1.4 1.6h6.6v7.6H1.8z"/></svg>
+        </button>
+        <button class="tbtn flat" id="btn-save" type="button" title="Salva progetto (Ctrl+S)" aria-label="Salva">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M2.5 2.5h9l2 2v9h-11z"/><path d="M5 2.5v3.5h5V2.5M5 13.5V9.5h6v4"/></svg>
+        </button>
+        <button class="tbtn flat" id="btn-export" type="button" title="Esporta il brano: WAV, FLAC, OGG o tracce separate (Ctrl+R)" aria-label="Esporta">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 2v8M4.8 6.8 8 10l3.2-3.2M2.5 13.5h11"/></svg>
+        </button>
+        <button class="tbtn flat" id="btn-undo" type="button" title="Annulla (Ctrl+Z)" aria-label="Annulla">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3.5 2.5 6.5l3 3"/><path d="M2.5 6.5h7a3.5 3.5 0 0 1 0 7H7"/></svg>
+        </button>
+        <button class="tbtn flat" id="btn-redo" type="button" title="Ripeti (Ctrl+Maiusc+Z)" aria-label="Ripeti">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 3.5 3 3-3 3"/><path d="M13.5 6.5h-7a3.5 3.5 0 0 0 0 7H9"/></svg>
+        </button>
+        <button class="tbtn flat" type="button" data-toggle="help" title="Aiuto e scorciatoie" aria-label="Aiuto">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M6.3 6.2a1.8 1.8 0 1 1 2.4 1.7c-.5.2-.7.6-.7 1.1v.4M8 11.4v.1"/></svg>
+        </button>
+      </div>
+      <span class="push"></span>
+      <div class="brand" title="Ritmo Studio — gratuito e open source">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="1" y="1" width="22" height="22" rx="5" fill="#2a3237"/>
+          <rect x="4.5" y="4.5" width="6" height="6" rx="1.5" fill="#f6a43c"/>
+          <rect x="13.5" y="4.5" width="6" height="6" rx="1.5" fill="#5a6870"/>
+          <rect x="4.5" y="13.5" width="6" height="6" rx="1.5" fill="#5a6870"/>
+          <rect x="13.5" y="13.5" width="6" height="6" rx="1.5" fill="#f6a43c"/>
+        </svg>
+      </div>
+    </div>
+    <div class="bar bar2">
+      <div class="hint-panel">
+        <input type="text" class="proj-name" id="proj-name" aria-label="Nome del progetto" maxlength="60">
+        <span id="hint">Clicca i passi del Channel Rack, poi premi Spazio.</span>
+      </div>
+      <div class="tgroup" title="Volume master">
+        <div id="master-knob"></div>
+      </div>
+      <div class="tgroup">
+        <button class="tbtn" id="btn-typing" type="button" title="Tastiera del computer come tastiera musicale" aria-label="Tastiera musicale" aria-pressed="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="4" width="13" height="8" rx="1"/><path d="M5 4v5M8 4v5M11 4v5"/></svg>
+        </button>
+      </div>
+      <div class="tgroup sep winbtns">
+        <button class="tbtn" type="button" data-toggle="playlist" title="Playlist (F5)" aria-label="Playlist">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+        </button>
+        <button class="tbtn" type="button" data-toggle="piano" title="Piano Roll (F7)" aria-label="Piano Roll">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><path d="M5 2.5v7M8.5 2.5v7M12 2.5v7"/><path d="M1.5 9.5h13"/></svg>
+        </button>
+        <button class="tbtn" type="button" data-toggle="rack" title="Channel Rack (F6)" aria-label="Channel Rack">
+          <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1.5" y="3" width="3" height="3" rx=".6"/><rect x="5.5" y="3" width="3" height="3" rx=".6" opacity=".45"/><rect x="9.5" y="3" width="3" height="3" rx=".6"/><rect x="1.5" y="9" width="3" height="3" rx=".6" opacity=".45"/><rect x="5.5" y="9" width="3" height="3" rx=".6"/><rect x="9.5" y="9" width="3" height="3" rx=".6" opacity=".45"/></svg>
+        </button>
+        <button class="tbtn" type="button" data-toggle="mixer" title="Mixer (F9)" aria-label="Mixer">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 2v12M8 2v12M12 2v12"/><rect x="2.5" y="8" width="3" height="2.2" rx=".5" fill="currentColor"/><rect x="6.5" y="4.5" width="3" height="2.2" rx=".5" fill="currentColor"/><rect x="10.5" y="10" width="3" height="2.2" rx=".5" fill="currentColor"/></svg>
+        </button>
+        <button class="tbtn" type="button" data-toggle="browser" title="Browser (Alt+F8)" aria-label="Browser">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M1.8 3.5h4.4l1.4 1.6h6.6v7.4H1.8z"/></svg>
+        </button>
+      </div>
+      <label class="snap" title="Griglia della playlist">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 2.5v5a4 4 0 0 0 8 0v-5M4 5h2M10 5h2"/></svg>
+        <select id="pl-snap" aria-label="Griglia della playlist"><option value="16">Battuta</option><option value="4">Battito</option><option value="1">Passo</option></select>
+      </label>
+      <div class="pat-picker">
+        <button class="tbtn flat small" id="pat-prev" type="button" title="Pattern precedente" aria-label="Pattern precedente">‹</button>
+        <select id="pat-select" aria-label="Pattern corrente"></select>
+        <button class="tbtn flat small" id="pat-next" type="button" title="Pattern successivo" aria-label="Pattern successivo">›</button>
+        <button class="tbtn flat small" id="btn-pat-add" type="button" title="Nuovo pattern" aria-label="Nuovo pattern">+</button>
+      </div>
+      <span class="push"></span>
+    </div>
+  </div>
+
+  <main class="app" id="app">
+    <aside class="browser" id="browser" aria-label="Browser">
+      <div class="br-head">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+        <input type="search" id="br-search" class="br-search" placeholder="Cerca suoni, strumenti, effetti…" aria-label="Cerca nel browser" autocomplete="off" spellcheck="false">
+        <button class="tbtn flat small" id="br-add" type="button" title="Aggiungi una cartella di campioni al browser" aria-label="Aggiungi una cartella">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M1.8 3.5h4.4l1.4 1.6h6.6v7.4H1.8z"/><path d="M8 7v4M6 9h4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="tree" id="tree" role="tree"></div>
+      <div class="pv-bar" id="pv-bar">
+        <button class="pv-play" id="pv-play" type="button" aria-label="Ascolta">▶</button>
+        <span class="pv-name" id="pv-name"></span>
+        <input type="range" id="pv-vol" min="0" max="1.5" step="0.01" aria-label="Volume dell'anteprima" title="Volume dell'anteprima">
+      </div>
+    </aside>
+
+    <section class="desk" id="desk">
+      <!-- Playlist: always behind the floating windows -->
+      <section class="pl-win" id="playlist" aria-label="Playlist">
+        <div class="win-title">
+          <span class="tools">
+            <span class="tool-group" role="group" aria-label="Strumenti della Playlist">
+              <button class="tbtn small icon" type="button" data-pltool="draw" title="Disegna (Ctrl+trascina duplica)" aria-label="Disegna" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 13l1-3.5L11 2.5l2.5 2.5L6.5 12z"/><path d="M9.5 4l2.5 2.5"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="paint" title="Pennello: dipinge clip in fila" aria-label="Pennello"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M9.5 2.5l4 4-5 5-4-4z"/><path d="M4.5 7.5 2.5 13.5l6-2"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="delete" title="Cancella" aria-label="Cancella"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M6 13.5h7.5M2.5 9.5l6-6 4.5 4.5-6 6H5z"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="mute" title="Muta clip" aria-label="Muta"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="m11 6 3 4m0-4-3 4"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="slip" title="Slip: fa scorrere il contenuto della clip" aria-label="Slip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2 8h12M4.5 5.5 2 8l2.5 2.5M11.5 5.5 14 8l-2.5 2.5"/><rect x="5.5" y="3" width="5" height="10" rx="1"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="slice" title="Taglia clip" aria-label="Taglia"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 1.5v13M3 5.5h3M10 5.5h3M3 10.5h3M10 10.5h3"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="select" title="Seleziona (Maiusc aggiunge)" aria-label="Seleziona"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.6"><rect x="2.5" y="3" width="11" height="10" rx="1"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="zoom" title="Zoom: trascina sul tratto da ingrandire" aria-label="Zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/><path d="M5.5 7h3"/></svg></button>
+              <button class="tbtn small icon" type="button" data-pltool="play" title="Ascolta: tieni premuto sulla griglia" aria-label="Ascolta"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M5 3.5v9l7-4.5z"/></svg></button>
+              <button class="tbtn small icon" id="pl-zoom-out" type="button" title="Riduci zoom" aria-label="Riduci zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5M5 7h4"/></svg></button>
+              <button class="tbtn small icon" id="pl-zoom-in" type="button" title="Aumenta zoom" aria-label="Aumenta zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5M5 7h4M7 5v4"/></svg></button>
+            </span>
+          </span>
+          <span class="t" title="Righello: clic per la posizione, trascina per un loop, clic destro toglie il loop">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+            Playlist <small>-</small> <button class="pl-arr" id="pl-arr" type="button" title="Arrangiamenti: cambia, crea, clona, rinomina">Arrangiamento ▾</button> <small>›</small> <small id="pl-pat-name"></small>
+          </span>
+        </div>
+        <div class="pl">
+          <div class="pl-pats" id="pl-pats" aria-label="Pattern"></div>
+          <div class="pl-corner"></div>
+          <div class="cell" id="pl-ruler-cell"><canvas id="pl-ruler" title="Clic: posizione di partenza del brano"></canvas></div>
+          <div class="pl-heads" id="pl-heads"><div class="pl-heads-inner" id="pl-heads-inner"></div></div>
+          <div class="scroller" id="pl-scroll"><div class="sizer" id="pl-sizer"><canvas id="pl-canvas"></canvas></div></div>
+        </div>
+      </section>
+
+      <!-- Channel rack -->
+      <section class="win" id="win-rack" data-win="rack" aria-label="Channel Rack" hidden>
+        <div class="win-title">
+          <span class="tools">
+            <select id="rack-filter" class="rack-filter" aria-label="Filtra i canali per tipo"></select>
+          </span>
+          <span class="t">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg>
+            Channel rack <small id="rack-pat-name"></small>
+          </span>
+          <span class="tools">
+            <span id="rack-swing" class="rack-swing" title="Swing"></span>
+            <select id="rack-len" aria-label="Lunghezza del pattern" title="Passi del pattern">
+              <option value="16">16</option><option value="32">32</option><option value="48">48</option><option value="64">64</option><option value="128">128</option>
+            </select>
+            <button class="tbtn small icon" id="rack-graph" type="button" title="Graph Editor: velocità o intonazione di ogni passo del canale selezionato" aria-pressed="false"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="8" width="2.4" height="6"/><rect x="5.6" y="4" width="2.4" height="10"/><rect x="9.2" y="10" width="2.4" height="4"/><rect x="12.8" y="6" width="1.6" height="8"/></svg></button>
+            <select id="rack-graph-mode" aria-label="Parametro del Graph Editor"><option value="vel">Velocità</option><option value="pitch">Intonazione</option></select>
+            <button class="tbtn small" id="rack-loopstarter" type="button" title="Loop Starter: crea un'idea di loop per genere e tonalità">Loop Starter</button>
+          </span>
+        </div>
+        <div class="rack-body" id="rack-rows"></div>
+        <div class="rack-foot">
+          <button class="rack-add" id="rack-add" type="button" title="Aggiungi un canale" aria-label="Aggiungi canale">+</button>
+        </div>
+      </section>
+
+      <!-- Piano roll -->
+      <section class="win" id="win-piano" data-win="piano" aria-label="Piano Roll" hidden>
+        <div class="win-title">
+          <span class="t">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><path d="M5 2.5v7M8.5 2.5v7M12 2.5v7"/><path d="M1.5 9.5h13"/></svg>
+            Piano roll <small id="pr-title"></small>
+          </span>
+          <span class="tools">
+            <label class="field">Canale <select id="pr-ch" aria-label="Canale nel Piano Roll"></select></label>
+            <label class="field">Griglia
+              <select id="pr-snap">
+                <option value="16">1 battuta</option><option value="4">1/4</option><option value="2">1/8</option><option value="1">1/16</option><option value="0.5">1/32</option><option value="0.25">1/64</option>
+              </select>
+            </label>
+            <span class="tool-group" role="group" aria-label="Strumenti del Piano Roll">
+              <button class="tbtn small icon" type="button" data-prtool="draw" title="Disegna" aria-label="Disegna" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 13l1-3.5L11 2.5l2.5 2.5L6.5 12z"/><path d="M9.5 4l2.5 2.5"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="paint" title="Pennello" aria-label="Pennello"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M9.5 2.5l4 4-5 5-4-4z"/><path d="M4.5 7.5 2.5 13.5l6-2"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="delete" title="Cancella" aria-label="Cancella"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M6 13.5h7.5M2.5 9.5l6-6 4.5 4.5-6 6H5z"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="mute" title="Muta" aria-label="Muta"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="m11 6 3 4m0-4-3 4"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="slice" title="Taglia" aria-label="Taglia"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 1.5v13M3 5.5h3M10 5.5h3M3 10.5h3M10 10.5h3"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="select" title="Seleziona" aria-label="Seleziona"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.6"><rect x="2.5" y="3" width="11" height="10" rx="1"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="lasso" title="Lazo: selezione a mano libera" aria-label="Lazo"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 3c3.6 0 6 1.6 6 3.6S11.6 10 8 10 2 8.6 2 6.6 4.4 3 8 3z" stroke-dasharray="2 1.6"/><path d="M5 9.5c-.8 1.2-.6 2.6.6 3.4"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="zoom" title="Zoom" aria-label="Zoom"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/><path d="M5.5 7h3"/></svg></button>
+              <button class="tbtn small icon" type="button" data-prtool="play" title="Ascolta le note sotto il cursore" aria-label="Ascolta"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M5 3.5v9l7-4.5z"/></svg></button>
+            </span>
+            <button class="tbtn small pr-color" id="pr-color" type="button" aria-label="Colore delle nuove note"><span class="sw"></span></button>
+            <button class="tbtn small" id="pr-slide" type="button" title="Slide: le nuove note fanno scivolare l'intonazione delle note che suonano" aria-pressed="false">Slide</button>
+            <button class="tbtn small" id="pr-porta" type="button" title="Porta: le nuove note partono dall'intonazione della nota precedente" aria-pressed="false">Porta</button>
+            <label class="field">Accordo <select id="pr-chord" aria-label="Chord Stamp"></select></label>
+            <button class="tbtn small" id="pr-chord-top" type="button" title="Chord Stamp dall'alto: la nota cliccata è la voce più acuta" aria-pressed="false">Dall'alto</button>
+            <label class="field">Scala <select id="pr-scale-root" aria-label="Tonica della scala"></select><select id="pr-scale-type" aria-label="Tipo di scala"></select></label>
+            <button class="tbtn small" id="pr-tools-menu" type="button" title="Strumenti di editing: arpeggio, strum, legato, Riff Machine…">Strumenti ▾</button>
+            <button class="tbtn small" id="pr-quant" type="button" title="Allinea le note alla griglia">Quantizza</button>
+            <button class="tbtn small" id="pr-ghost" type="button" title="Mostra le note degli altri canali" aria-pressed="true">Fantasma</button>
+            <button class="tbtn small" id="pr-zoom-out" type="button" title="Riduci" aria-label="Riduci zoom">−</button>
+            <button class="tbtn small" id="pr-zoom-in" type="button" title="Ingrandisci" aria-label="Aumenta zoom">+</button>
+            <button class="tbtn small danger" id="pr-clear" type="button" title="Cancella tutte le note del canale nel pattern">Svuota</button>
+          </span>
+        </div>
+        <div class="win-body">
+          <div class="pr">
+            <div class="pr-corner"></div>
+            <div class="cell" id="pr-ruler-cell"><canvas id="pr-ruler"></canvas></div>
+            <div class="cell" id="pr-keys-cell"><canvas id="pr-keys" title="Clic per ascoltare"></canvas></div>
+            <div class="scroller" id="pr-scroll"><div class="sizer" id="pr-sizer"><canvas id="pr-canvas"></canvas></div></div>
+            <div class="vel-label"><select id="pr-lane" aria-label="Corsia degli eventi" title="Proprietà mostrata nella corsia degli eventi"></select></div>
+            <div class="cell" id="pr-vel-cell"><canvas id="pr-vel" title="Trascina per cambiare la dinamica delle note"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mixer -->
+      <section class="win" id="win-mixer" data-win="mixer" aria-label="Mixer" hidden>
+        <div class="win-title">
+          <span class="t">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M4 2v12M8 2v12M12 2v12"/></svg>
+            Mixer <small id="mx-title"></small>
+          </span>
+          <span class="tools">
+            <button class="tbtn small" id="mx-wide" type="button" title="Strisce larghe o strette" aria-pressed="false">Largo</button>
+          </span>
+        </div>
+        <div class="win-body">
+          <div class="mx">
+            <div class="mx-strips" id="mx-strips"></div>
+            <aside class="mx-side" id="mx-side" aria-label="Traccia selezionata"></aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- Effect in a mixer slot -->
+      <section class="win" id="win-fx" data-win="fx" aria-label="Effetto" hidden>
+        <div class="win-title">
+          <span class="t">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M4 2v12M12 2v12"/><circle cx="4" cy="10" r="1.8" fill="currentColor"/><circle cx="12" cy="5" r="1.8" fill="currentColor"/></svg>
+            <span id="fx-title">Effetto</span>
+          </span>
+        </div>
+        <div class="fx-body" id="fx-body"></div>
+      </section>
+
+      <!-- Automation clip editor -->
+      <section class="win" id="win-auto" data-win="auto" aria-label="Clip di automazione" hidden>
+        <div class="win-title">
+          <span class="t">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 12 5 6l3 3 3-6 3.5 5"/></svg>
+            <span id="auto-title">Automazione</span>
+          </span>
+          <span class="tools">
+            <input type="text" id="auto-name" aria-label="Nome della clip" maxlength="60" style="width:150px">
+            <select id="auto-len" aria-label="Lunghezza della clip">
+              <option value="16">1 battuta</option><option value="32">2 battute</option><option value="64">4 battute</option><option value="128">8 battute</option><option value="256">16 battute</option>
+            </select>
+            <button class="tbtn small" id="auto-shape" type="button">Forma ▾</button>
+            <button class="tbtn small danger" id="auto-del" type="button" title="Elimina la clip e le sue copie nella Playlist">Elimina</button>
+          </span>
+        </div>
+        <div class="tree-note" id="auto-target" style="padding:4px 10px"></div>
+        <div class="cell" style="flex:1;min-height:120px"><canvas id="auto-cv" title="Clic: aggiungi un punto · trascina: sposta · clic destro: elimina il punto (Maiusc: senza griglia)"></canvas></div>
+      </section>
+
+      <!-- Export -->
+      <section class="win" id="win-export" data-win="export" aria-label="Esporta" hidden>
+        <div class="win-title"><span class="t">Esporta <small>- audio</small></span></div>
+        <div class="tool-body" id="export-body"></div>
+      </section>
+
+      <!-- Audio settings -->
+      <section class="win" id="win-audio" data-win="audio" aria-label="Impostazioni audio" hidden>
+        <div class="win-title"><span class="t">Impostazioni audio</span></div>
+        <div class="tool-body" id="audio-body"></div>
+      </section>
+
+      <!-- Channel settings -->
+      <section class="win" id="win-inst" data-win="inst" aria-label="Impostazioni canale" hidden>
+        <div class="win-title">
+          <span class="t"><span class="ed-swatch" id="ed-swatch"></span></span>
+          <input type="text" class="inst-name" id="ed-name" aria-label="Nome del canale" maxlength="40">
+        </div>
+        <div class="inst-body" id="inst-body"></div>
+      </section>
+
+      <section class="win" id="win-welcome" data-win="welcome" aria-label="Benvenuto in Ritmo Studio" hidden>
+        <div class="win-title">
+          <span class="t">Benvenuto in Ritmo Studio <small></small></span>
+        </div>
+        <div class="tool-body" id="welcome-body"></div>
+      </section>
+
+      <section class="win" id="win-loopstarter" data-win="loopstarter" aria-label="Loop Starter" hidden>
+        <div class="win-title">
+          <span class="t">Loop Starter <small>· idee per genere e tonalità</small></span>
+        </div>
+        <div class="tool-body" id="loopstarter-body"></div>
+      </section>
+
+      <section class="win" id="win-chordtool" data-win="chordtool" aria-label="Chord Progression Tool" hidden>
+        <div class="win-title">
+          <span class="t">Chord Progression Tool <small>· progressioni e basso</small></span>
+        </div>
+        <div class="tool-body" id="chordtool-body"></div>
+      </section>
+
+      <section class="win" id="win-chords" data-win="chords" aria-label="Rilevamento accordi" hidden>
+        <div class="win-title">
+          <span class="t">Accordi <small>· rilevamento</small></span>
+        </div>
+        <div class="tool-body chords-body">
+          <div class="chords-name" id="chords-name" aria-live="polite">—</div>
+          <div class="chords-notes" id="chords-notes"></div>
+          <div class="chords-source" id="chords-source"></div>
+        </div>
+      </section>
+
+      <!-- Help -->
+      <section class="win" id="win-help" data-win="help" aria-label="Scorciatoie" hidden>
+        <div class="win-title">
+          <span class="t">Aiuto <small>· scorciatoie</small></span>
+        </div>
+        <div class="help-body">
+          <dl class="keys-help">
+            <dt>Spazio</dt><dd>Play / Stop</dd>
+            <dt>L</dt><dd>Cambia modalità PAT / SONG</dd>
+            <dt>F6 · F7 · F9</dt><dd>Channel Rack · Piano Roll · Mixer</dd>
+            <dt>Alt+F8</dt><dd>Browser</dd>
+            <dt>Z … M</dt><dd>Suona note con la tastiera (ottava bassa)</dd>
+            <dt>Q … P</dt><dd>Suona note (ottava alta)</dd>
+            <dt>− / +</dt><dd>Sposta di un'ottava la tastiera</dd>
+            <dt>Ctrl+Z · Ctrl+Y</dt><dd>Annulla · Ripeti</dd>
+            <dt>Ctrl+S · Ctrl+O</dt><dd>Salva · Apri progetto</dd>
+            <dt>Ctrl+R</dt><dd>Esporta: WAV, FLAC, OGG o tracce separate</dd>
+            <dt>Clic destro</dt><dd>Cancella note, passi e clip; menu del canale</dd>
+            <dt>Ctrl+trascina</dt><dd>Seleziona più note nel Piano Roll</dd>
+            <dt>Ctrl+C · Ctrl+V · Ctrl+D</dt><dd>Copia · Incolla · Duplica note</dd>
+            <dt>Frecce</dt><dd>Sposta le note selezionate (Maiusc: di un'ottava)</dd>
+            <dt>Ctrl+rotella</dt><dd>Zoom orizzontale</dd>
+            <dt>Maiusc+↑ · Maiusc+↓</dt><dd>Suono precedente o successivo della cartella del browser nel canale selezionato</dd>
+          </dl>
+          <p class="legal">Ritmo Studio è un progetto indipendente, gratuito e open source. Non è affiliato a Image-Line né a FL Studio. Tutti i suoni sono sintetizzati in tempo reale.</p>
+        </div>
+      </section>
+    </section>
+  </main>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<input type="file" id="file-project" accept=".json,application/json" hidden>
+<input type="file" id="file-midi" accept=".mid,.midi,audio/midi" hidden>
+<input type="file" id="file-audio" accept="audio/*,.wav,.mp3,.ogg,.flac,.m4a,.aif,.aiff" multiple hidden>
+
+<script src="js/core.js"></script>
+<script src="js/theory.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/widgets.js"></script>
+<script src="js/rack.js"></script>
+<script src="js/pianoroll.js"></script>
+<script src="js/playlist.js"></script>
+<script src="js/arrange.js"></script>
+<script src="js/mixer.js"></script>
+<script src="js/automation.js"></script>
+<script src="js/browser.js"></script>
+<script src="js/app.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/io.js"></script>
+<script src="js/native.js"></script>
+<script src="js/plugins-ui.js"></script>

@@ -1,0 +1,40 @@
+# Publishes the website (site/) to GitHub Pages: the landing pages in Italian and English, the online app,
+# sitemap and social images. Download links and file sizes come from the release of the current version.
+name: Website
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+  push:
+    branches: [main]
+    paths: ['site/**', 'RitmoStudio.html', 'desktop/package.json', '.github/workflows/site.yml']
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+        id: pages
+      - name: Build the site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 site/build.py --base "${{ vars.SITE_BASE || steps.pages.outputs.base_url }}" --repo "${{ github.repository }}"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/_out
+      - uses: actions/deploy-pages@v4
+        id: deploy

@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+.claude/
+dist/
+engine/build*/
+engine/third_party/JUCE/
+desktop/node_modules/
+desktop/release/
+desktop/app/
+desktop/engine-bin/
+site/_out/
