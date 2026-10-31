@@ -44,6 +44,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v4
 
@@ -112,3 +113,10 @@ jobs:
           if [ ${#files[@]} -eq 0 ]; then echo "No installers found"; exit 1; fi
           ls -l "${files[@]}"
           gh release upload "$TAG" -R "$REPO" --clobber "${files[@]}"
+
+      - name: Refresh the website with the new download sizes
+        if: github.event_name == 'workflow_dispatch' || github.ref_type == 'tag'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run site.yml -R "${{ github.repository }}" --ref "${{ github.event.repository.default_branch }}"

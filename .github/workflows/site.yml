@@ -3,9 +3,7 @@
 name: Website
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published]
+  workflow_dispatch:  # the installer build starts it once the files are in the release
   push:
     branches: [main]
     paths: ['site/**', 'RitmoStudio.html', 'desktop/package.json', '.github/workflows/site.yml']
