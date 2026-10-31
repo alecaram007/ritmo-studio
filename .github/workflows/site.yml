@@ -36,3 +36,13 @@ jobs:
           path: site/_out
       - uses: actions/deploy-pages@v4
         id: deploy
+      - name: Tell Bing and other IndexNow search engines about the update
+        env:
+          BASE: ${{ vars.SITE_BASE || steps.pages.outputs.base_url }}
+        run: |
+          KEY=$(ls site/_out | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | cut -d. -f1)
+          [ -n "$KEY" ] || exit 0
+          HOST=$(echo "$BASE" | cut -d/ -f3)
+          curl -sS -o /dev/null -w 'IndexNow: %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"$HOST\",\"key\":\"$KEY\",\"keyLocation\":\"$BASE/$KEY.txt\",\"urlList\":[\"$BASE/\",\"$BASE/en/\",\"$BASE/app/\"]}" || true

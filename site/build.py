@@ -179,6 +179,9 @@ def main():
 
     shutil.copytree(os.path.join(SRC, 'img'), os.path.join(out, 'img'))
     shutil.copy(os.path.join(SRC, 'favicon.ico'), out)
+    for f in os.listdir(SRC):  # the IndexNow key, which tells search engines the site is ours
+        if re.fullmatch(r'[0-9a-f]{32}\.txt', f):
+            shutil.copy(os.path.join(SRC, f), out)
     os.makedirs(os.path.join(out, 'fonts'))
     for f in FONTS:
         shutil.copy(os.path.join(ROOT, 'fonts', f + '.woff2'), os.path.join(out, 'fonts'))
