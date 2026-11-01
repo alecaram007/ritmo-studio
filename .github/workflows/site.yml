@@ -40,9 +40,18 @@ jobs:
         env:
           BASE: ${{ vars.SITE_BASE || steps.pages.outputs.base_url }}
         run: |
-          KEY=$(ls site/_out | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | cut -d. -f1)
-          [ -n "$KEY" ] || exit 0
-          HOST=$(echo "$BASE" | cut -d/ -f3)
-          curl -sS -o /dev/null -w 'IndexNow: %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
-            -H 'Content-Type: application/json; charset=utf-8' \
-            -d "{\"host\":\"$HOST\",\"key\":\"$KEY\",\"keyLocation\":\"$BASE/$KEY.txt\",\"urlList\":[\"$BASE/\",\"$BASE/en/\",\"$BASE/app/\"]}" || true
+          python3 - <<'PY'
+          import json, os, re, urllib.request
+          out = 'site/_out'
+          keys = [f[:-4] for f in os.listdir(out) if re.fullmatch(r'[0-9a-f]{32}\.txt', f)]
+          if not keys:
+              raise SystemExit(0)
+          base = os.environ['BASE'].rstrip('/')
+          urls = re.findall(r'<loc>([^<]+)</loc>', open(f'{out}/sitemap.xml').read())
+          body = json.dumps({'host': base.split('/')[2], 'key': keys[0], 'keyLocation': f'{base}/{keys[0]}.txt', 'urlList': urls}).encode()
+          req = urllib.request.Request('https://api.indexnow.org/indexnow', body, {'Content-Type': 'application/json; charset=utf-8'})
+          try:
+              print('IndexNow:', urllib.request.urlopen(req, timeout=30).status, f'({len(urls)} pages)')
+          except Exception as e:  # a refused ping must not fail the deploy
+              print('IndexNow not reached:', e)
+          PY
