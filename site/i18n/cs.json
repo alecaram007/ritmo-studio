@@ -19,7 +19,7 @@
   "suggest_go": "Číst česky",
   "chip_free": "Zdarma",
   "chip_version": "Verze {{VER}}",
-  "chip_ui": "Rozhraní v italštině",
+  "chip_ui": "Ve 26 jazycích",
   "h1": "DAW zdarma pro tvorbu beatů a písní",
   "lead": "Ritmo Studio je kompletní program na tvorbu hudby: step sequencer, Piano Roll, Playlist a Mixer, s vestavěnými nástroji a efekty a podporou tvých pluginů VST3. Stáhni si ho pro Windows, Mac nebo Linux, nebo ho hned vyzkoušej v prohlížeči.",
   "dl_main": "Stáhnout zdarma",
@@ -94,18 +94,18 @@
   "news_label": "Novinky",
   "news_h2": "Co přináší verze {{VER}}",
   "news": [
-    "Piano Roll s pruhem událostí, vlastnostmi not, 16 barvami not a notami se slide a portamentem.",
-    "Nové nástroje: Laso, Zoom, Poslech, Artikulace, LFO, Interpolace a Rychlé sekání.",
-    "Takt projektu a změny taktu v Playlistu; značky se smyčkami, skoky a pauzami.",
-    "Audio klipy s fade-in/fade-out, crossfady, změnou výšky tónu, reverzem a time-stretchem.",
-    "Slučování patternů, vytvoření unikátní kopie, renderování do audia a více aranží v jednom projektu."
+    "Rozhraní ve 26 jazycích: spustí se v jazyce tvého systému a přepnout ho můžeš v nabídce Možnosti › Jazyk.",
+    "Zvoleným jazykem se řídí i nabídky desktopové aplikace a dialogy pro uložení.",
+    "Klávesové zkratky jako Ctrl+Z se řídí písmeny natištěnými na tvé klávesnici (QWERTZ, AZERTY…).",
+    "Písma pro latinku, cyrilici, řeckou a vietnamskou abecedu.",
+    "Obsahuje všechny novinky verze 1.4: pruh událostí, noty se slide, změny taktu, nástroje pro audio klipy a více aranží."
   ],
   "faq_label": "FAQ",
   "faq_h2": "Otázky k Ritmo Studio",
   "faq": [
     {"q": "Je Ritmo Studio opravdu zdarma?", "a": "Ano. Neexistují placené edice, předplatné, zkušební verze ani reklamy a nepotřebuješ účet. Všechny funkce máš k dispozici hned od začátku."},
     {"q": "Můžu svou hudbu vydávat a prodávat?", "a": "Ano. Skladby, které vytvoříš, jsou tvoje: vydávej je na streamovacích službách, prodávej je a používej ve videích i komerčních projektech. Vestavěné nástroje jsou syntetizované, takže nemusíš řešit licence k samplům."},
-    {"q": "V jakém jazyce je rozhraní?", "a": "Rozhraní je momentálně v italštině. Rozvržení vychází z klasického workflow patternových DAW, takže Channel Rack, Piano Roll, Playlist a Mixer snadno poznáš."},
+    {"q": "V jakém jazyce je rozhraní?", "a": "Ritmo Studio je k dispozici ve 26 jazycích, včetně češtiny. Spustí se v jazyce tvého systému a kdykoli ho můžeš přepnout v nabídce Možnosti › Jazyk."},
     {"q": "Na jakých počítačích běží?", "a": "Na 64bitových Windows 10 a 11, na macOS 13 Ventura nebo novějším na Macích s čipem Apple i Intel, na Linuxu x64 (Ubuntu 22.04 nebo novější a podobné distribuce) a v aktuálních prohlížečích. Je navržené pro obrazovku počítače, ne pro telefon."},
     {"q": "Můžu používat svoje VST pluginy?", "a": "Ano, v desktopové aplikaci: VST3 na Windows, Macu a Linuxu, AU na Macu a LV2 na Linuxu. Pluginy VST2 a CLAP zatím podporované nejsou. Online verze používá vestavěné nástroje a efekty."},
     {"q": "Jaký je rozdíl mezi online a desktopovou verzí?", "a": "Editor je stejný. Desktopová aplikace navíc přidává nativní audio engine, pluginy, nastavení zvukové karty a bufferu a export do FLAC a OGG. Online verze se hodí na vyzkoušení nebo na práci na počítači, kam nemůžeš nic instalovat."},

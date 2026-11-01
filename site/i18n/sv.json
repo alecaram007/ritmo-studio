@@ -19,7 +19,7 @@
   "suggest_go": "Läs på svenska",
   "chip_free": "Gratis",
   "chip_version": "Version {{VER}}",
-  "chip_ui": "Gränssnitt på italienska",
+  "chip_ui": "På 26 språk",
   "h1": "Gratis DAW för att göra beats och låtar",
   "lead": "Ritmo Studio är ett komplett program för att göra musik: stegsekvenserare, Piano Roll, Playlist och Mixer, med inbyggda instrument och effekter plus dina egna VST3-plugins. Ladda ner det för Windows, Mac eller Linux, eller testa direkt i webbläsaren.",
   "dl_main": "Ladda ner gratis",
@@ -94,18 +94,18 @@
   "news_label": "Nyheter",
   "news_h2": "Nytt i version {{VER}}",
   "news": [
-    "Piano Roll med händelsefält, notegenskaper, 16 notfärger och slide- och portamentonoter.",
-    "Nya verktyg: Lasso, Zoom, Lyssna, Artikulera, LFO, Interpolera och Snabbklipp.",
-    "Taktart för projektet och taktartsbyten i Playlist; markörer med loopar, hopp och pauser.",
-    "Ljudklipp med fades, crossfades, tonhöjd, baklänges och time-stretch.",
-    "Slå ihop mönster, gör unik, rendera till ljud och flera arrangemang i samma projekt."
+    "Gränssnitt på 26 språk: programmet startar på systemets språk, och du kan byta under Alternativ › Språk.",
+    "Även skrivbordsappens menyer och Spara-dialoger följer det valda språket.",
+    "Kortkommandon som Ctrl+Z följer bokstäverna som står på ditt tangentbord (QWERTZ, AZERTY…).",
+    "Typsnitt för det latinska, kyrilliska, grekiska och vietnamesiska alfabetet.",
+    "Innehåller alla nyheter från 1.4: händelsefält, slidenoter, taktartsbyten, verktyg för ljudklipp och flera arrangemang."
   ],
   "faq_label": "Vanliga frågor",
   "faq_h2": "Frågor om Ritmo Studio",
   "faq": [
     {"q": "Är Ritmo Studio verkligen gratis?", "a": "Ja. Det finns inga betalversioner, prenumerationer, provperioder eller annonser, och du behöver inget konto. Alla funktioner finns tillgängliga från start."},
     {"q": "Får jag släppa och sälja musiken jag gör?", "a": "Ja. Låtarna du gör är dina: släpp dem på streamingtjänster, sälj dem och använd dem i videor och kommersiella projekt. De inbyggda instrumenten är syntetiserade, så du behöver inte oroa dig för samplelicenser."},
-    {"q": "Vilket språk har gränssnittet?", "a": "Gränssnittet är för närvarande på italienska. Upplägget följer det klassiska arbetsflödet i mönsterbaserade DAW:er, så Channel Rack, Piano Roll, Playlist och Mixer är lätta att känna igen."},
+    {"q": "Vilket språk har gränssnittet?", "a": "Ritmo Studio finns på 26 språk, bland annat svenska. Programmet startar på systemets språk, och du kan byta när som helst under Alternativ › Språk."},
     {"q": "Vilka datorer fungerar det på?", "a": "64-bitars Windows 10 och 11, macOS 13 Ventura eller senare på Mac med Apple-chip eller Intel, x64-Linux (Ubuntu 22.04 eller senare och liknande distributioner) och aktuella webbläsare. Det är gjort för en datorskärm, inte för en mobil."},
     {"q": "Kan jag använda mina VST-plugins?", "a": "Ja, i skrivbordsappen: VST3 på Windows, Mac och Linux, AU på Mac och LV2 på Linux. VST2- och CLAP-plugins stöds inte än. Onlineversionen använder de inbyggda instrumenten och effekterna."},
     {"q": "Vad är skillnaden mellan onlineversionen och skrivbordsversionen?", "a": "Editorn är densamma. Skrivbordsappen lägger till den nativa ljudmotorn, plugins, inställningar för ljudkort och buffert samt export till FLAC och OGG. Onlineversionen är smidig för att testa eller för att jobba på en dator där du inte kan installera något."},

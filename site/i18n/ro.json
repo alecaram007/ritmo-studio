@@ -19,7 +19,7 @@
   "suggest_go": "Citește în română",
   "chip_free": "Gratuit",
   "chip_version": "Versiunea {{VER}}",
-  "chip_ui": "Interfață în italiană",
+  "chip_ui": "În 26 de limbi",
   "h1": "DAW-ul gratuit pentru beaturi și piese",
   "lead": "Ritmo Studio este un program complet de făcut muzică: step sequencer, Piano Roll, Playlist și Mixer, cu instrumente și efecte incluse, plus pluginurile tale VST3. Descarcă-l pentru Windows, Mac sau Linux ori încearcă-l chiar acum în browser.",
   "dl_main": "Descarcă gratuit",
@@ -94,18 +94,18 @@
   "news_label": "Noutăți",
   "news_h2": "Ce aduce versiunea {{VER}}",
   "news": [
-    "Piano Roll cu bandă de evenimente, proprietăți ale notelor, 16 culori de notă și note slide și portamento.",
-    "Unelte noi: Lasou, Zoom, Ascultare, Articulare, LFO, Interpolare și Tăiere rapidă.",
-    "Măsura proiectului și schimbări de măsură în Playlist; markere cu bucle, salturi și pauze.",
-    "Clipuri audio cu fade-uri, crossfade-uri, pitch, redare inversă și time-stretch.",
-    "Unirea patternurilor, crearea de copii unice, randare în audio și mai multe aranjamente în același proiect."
+    "Interfață în 26 de limbi: pornește în limba sistemului tău și o poți schimba din Opțiuni › Limbă.",
+    "Meniurile aplicației desktop și ferestrele de salvare urmează și ele limba aleasă.",
+    "Comenzile rapide precum Ctrl+Z se potrivesc cu literele de pe tastatura ta (QWERTZ, AZERTY…).",
+    "Fonturi pentru alfabetele latin, chirilic, grec și vietnamez.",
+    "Include toate noutățile din 1.4: bandă de evenimente, note slide, schimbări de măsură, unelte pentru clipuri audio și mai multe aranjamente."
   ],
   "faq_label": "Întrebări frecvente",
   "faq_h2": "Întrebări despre Ritmo Studio",
   "faq": [
     {"q": "Ritmo Studio este chiar gratuit?", "a": "Da. Nu există ediții plătite, abonamente, perioade de probă sau reclame și nu ai nevoie de cont. Toate funcțiile sunt disponibile de la început."},
     {"q": "Pot să lansez și să vând muzica pe care o fac?", "a": "Da. Piesele pe care le faci sunt ale tale: lansează-le pe platformele de streaming, vinde-le și folosește-le în videoclipuri și proiecte comerciale. Instrumentele incluse sunt sintetizate, așa că nu trebuie să-ți faci griji pentru licențe de sample-uri."},
-    {"q": "În ce limbă este interfața?", "a": "Momentan, interfața este în italiană. Organizarea urmează fluxul clasic al unui DAW bazat pe patternuri, așa că Channel Rack, Piano Roll, Playlist și Mixer sunt ușor de recunoscut."},
+    {"q": "În ce limbă este interfața?", "a": "Ritmo Studio este disponibil în 26 de limbi, inclusiv în română. Pornește în limba sistemului tău și o poți schimba oricând din Opțiuni › Limbă."},
     {"q": "Pe ce computere funcționează?", "a": "Windows 10 și 11 pe 64 de biți, macOS 13 Ventura sau mai nou pe Mac cu cip Apple sau Intel, Linux x64 (Ubuntu 22.04 sau mai nou și distribuții similare) și browsere recente. Este gândit pentru ecranul unui computer, nu pentru telefon."},
     {"q": "Pot folosi pluginurile mele VST?", "a": "Da, în aplicația desktop: VST3 pe Windows, Mac și Linux, AU pe Mac și LV2 pe Linux. Pluginurile VST2 și CLAP nu sunt încă suportate. Versiunea online folosește instrumentele și efectele incluse."},
     {"q": "Care e diferența dintre versiunea online și cea desktop?", "a": "Editorul e același. Aplicația desktop adaugă motorul audio nativ, pluginurile, setările pentru placa de sunet și buffer și exportul în FLAC și OGG. Versiunea online e utilă ca să încerci programul sau ca să lucrezi pe un computer pe care nu poți instala nimic."},

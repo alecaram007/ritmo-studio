@@ -19,7 +19,7 @@
   "suggest_go": "Lees in het Nederlands",
   "chip_free": "Gratis",
   "chip_version": "Versie {{VER}}",
-  "chip_ui": "Interface in het Italiaans",
+  "chip_ui": "In 26 talen",
   "h1": "De gratis DAW om beats en nummers te maken",
   "lead": "Ritmo Studio is een compleet programma om muziek te maken: stepsequencer, Piano Roll, Playlist en Mixer, met ingebouwde instrumenten en effecten plus je eigen VST3-plugins. Download het voor Windows, Mac of Linux, of probeer het meteen in je browser.",
   "dl_main": "Gratis downloaden",
@@ -94,18 +94,18 @@
   "news_label": "Nieuw",
   "news_h2": "Nieuw in versie {{VER}}",
   "news": [
-    "Piano Roll met eventstrook, nooteigenschappen, 16 nootkleuren en slide- en portamentonoten.",
-    "Nieuwe tools: Lasso, Zoom, Beluisteren, Articuleren, LFO, Interpoleren en Snel knippen.",
-    "Maatsoort per project en maatsoortwisselingen in de Playlist; markers met loops, sprongen en pauzes.",
-    "Audioclips met fades, crossfades, toonhoogte, reverse en time-stretch.",
-    "Patronen samenvoegen, uniek maken, renderen naar audio en meerdere arrangementen in één project."
+    "Interface in 26 talen: de app start in de taal van je systeem en je wisselt via Opties › Taal.",
+    "Ook de menu’s en de opslagvensters van de desktop-app volgen de gekozen taal.",
+    "Sneltoetsen zoals Ctrl+Z volgen de letters die op je toetsenbord staan (QWERTZ, AZERTY…).",
+    "Lettertypen voor het Latijnse, Cyrillische, Griekse en Vietnamese alfabet.",
+    "Bevat alles wat nieuw is in 1.4: eventstrook, slidenoten, maatsoortwisselingen, tools voor audioclips en meerdere arrangementen."
   ],
   "faq_label": "Veelgestelde vragen",
   "faq_h2": "Vragen over Ritmo Studio",
   "faq": [
     {"q": "Is Ritmo Studio echt gratis?", "a": "Ja. Er zijn geen betaalde edities, abonnementen, proefversies of advertenties, en je hebt geen account nodig. Alle functies zijn meteen beschikbaar."},
     {"q": "Mag ik de muziek die ik maak uitbrengen en verkopen?", "a": "Ja. De nummers die je maakt zijn van jou: zet ze op streamingdiensten, verkoop ze en gebruik ze in video’s en commerciële projecten. De ingebouwde instrumenten zijn gesynthetiseerd, dus je hoeft je geen zorgen te maken over samplelicenties."},
-    {"q": "In welke taal is de interface?", "a": "De interface is momenteel in het Italiaans. De indeling volgt de klassieke workflow van patroongebaseerde DAW’s, dus Channel Rack, Piano Roll, Playlist en Mixer zijn makkelijk te herkennen."},
+    {"q": "In welke taal is de interface?", "a": "Ritmo Studio is beschikbaar in 26 talen, waaronder het Nederlands. Het start in de taal van je systeem en je kunt op elk moment wisselen via Opties › Taal."},
     {"q": "Op welke computers werkt het?", "a": "Windows 10 en 11 (64-bit), macOS 13 Ventura of nieuwer op Macs met Apple chip of Intel, Linux x64 (Ubuntu 22.04 of nieuwer en vergelijkbare distributies) en recente browsers. Het is gemaakt voor een computerscherm, niet voor een telefoon."},
     {"q": "Kan ik mijn VST-plugins gebruiken?", "a": "Ja, in de desktop-app: VST3 op Windows, Mac en Linux, AU op Mac en LV2 op Linux. VST2- en CLAP-plugins worden nog niet ondersteund. De online versie gebruikt de ingebouwde instrumenten en effecten."},
     {"q": "Wat is het verschil tussen de online en de desktopversie?", "a": "De editor is hetzelfde. De desktop-app voegt de native audio-engine, plugins, instellingen voor geluidskaart en buffer en export naar FLAC en OGG toe. De online versie is handig om het uit te proberen of om te werken op een computer waarop je niets kunt installeren."},

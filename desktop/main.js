@@ -392,7 +392,7 @@ function buildMenu() {
       { role: 'undo', label: T('Annulla') },
       { role: 'redo', label: T('Ripeti') },
       sep,
-      { role: 'cut', label: T('Taglia') },
+      { role: 'cut', label: T('Taglia||appunti') },
       { role: 'copy', label: T('Copia') },
       { role: 'paste', label: T('Incolla') },
       sep,

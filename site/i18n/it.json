@@ -19,7 +19,7 @@
   "suggest_go": "Apri la versione italiana",
   "chip_free": "Gratis",
   "chip_version": "Versione {{VER}}",
-  "chip_ui": "Interfaccia in italiano",
+  "chip_ui": "In 26 lingue",
   "h1": "La DAW gratuita per creare beat e canzoni",
   "lead": "Ritmo Studio è un programma completo per fare musica: step sequencer, Piano Roll, Playlist e Mixer, con strumenti ed effetti già inclusi e i tuoi plugin VST3. Scaricalo per Windows, Mac o Linux, oppure provalo subito nel browser.",
   "dl_main": "Scarica gratis",
@@ -28,7 +28,12 @@
   "dl_linux": "Scarica per Linux",
   "dl_mobile": "Download per computer",
   "try_online": "Prova online",
-  "promise": ["Gratis per sempre", "Nessun account", "Niente pubblicità", "La tua musica è tua"],
+  "promise": [
+    "Gratis per sempre",
+    "Nessun account",
+    "Niente pubblicità",
+    "La tua musica è tua"
+  ],
   "hero_alt": "Ritmo Studio con il progetto demo «Mezzanotte»: browser dei suoni, Playlist con le clip di batteria, basso, accordi e melodia, e Channel Rack con il pattern di batteria",
   "hero_caption": "Il progetto demo «Mezzanotte» aperto in Ritmo Studio {{VER}}: browser, Playlist e Channel Rack.",
   "seq_aria": "Step sequencer di prova",
@@ -36,42 +41,109 @@
   "seq_play": "Play",
   "seq_stop": "Stop",
   "seq_step": "passo",
-  "voices": {"kick": "Cassa", "clap": "Clap", "hat": "Hi-hat", "ohat": "Hi-hat aperto"},
+  "voices": {
+    "kick": "Cassa",
+    "clap": "Clap",
+    "hat": "Hi-hat",
+    "ohat": "Hi-hat aperto"
+  },
   "features_label": "Funzioni",
   "features_h2": "Dal primo beat al brano finito, nello stesso programma",
   "features_p": "Le quattro finestre di Ritmo Studio coprono tutto il lavoro: scrivi il ritmo, suona melodie e accordi, arrangia la canzone e mixala. Si aprono, si spostano e si ridimensionano come vuoi.",
   "features": [
-    {"tag": "Channel Rack", "h3": "Un beat in pochi clic con lo step sequencer", "p": "Ogni riga è uno strumento, ogni casella un sedicesimo: accendi i passi e premi Spazio. Il pattern gira in loop mentre aggiungi suoni.",
-     "list": ["Batteria sintetizzata: cassa, rullante, clap, hi-hat, tom, campanaccio e piatto", "Swing, velocità per passo e groove pronti da cui partire", "Trascina i tuoi campioni dal browser direttamente sul rack"],
-     "alt": "Channel Rack di Ritmo Studio con cassa, clap, hi-hat, basso 808, pad e pluck"},
-    {"tag": "Piano Roll", "h3": "Melodie, accordi e bassi nota per nota", "p": "Disegna le note con il mouse o suonale con la tastiera del computer o un controller MIDI. Sotto le note, una corsia per velocità, rilascio, pan, intonazione fine e due modulazioni.",
-     "list": ["Note Slide e Portamento, 16 colori che diventano canali MIDI per i plugin", "Scale e accordi, strumento per le progressioni, rilevamento degli accordi", "Articolazione, LFO, Interpolazione e Taglio rapido sulle note"],
-     "alt": "Piano Roll di Ritmo Studio con un arpeggio in La minore e la corsia della velocità"},
-    {"tag": "Playlist", "h3": "Arrangia la canzone come la senti", "p": "Disponi pattern, clip audio e automazioni sulla timeline. Copia, taglia, allunga e prova versioni diverse dello stesso brano senza perdere nulla.",
-     "list": ["Clip audio con dissolvenze, intonazione, al contrario e time-stretch", "Marcatori con loop, salti e pause; cambi di metro (3/4, 6/8, 7/8…)", "Più arrangiamenti nello stesso progetto, gruppi di tracce colorati"],
-     "alt": "Playlist di Ritmo Studio con le tracce Batteria, Basso, Accordi e Melodia"},
-    {"tag": "Mixer", "h3": "Mixa come in studio, con 125 tracce", "p": "Ogni traccia del mixer ha 10 slot per gli effetti, EQ a 3 bande, separazione stereo, fase, uscite e mandate. Sul Master chiudi la catena con compressore e limiter.",
-     "list": ["15 effetti inclusi, dal riverbero al sidechain", "Clip di automazione per manopole, fader e parametri dei plugin", "Preset per canali, effetti e intere tracce del mixer"],
-     "alt": "Mixer di Ritmo Studio con la traccia del Pluck selezionata e gli effetti Delay e Riverbero"}
+    {
+      "tag": "Channel Rack",
+      "h3": "Un beat in pochi clic con lo step sequencer",
+      "p": "Ogni riga è uno strumento, ogni casella un sedicesimo: accendi i passi e premi Spazio. Il pattern gira in loop mentre aggiungi suoni.",
+      "list": [
+        "Batteria sintetizzata: cassa, rullante, clap, hi-hat, tom, campanaccio e piatto",
+        "Swing, velocità per passo e groove pronti da cui partire",
+        "Trascina i tuoi campioni dal browser direttamente sul rack"
+      ],
+      "alt": "Channel Rack di Ritmo Studio con cassa, clap, hi-hat, basso 808, pad e pluck"
+    },
+    {
+      "tag": "Piano Roll",
+      "h3": "Melodie, accordi e bassi nota per nota",
+      "p": "Disegna le note con il mouse o suonale con la tastiera del computer o un controller MIDI. Sotto le note, una corsia per velocità, rilascio, pan, intonazione fine e due modulazioni.",
+      "list": [
+        "Note Slide e Portamento, 16 colori che diventano canali MIDI per i plugin",
+        "Scale e accordi, strumento per le progressioni, rilevamento degli accordi",
+        "Articolazione, LFO, Interpolazione e Taglio rapido sulle note"
+      ],
+      "alt": "Piano Roll di Ritmo Studio con un arpeggio in La minore e la corsia della velocità"
+    },
+    {
+      "tag": "Playlist",
+      "h3": "Arrangia la canzone come la senti",
+      "p": "Disponi pattern, clip audio e automazioni sulla timeline. Copia, taglia, allunga e prova versioni diverse dello stesso brano senza perdere nulla.",
+      "list": [
+        "Clip audio con dissolvenze, intonazione, al contrario e time-stretch",
+        "Marcatori con loop, salti e pause; cambi di metro (3/4, 6/8, 7/8…)",
+        "Più arrangiamenti nello stesso progetto, gruppi di tracce colorati"
+      ],
+      "alt": "Playlist di Ritmo Studio con le tracce Batteria, Basso, Accordi e Melodia"
+    },
+    {
+      "tag": "Mixer",
+      "h3": "Mixa come in studio, con 125 tracce",
+      "p": "Ogni traccia del mixer ha 10 slot per gli effetti, EQ a 3 bande, separazione stereo, fase, uscite e mandate. Sul Master chiudi la catena con compressore e limiter.",
+      "list": [
+        "15 effetti inclusi, dal riverbero al sidechain",
+        "Clip di automazione per manopole, fader e parametri dei plugin",
+        "Preset per canali, effetti e intere tracce del mixer"
+      ],
+      "alt": "Mixer di Ritmo Studio con la traccia del Pluck selezionata e gli effetti Delay e Riverbero"
+    }
   ],
   "inc_label": "Tutto incluso",
   "inc_h2": "Suoni pronti, plugin quando vuoi tu",
   "cards": [
-    {"h3": "10 strumenti", "p": "Basso 808, Synth sottrattivo, Pad, Pluck, E-Piano FM, Supersaw, Acid Bass 303 con slide, FM a 4 operatori, Organo a 9 registri e Campionatore."},
-    {"h3": "15 effetti", "p": "EQ, Filtro, Compressore, Limiter, Distorsione, Delay, Riverbero, Chorus, Phaser, Flanger, Bitcrusher, Stereo, Gate ritmico, Tremolo e Sidechain."},
-    {"h3": "Plugin VST3, AU e LV2", "p": "Nell'app desktop il motore audio nativo carica i tuoi strumenti ed effetti. La scansione prova ogni plugin a parte: uno difettoso viene saltato senza bloccare il programma."},
-    {"h3": "Registrazione", "p": "Registra note dalla tastiera o da un controller MIDI, oppure audio dall'ingresso della scheda audio: voce, chitarra, qualsiasi cosa."},
-    {"h3": "Esportazione", "p": "WAV a 16, 24 o 32 bit, anche traccia per traccia per il mastering; FLAC e OGG nell'app desktop. Import ed export MIDI con il metro del brano."},
-    {"h3": "Funziona ovunque", "p": "Windows, Mac con chip Apple e Intel, Linux e browser. I progetti si salvano in un file che apri su qualsiasi sistema."}
+    {
+      "h3": "10 strumenti",
+      "p": "Basso 808, Synth sottrattivo, Pad, Pluck, E-Piano FM, Supersaw, Acid Bass 303 con slide, FM a 4 operatori, Organo a 9 registri e Campionatore."
+    },
+    {
+      "h3": "15 effetti",
+      "p": "EQ, Filtro, Compressore, Limiter, Distorsione, Delay, Riverbero, Chorus, Phaser, Flanger, Bitcrusher, Stereo, Gate ritmico, Tremolo e Sidechain."
+    },
+    {
+      "h3": "Plugin VST3, AU e LV2",
+      "p": "Nell'app desktop il motore audio nativo carica i tuoi strumenti ed effetti. La scansione prova ogni plugin a parte: uno difettoso viene saltato senza bloccare il programma."
+    },
+    {
+      "h3": "Registrazione",
+      "p": "Registra note dalla tastiera o da un controller MIDI, oppure audio dall'ingresso della scheda audio: voce, chitarra, qualsiasi cosa."
+    },
+    {
+      "h3": "Esportazione",
+      "p": "WAV a 16, 24 o 32 bit, anche traccia per traccia per il mastering; FLAC e OGG nell'app desktop. Import ed export MIDI con il metro del brano."
+    },
+    {
+      "h3": "Funziona ovunque",
+      "p": "Windows, Mac con chip Apple e Intel, Linux e browser. I progetti si salvano in un file che apri su qualsiasi sistema."
+    }
   ],
   "how_label": "Come si fa",
   "how_h2": "Il tuo primo beat in quattro passi",
   "how_p": "Non serve esperienza. Puoi provarlo anche qui sopra, nel sequencer della pagina.",
   "steps": [
-    {"h": "Apri Ritmo Studio", "p": "Scarica l'app o aprila nel browser: parte con un progetto demo da ascoltare e modificare."},
-    {"h": "Metti la cassa sui tempi", "p": "Nel Channel Rack accendi i passi 1, 5, 9 e 13 della Cassa: è il classico «quattro sul pavimento»."},
-    {"h": "Aggiungi clap e hi-hat", "p": "Clap sui passi 5 e 13, hi-hat sui passi pari o dove ti suona meglio. Usa lo swing per un groove meno rigido."},
-    {"h": "Premi Spazio e continua", "p": "Il beat suona in loop. Poi apri il Piano Roll per il basso e la melodia, e mettili in fila nella Playlist."}
+    {
+      "h": "Apri Ritmo Studio",
+      "p": "Scarica l'app o aprila nel browser: parte con un progetto demo da ascoltare e modificare."
+    },
+    {
+      "h": "Metti la cassa sui tempi",
+      "p": "Nel Channel Rack accendi i passi 1, 5, 9 e 13 della Cassa: è il classico «quattro sul pavimento»."
+    },
+    {
+      "h": "Aggiungi clap e hi-hat",
+      "p": "Clap sui passi 5 e 13, hi-hat sui passi pari o dove ti suona meglio. Usa lo swing per un groove meno rigido."
+    },
+    {
+      "h": "Premi Spazio e continua",
+      "p": "Il beat suona in loop. Poi apri il Piano Roll per il basso e la melodia, e mettili in fila nella Playlist."
+    }
   ],
   "dl_label": "Download",
   "dl_h2": "Scarica Ritmo Studio {{VER}} gratis",
@@ -94,25 +166,55 @@
   "news_label": "Novità",
   "news_h2": "Cosa c'è nella versione {{VER}}",
   "news": [
-    "Piano Roll con corsia degli eventi, proprietà della nota, 16 colori di nota e note Slide e Portamento.",
-    "Nuovi strumenti: Lazo, Zoom, Ascolta, Articolazione, LFO, Interpolazione e Taglio rapido.",
-    "Metro del progetto e cambi di metro nella Playlist; marcatori con loop, salti e pause.",
-    "Clip audio con dissolvenze, dissolvenza incrociata, intonazione, al contrario e time-stretch.",
-    "Unisci pattern, rendi unico, renderizza in audio e più arrangiamenti nello stesso progetto."
+    "Interfaccia in 26 lingue: parte nella lingua del sistema e si cambia da Opzioni › Lingua.",
+    "Anche i menu dell'app desktop e le finestre di salvataggio seguono la lingua scelta.",
+    "Le scorciatoie come Ctrl+Z seguono le lettere stampate sulla tua tastiera (QWERTZ, AZERTY…).",
+    "Caratteri per gli alfabeti latino, cirillico, greco e vietnamita.",
+    "Contiene tutte le novità della 1.4: corsia degli eventi, note Slide, cambi di metro, strumenti per le clip audio e più arrangiamenti."
   ],
   "faq_label": "Domande frequenti",
   "faq_h2": "Domande su Ritmo Studio",
   "faq": [
-    {"q": "Ritmo Studio è davvero gratis?", "a": "Sì. Non ci sono versioni a pagamento, abbonamenti, prove a tempo o pubblicità, e non serve creare un account. Tutte le funzioni sono disponibili da subito."},
-    {"q": "Posso pubblicare e vendere la musica che creo?", "a": "Sì. I brani che crei sono tuoi: puoi pubblicarli sulle piattaforme di streaming, venderli e usarli in video e progetti commerciali. Gli strumenti inclusi sono sintetizzati, quindi non ci sono campioni con licenze da rispettare."},
-    {"q": "Su quali computer funziona?", "a": "Windows 10 e 11 a 64 bit, macOS 13 Ventura o successivo sui Mac con chip Apple e su quelli Intel, Linux x64 (Ubuntu 22.04 o successivo e distribuzioni simili) e nei browser recenti. È pensato per lo schermo di un computer, non per il telefono."},
-    {"q": "Posso usare i miei plugin VST?", "a": "Sì, nell'app desktop: VST3 su Windows, Mac e Linux, AU su Mac e LV2 su Linux. I plugin VST2 e CLAP non sono ancora supportati. Nella versione online si usano gli strumenti e gli effetti inclusi."},
-    {"q": "Che differenza c'è tra la versione online e quella da scaricare?", "a": "L'editor è lo stesso. L'app desktop aggiunge il motore audio nativo, i plugin, la scelta della scheda audio e del buffer e l'esportazione in FLAC e OGG. La versione online è comoda per provare o lavorare su un computer dove non puoi installare nulla."},
-    {"q": "Funziona senza connessione a internet?", "a": "Sì: dopo l'installazione l'app desktop funziona completamente offline e i progetti restano sul tuo computer."},
-    {"q": "Posso usare una tastiera MIDI?", "a": "Sì. Collega il controller prima di aprire Ritmo Studio: puoi suonare gli strumenti, registrare le note nel Piano Roll e allinearle automaticamente alla scala scelta. Puoi anche importare ed esportare file MIDI."},
-    {"q": "Windows dice «Windows ha protetto il PC»: cosa faccio?", "a": "Succede perché l'installer non ha una firma digitale a pagamento. Clicca «Ulteriori informazioni» e poi «Esegui comunque»."},
-    {"q": "Il Mac dice che l'app non può essere aperta: cosa faccio?", "a": "Dopo averla copiata in Applicazioni, fai clic destro sull'app e scegli Apri, poi di nuovo Apri. Su macOS 15 e successivi, se l'opzione non c'è, vai in Impostazioni di Sistema › Privacy e sicurezza e scegli «Apri comunque»."},
-    {"q": "Il codice sorgente è disponibile?", "a": "Sì. L'interfaccia e l'app desktop sono sotto licenza MIT, il motore audio sotto AGPLv3. Il codice è su <a href=\"{{REPO_URL}}\">GitHub</a>."}
+    {
+      "q": "Ritmo Studio è davvero gratis?",
+      "a": "Sì. Non ci sono versioni a pagamento, abbonamenti, prove a tempo o pubblicità, e non serve creare un account. Tutte le funzioni sono disponibili da subito."
+    },
+    {
+      "q": "Posso pubblicare e vendere la musica che creo?",
+      "a": "Sì. I brani che crei sono tuoi: puoi pubblicarli sulle piattaforme di streaming, venderli e usarli in video e progetti commerciali. Gli strumenti inclusi sono sintetizzati, quindi non ci sono campioni con licenze da rispettare."
+    },
+    {
+      "q": "Su quali computer funziona?",
+      "a": "Windows 10 e 11 a 64 bit, macOS 13 Ventura o successivo sui Mac con chip Apple e su quelli Intel, Linux x64 (Ubuntu 22.04 o successivo e distribuzioni simili) e nei browser recenti. È pensato per lo schermo di un computer, non per il telefono."
+    },
+    {
+      "q": "Posso usare i miei plugin VST?",
+      "a": "Sì, nell'app desktop: VST3 su Windows, Mac e Linux, AU su Mac e LV2 su Linux. I plugin VST2 e CLAP non sono ancora supportati. Nella versione online si usano gli strumenti e gli effetti inclusi."
+    },
+    {
+      "q": "Che differenza c'è tra la versione online e quella da scaricare?",
+      "a": "L'editor è lo stesso. L'app desktop aggiunge il motore audio nativo, i plugin, la scelta della scheda audio e del buffer e l'esportazione in FLAC e OGG. La versione online è comoda per provare o lavorare su un computer dove non puoi installare nulla."
+    },
+    {
+      "q": "Funziona senza connessione a internet?",
+      "a": "Sì: dopo l'installazione l'app desktop funziona completamente offline e i progetti restano sul tuo computer."
+    },
+    {
+      "q": "Posso usare una tastiera MIDI?",
+      "a": "Sì. Collega il controller prima di aprire Ritmo Studio: puoi suonare gli strumenti, registrare le note nel Piano Roll e allinearle automaticamente alla scala scelta. Puoi anche importare ed esportare file MIDI."
+    },
+    {
+      "q": "Windows dice «Windows ha protetto il PC»: cosa faccio?",
+      "a": "Succede perché l'installer non ha una firma digitale a pagamento. Clicca «Ulteriori informazioni» e poi «Esegui comunque»."
+    },
+    {
+      "q": "Il Mac dice che l'app non può essere aperta: cosa faccio?",
+      "a": "Dopo averla copiata in Applicazioni, fai clic destro sull'app e scegli Apri, poi di nuovo Apri. Su macOS 15 e successivi, se l'opzione non c'è, vai in Impostazioni di Sistema › Privacy e sicurezza e scegli «Apri comunque»."
+    },
+    {
+      "q": "Il codice sorgente è disponibile?",
+      "a": "Sì. L'interfaccia e l'app desktop sono sotto licenza MIT, il motore audio sotto AGPLv3. Il codice è su <a href=\"{{REPO_URL}}\">GitHub</a>."
+    }
   ],
   "final_h2": "Il prossimo beat parte da qui",
   "final_p": "Scarica Ritmo Studio gratis o aprilo nel browser: in un minuto stai già facendo musica.",
@@ -122,8 +224,30 @@
   "footer_online": "Versione online",
   "footer_source": "Codice sorgente",
   "footer_versions": "Tutte le versioni",
-  "months": ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
+  "months": [
+    "gennaio",
+    "febbraio",
+    "marzo",
+    "aprile",
+    "maggio",
+    "giugno",
+    "luglio",
+    "agosto",
+    "settembre",
+    "ottobre",
+    "novembre",
+    "dicembre"
+  ],
   "date_format": "{d} {month} {y}",
   "ld_description": "DAW gratuita per creare beat e canzoni: step sequencer, Piano Roll, Playlist, Mixer, strumenti ed effetti inclusi e plugin VST3, AU e LV2.",
-  "ld_features": ["Step sequencer (Channel Rack)", "Piano Roll con note Slide e Portamento", "Playlist con clip audio, automazioni e marcatori", "Mixer a 125 tracce con 10 slot effetto", "10 strumenti e 15 effetti inclusi", "Plugin VST3, AU e LV2", "Registrazione MIDI e audio", "Esportazione WAV, FLAC, OGG e MIDI"]
+  "ld_features": [
+    "Step sequencer (Channel Rack)",
+    "Piano Roll con note Slide e Portamento",
+    "Playlist con clip audio, automazioni e marcatori",
+    "Mixer a 125 tracce con 10 slot effetto",
+    "10 strumenti e 15 effetti inclusi",
+    "Plugin VST3, AU e LV2",
+    "Registrazione MIDI e audio",
+    "Esportazione WAV, FLAC, OGG e MIDI"
+  ]
 }

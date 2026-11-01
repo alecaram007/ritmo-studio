@@ -15,7 +15,7 @@ if (window.NativePlugins) {
       if (NE.scan) note(d, T('Scansione in corso: {0} di {1}', NE.scan.done, NE.scan.total) + (NE.scan.current ? ' · ' + NE.scan.current : ''));
       else if (!NE.connected) note(d, T('Avvio del motore audio…'));
       else if (!NE.plugins.length) note(d, T('Nessun plugin trovato. Usa “Cerca plugin nuovi”.'));
-      const groups = [['plugins/inst', T('Strumenti'), p => p.isInstrument], ['plugins/fx', T('Effetti'), p => !p.isInstrument]];
+      const groups = [['plugins/inst', T('Strumenti||plugin'), p => p.isInstrument], ['plugins/fx', T('Effetti'), p => !p.isInstrument]];
       for (const [key, label, pick] of groups) {
         const list = NE.plugins.filter(pick);
         if (!list.length) continue;

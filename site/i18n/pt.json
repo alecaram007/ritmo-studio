@@ -19,7 +19,7 @@
   "suggest_go": "Ler em português",
   "chip_free": "Grátis",
   "chip_version": "Versão {{VER}}",
-  "chip_ui": "Interface em italiano",
+  "chip_ui": "Em 26 idiomas",
   "h1": "A DAW grátis para fazer beats e músicas",
   "lead": "O Ritmo Studio é um programa completo para fazer música: step sequencer, Piano Roll, Playlist e Mixer, com instrumentos e efeitos inclusos e seus próprios plugins VST3. Baixe para Windows, Mac ou Linux, ou experimente agora mesmo no navegador.",
   "dl_main": "Baixar grátis",
@@ -94,18 +94,18 @@
   "news_label": "Novidades",
   "news_h2": "O que há de novo na versão {{VER}}",
   "news": [
-    "Piano Roll com painel de eventos, propriedades da nota, 16 cores de nota e notas slide e portamento.",
-    "Novas ferramentas: Laço, Zoom, Ouvir, Articular, LFO, Interpolar e Corte rápido.",
-    "Fórmula de compasso do projeto e mudanças de compasso na Playlist; marcadores com loops, saltos e pausas.",
-    "Clipes de áudio com fades, crossfades, afinação, reverso e time-stretch.",
-    "Mesclar patterns, tornar único, renderizar em áudio e vários arranjos no mesmo projeto."
+    "Interface em 26 idiomas: ela abre no idioma do seu sistema, e você pode trocar em Opções › Idioma.",
+    "Os menus do app desktop e as janelas de Salvar também seguem o idioma escolhido.",
+    "Atalhos como Ctrl+Z seguem as letras impressas no seu teclado (QWERTZ, AZERTY…).",
+    "Fontes para os alfabetos latino, cirílico, grego e vietnamita.",
+    "Inclui todas as novidades da 1.4: painel de eventos, notas slide, mudanças de compasso, ferramentas para clipes de áudio e vários arranjos."
   ],
   "faq_label": "Perguntas frequentes",
   "faq_h2": "Perguntas sobre o Ritmo Studio",
   "faq": [
     {"q": "O Ritmo Studio é grátis mesmo?", "a": "Sim. Não existem versões pagas, assinaturas, períodos de teste nem anúncios, e você não precisa criar conta. Todos os recursos estão disponíveis desde o início."},
     {"q": "Posso lançar e vender as músicas que eu fizer?", "a": "Sim. As músicas que você faz são suas: lance nas plataformas de streaming, venda e use em vídeos e projetos comerciais. Os instrumentos inclusos são sintetizados, então não há licenças de samples com que se preocupar."},
-    {"q": "Em que idioma está a interface?", "a": "Por enquanto, a interface está em italiano. O layout segue o fluxo de trabalho clássico das DAWs baseadas em patterns, então Channel Rack, Piano Roll, Playlist e Mixer são fáceis de reconhecer."},
+    {"q": "Em que idioma está a interface?", "a": "O Ritmo Studio está disponível em 26 idiomas, incluindo o português. Ele abre no idioma do seu sistema, e você pode trocar quando quiser em Opções › Idioma."},
     {"q": "Em quais computadores ele roda?", "a": "Windows 10 e 11 de 64 bits, macOS 13 Ventura ou posterior em Macs com chip Apple ou Intel, Linux x64 (Ubuntu 22.04 ou posterior e distribuições semelhantes) e navegadores recentes. Ele foi feito para a tela do computador, não do celular."},
     {"q": "Posso usar meus plugins VST?", "a": "Sim, no app desktop: VST3 no Windows, Mac e Linux, AU no Mac e LV2 no Linux. Plugins VST2 e CLAP ainda não são suportados. A versão online usa os instrumentos e efeitos inclusos."},
     {"q": "Qual é a diferença entre a versão online e a versão desktop?", "a": "O editor é o mesmo. O app desktop acrescenta o motor de áudio nativo, os plugins, as configurações de placa de som e buffer e a exportação em FLAC e OGG. A versão online é prática para testar ou para trabalhar num computador onde você não pode instalar nada."},

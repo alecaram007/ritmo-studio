@@ -189,6 +189,8 @@ select, input[type="text"], input[type="number"] {
   font-variant-numeric: tabular-nums;
 }
 .sys b { color: var(--text); font-weight: 600; white-space: nowrap; }
+/* Each control keeps its own text direction, so Arabic or Hebrew labels side by side keep the app's order. */
+button, select, label, .tab, .menu-btn, .chip, .tbtn { unicode-bidi: isolate; }
 .brand { display: flex; align-items: center; gap: 6px; padding: 0 4px; }
 .brand-mark { width: 26px; height: 26px; flex: none; }
 .logo { font: 600 12px/1 var(--f-display); letter-spacing: .05em; color: var(--brass); }

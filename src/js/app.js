@@ -98,7 +98,7 @@ const WM = {
       { label: T('Porta la Playlist in primo piano'), key: 'F5', action: () => this.blur() },
       { label: T('Ripristina la disposizione delle finestre'), action: () => this.resetLayout() },
     ] : [
-      { label: this.el(id).classList.contains('max') ? T('Ripristina dimensione') : T('Ingrandisci'), action: () => this.maximize(id) },
+      { label: this.el(id).classList.contains('max') ? T('Ripristina dimensione') : T('Ingrandisci||finestra'), action: () => this.maximize(id) },
       { label: T('Posizione iniziale'), action: () => { delete ui.wins[id]; this.el(id).classList.remove('max'); this.place(id); this.remember(id); savePrefs(); } },
       '-',
       { label: T('Chiudi'), action: () => this.close(id) },
@@ -139,8 +139,8 @@ const WM = {
       if (!closable) return;
       const ctl = h('span', 'win-ctl');
       const btn = (kind, label, fn) => { const b = h('button', 'win-x'); b.type = 'button'; b.innerHTML = WIN_ICON[kind]; b.title = label; b.setAttribute('aria-label', label); b.addEventListener('click', fn); ctl.appendChild(b); return b; };
-      btn('min', T('Riduci'), () => this.close(id));
-      btn('max', T('Ingrandisci'), () => this.maximize(id));
+      btn('min', T('Riduci||finestra'), () => this.close(id));
+      btn('max', T('Ingrandisci||finestra'), () => this.maximize(id));
       btn('close', T('Chiudi'), () => this.close(id)).dataset.close = id;
       bar.appendChild(ctl);
     };
@@ -552,7 +552,7 @@ const MENUS = {
   help: () => [
     { label: T('Finestra di benvenuto'), action: () => Welcome.open() },
     { label: T('Scorciatoie e aiuto'), action: () => WM.open('help') },
-    { label: T('Informazioni su Ritmo Studio'), action: () => toast(T('Ritmo Studio {0} · DAW gratuita e open source · nessuna affiliazione con Image-Line', '1.4')) },
+    { label: T('Informazioni su Ritmo Studio'), action: () => toast(T('Ritmo Studio {0} · DAW gratuita e open source · nessuna affiliazione con Image-Line', '1.5')) },
   ],
 };
 let openMenuKey = null;
@@ -1233,11 +1233,11 @@ const isTyping = t => t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' ||
 function onKeyDown(e) {
   if (isTyping(e.target)) { if (e.key === 'Escape') e.target.blur(); return; }
   const mod = e.ctrlKey || e.metaKey;
-  if (mod && e.code === 'KeyZ') { e.preventDefault(); if (e.shiftKey) Hist.redo(); else Hist.undo(); return; }
-  if (mod && e.code === 'KeyY') { e.preventDefault(); Hist.redo(); return; }
-  if (mod && e.code === 'KeyS') { e.preventDefault(); saveProject(); return; }
-  if (mod && e.code === 'KeyO') { e.preventDefault(); openProjectDialog(); return; }
-  if (mod && e.code === 'KeyR') { e.preventDefault(); exportWav(); return; }
+  if (mod && shortcutKey(e) === 'z') { e.preventDefault(); if (e.shiftKey) Hist.redo(); else Hist.undo(); return; }
+  if (mod && shortcutKey(e) === 'y') { e.preventDefault(); Hist.redo(); return; }
+  if (mod && shortcutKey(e) === 's') { e.preventDefault(); saveProject(); return; }
+  if (mod && shortcutKey(e) === 'o') { e.preventDefault(); openProjectDialog(); return; }
+  if (mod && shortcutKey(e) === 'r') { e.preventDefault(); exportWav(); return; }
   if (e.code === 'Space') {
     e.preventDefault();
     if (document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.blur();
@@ -1265,7 +1265,7 @@ function onKeyDown(e) {
   if (WM.focused === 'piano' && PR.key(e)) { e.preventDefault(); return; }
   if (WM.focused !== 'piano' && PL.key(e)) { e.preventDefault(); return; }
   if (mod || e.altKey) return;
-  if (e.code === 'KeyL') { setMode(ui.mode === 'pattern' ? 'song' : 'pattern'); return; }
+  if (shortcutKey(e) === 'l') { setMode(ui.mode === 'pattern' ? 'song' : 'pattern'); return; }
   if (e.code === 'Minus' || e.code === 'Equal') { shiftOctave(e.code === 'Minus' ? -12 : 12); return; }
   if (ui.typing && e.code in KEYMAP) { e.preventDefault(); if (!e.repeat) liveOn(e.code, ui.kbOct + KEYMAP[e.code], 0.8); }
 }

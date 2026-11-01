@@ -19,7 +19,7 @@
   "suggest_go": "Xem bằng tiếng Việt",
   "chip_free": "Miễn phí",
   "chip_version": "Phiên bản {{VER}}",
-  "chip_ui": "Giao diện tiếng Ý",
+  "chip_ui": "Có 26 ngôn ngữ",
   "h1": "DAW miễn phí để làm beat và bài hát",
   "lead": "Ritmo Studio là phần mềm làm nhạc đầy đủ: step sequencer (Channel Rack), Piano Roll, Playlist và Mixer, có sẵn nhạc cụ và hiệu ứng, lại dùng được cả plugin VST3 của riêng bạn. Tải về cho Windows, Mac hoặc Linux, hoặc dùng thử ngay trên trình duyệt.",
   "dl_main": "Tải miễn phí",
@@ -94,18 +94,18 @@
   "news_label": "Có gì mới",
   "news_h2": "Có gì trong phiên bản {{VER}}",
   "news": [
-    "Piano Roll có làn sự kiện, thuộc tính nốt, 16 màu nốt cùng nốt slide và portamento.",
-    "Công cụ mới: Lasso, Zoom, Listen, Articulate, LFO, Interpolate và Quick chop.",
-    "Nhịp của dự án và đổi nhịp trong Playlist; marker với vòng lặp, nhảy và tạm dừng.",
-    "Clip audio với fade, crossfade, cao độ, đảo ngược và time-stretch.",
-    "Gộp pattern, tách thành bản riêng (make unique), render ra audio và nhiều bản phối trong một dự án."
+    "Giao diện có 26 ngôn ngữ: khởi động bằng ngôn ngữ của hệ thống, và bạn có thể đổi trong Tùy chọn › Ngôn ngữ.",
+    "Menu và hộp thoại Lưu của ứng dụng desktop cũng theo ngôn ngữ đã chọn.",
+    "Các phím tắt như Ctrl+Z khớp với chữ in trên bàn phím của bạn (QWERTZ, AZERTY…).",
+    "Phông chữ cho bảng chữ cái Latinh, Kirin, Hy Lạp và tiếng Việt.",
+    "Bao gồm mọi tính năng mới của 1.4: làn sự kiện, nốt slide, đổi nhịp, công cụ cho clip audio và nhiều bản phối."
   ],
   "faq_label": "Hỏi đáp",
   "faq_h2": "Câu hỏi về Ritmo Studio",
   "faq": [
     {"q": "Ritmo Studio có thật sự miễn phí không?", "a": "Có. Không có bản trả phí, gói thuê bao, bản dùng thử hay quảng cáo, và bạn không cần tài khoản. Mọi tính năng đều dùng được ngay từ đầu."},
     {"q": "Tôi có được phát hành và bán nhạc mình làm không?", "a": "Được. Bài hát bạn làm là của bạn: phát hành lên các nền tảng streaming, bán và dùng trong video hay dự án thương mại. Nhạc cụ có sẵn đều là âm thanh tổng hợp, nên bạn không phải lo về bản quyền sample."},
-    {"q": "Giao diện dùng ngôn ngữ gì?", "a": "Hiện tại giao diện chỉ có tiếng Ý. Bố cục đi theo quy trình làm việc dựa trên pattern quen thuộc của các DAW, nên Channel Rack, Piano Roll, Playlist và Mixer rất dễ nhận ra."},
+    {"q": "Giao diện dùng ngôn ngữ gì?", "a": "Ritmo Studio có 26 ngôn ngữ, trong đó có tiếng Việt. Ứng dụng khởi động bằng ngôn ngữ của hệ thống, và bạn có thể đổi bất cứ lúc nào trong Tùy chọn › Ngôn ngữ."},
     {"q": "Phần mềm chạy trên máy tính nào?", "a": "Windows 10 và 11 64-bit, macOS 13 Ventura trở lên trên Mac chip Apple và Intel, Linux x64 (Ubuntu 22.04 trở lên và các bản phân phối tương tự) và các trình duyệt mới. Phần mềm được thiết kế cho màn hình máy tính, không phải điện thoại."},
     {"q": "Tôi có dùng được plugin VST của mình không?", "a": "Được, trong ứng dụng desktop: VST3 trên Windows, Mac và Linux, AU trên Mac và LV2 trên Linux. Plugin VST2 và CLAP hiện chưa được hỗ trợ. Bản online dùng nhạc cụ và hiệu ứng có sẵn."},
     {"q": "Bản online và bản desktop khác nhau thế nào?", "a": "Trình chỉnh sửa giống nhau. Ứng dụng desktop có thêm engine âm thanh gốc, plugin, cài đặt card âm thanh và buffer, cùng khả năng xuất FLAC và OGG. Bản online tiện để dùng thử hoặc làm việc trên máy tính không cài được phần mềm."},

@@ -6,6 +6,7 @@ Sito: https://alecaram007.github.io/ritmo-studio/ — in 26 lingue, con download
 
 ## Funzioni principali
 
+- **26 lingue**: l'interfaccia parte nella lingua del sistema e si cambia da Opzioni › Lingua (italiano, inglese, spagnolo, portoghese, francese, tedesco, olandese, svedese, polacco, ceco, rumeno, ungherese, turco, greco, russo, ucraino, arabo, ebraico, hindi, indonesiano, vietnamita, thai, giapponese, coreano, cinese semplificato e tradizionale). Anche i menu dell'app desktop seguono la lingua scelta.
 - **Mixer** con Master e 125 insert: 10 slot effetto per traccia (ognuno con mix dry/wet), EQ a 3 bande, separazione stereo, inversione di fase e scambio L/R, uscita su un'altra traccia e mandate post-fader. Le frecce in basso nelle strisce instradano la traccia selezionata; gli anelli di instradamento vengono rifiutati.
 - **Clip di automazione**: clic destro su una manopola o un fader › *Crea clip di automazione*. La curva si disegna nel suo editor e la clip si dispone nella Playlist. Nell'app desktop si automatizzano anche i parametri dei plugin.
 - **Clip audio**: trascina un file audio sulla griglia della Playlist; suona sulla traccia del mixer che gli viene assegnata.
@@ -28,6 +29,7 @@ Sito: https://alecaram007.github.io/ritmo-studio/ — in 26 lingue, con download
 |---|---|
 | `src/` | L'interfaccia: `index.html` e `js/` (sequencer, Piano Roll, Playlist, Mixer, motore Web Audio, ponte verso il motore nativo) |
 | `fonts/` | Caratteri a licenza libera (SIL OFL), incorporati nel file finale |
+| `src/i18n/` | Le traduzioni dell'interfaccia: i testi si scrivono in italiano dentro `T('…')`; `node src/i18n/extract.mjs` aggiorna l'elenco `strings.json`, i file `<lingua>.json` contengono le traduzioni, `node src/i18n/check.mjs` controlla che siano complete |
 | `build.py` | Genera `RitmoStudio.html` (file unico, funziona anche offline) e `dist/artifact.html` |
 | `engine/` | Il motore nativo in C++ (JUCE 9): suona tutto e ospita i plugin |
 | `engine/src/builtins/` | Gli strumenti e gli effetti interni, versione nativa |

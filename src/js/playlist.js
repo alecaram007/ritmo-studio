@@ -557,8 +557,8 @@ const PL = {
       this.draw();
       return true;
     }
-    if (mod && e.code === 'KeyA' && !WM.focused) { this.select(proj.playlist.clips); this.draw(); hint(T('{0} clip selezionate', this.sel.size)); return true; }
-    if (mod && e.code === 'KeyB' && this.sel.size) {
+    if (mod && shortcutKey(e) === 'a' && !WM.focused) { this.select(proj.playlist.clips); this.draw(); hint(T('{0} clip selezionate', this.sel.size)); return true; }
+    if (mod && shortcutKey(e) === 'b' && this.sel.size) {
       // duplicate the selection right after itself
       const list = [...this.sel], a = Math.min(...list.map(c => c.s)), b = Math.max(...list.map(c => c.s + c.l));
       const copies = list.map(c => ({ ...c, id: uid(), s: c.s + (b - a) }));

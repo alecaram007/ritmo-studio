@@ -19,8 +19,8 @@ const SCALES = {
 };
 
 const CHORDS = {
-  maj: { label: T('Maggiore'), iv: [0, 4, 7], sym: '' },
-  min: { label: T('Minore'), iv: [0, 3, 7], sym: 'm' },
+  maj: { label: T('Maggiore||accordo'), iv: [0, 4, 7], sym: '' },
+  min: { label: T('Minore||accordo'), iv: [0, 3, 7], sym: 'm' },
   dim: { label: T('Diminuito'), iv: [0, 3, 6], sym: 'dim' },
   aug: { label: T('Aumentato'), iv: [0, 4, 8], sym: 'aug' },
   sus2: { label: 'Sus2', iv: [0, 2, 7], sym: 'sus2' },

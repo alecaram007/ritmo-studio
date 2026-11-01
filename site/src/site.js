@@ -8,6 +8,7 @@
     let want = '';
     for (const l of navigator.languages || [navigator.language || '']) {
       const full = l.toLowerCase(), primary = full.split('-')[0];
+      if (primary === 'zh') { want = /hant|-tw|-hk|-mo/.test(full) ? 'zh-tw' : 'zh-cn'; break; }
       want = [full, alias[full], primary, alias[primary]].find(c => c && data.pages[c]) || '';
       if (want) break;
     }

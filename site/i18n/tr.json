@@ -19,7 +19,7 @@
   "suggest_go": "Türkçe sayfaya geç",
   "chip_free": "Ücretsiz",
   "chip_version": "Sürüm {{VER}}",
-  "chip_ui": "Arayüz İtalyanca",
+  "chip_ui": "26 dilde",
   "h1": "Beat ve şarkı yapmak için ücretsiz DAW",
   "lead": "Ritmo Studio eksiksiz bir müzik yapma programı: step sequencer, Piano Roll, Playlist ve Mixer bir arada. Dahili enstrümanlar ve efektler hazır, kendi VST3 eklentilerini de kullanabilirsin. Windows, Mac veya Linux için indir ya da hemen tarayıcında dene.",
   "dl_main": "Ücretsiz indir",
@@ -94,18 +94,18 @@
   "news_label": "Yenilikler",
   "news_h2": "{{VER}} sürümünde neler var",
   "news": [
-    "Olay şeridi, nota özellikleri, 16 nota rengi ve slide ile portamento notalarıyla Piano Roll.",
-    "Yeni araçlar: Kement, Yakınlaştır, Dinle, Artikülasyon, LFO, İnterpolasyon ve Hızlı kesme.",
-    "Proje ölçüsü ve Playlist'te ölçü değişiklikleri; döngü, atlama ve duraklama içeren işaretçiler.",
-    "Fade, crossfade, pitch, ters çalma ve time-stretch özellikli ses klipleri.",
-    "Pattern birleştirme, benzersiz yapma, sese render alma ve tek projede birden fazla aranjman."
+    "26 dilde arayüz: sisteminin diliyle açılır, dili istediğin zaman Seçenekler › Dil menüsünden değiştirebilirsin.",
+    "Masaüstü uygulamasının menüleri ve kaydetme pencereleri de seçtiğin dilde görünür.",
+    "Ctrl+Z gibi kısayollar, klavyende yazan harflere göre çalışır (QWERTZ, AZERTY…).",
+    "Latin, Kiril, Yunan ve Vietnam alfabeleri için yazı tipleri.",
+    "1.4'teki tüm yenilikleri de içerir: olay şeridi, slide notaları, ölçü değişiklikleri, ses klibi araçları ve birden fazla aranjman."
   ],
   "faq_label": "SSS",
   "faq_h2": "Ritmo Studio hakkında sorular",
   "faq": [
     {"q": "Ritmo Studio gerçekten ücretsiz mi?", "a": "Evet. Ücretli sürüm, abonelik, deneme süresi ya da reklam yok; hesap açman da gerekmiyor. Tüm özellikler en baştan kullanılabilir."},
     {"q": "Yaptığım müziği yayınlayıp satabilir miyim?", "a": "Evet. Yaptığın şarkılar senin: dijital müzik platformlarında yayınla, sat, videolarda ve ticari projelerde kullan. Dahili enstrümanlar sentezlenmiş olduğu için sample lisanslarını dert etmene gerek yok."},
-    {"q": "Arayüz hangi dilde?", "a": "Arayüz şu anda İtalyanca. Düzen, pattern tabanlı klasik DAW iş akışını izliyor; bu yüzden Channel Rack, Piano Roll, Playlist ve Mixer pencereleri kolayca tanınır."},
+    {"q": "Arayüz hangi dilde?", "a": "Ritmo Studio, Türkçe dahil 26 dilde kullanılabilir. Sisteminin diliyle açılır; dili istediğin zaman Seçenekler › Dil menüsünden değiştirebilirsin."},
     {"q": "Hangi bilgisayarlarda çalışır?", "a": "64 bit Windows 10 ve 11'de, Apple çipli ve Intel işlemcili Mac'lerde macOS 13 Ventura veya üstünde, x64 Linux'ta (Ubuntu 22.04 veya üstü ve benzer dağıtımlar) ve güncel tarayıcılarda. Telefon için değil, bilgisayar ekranı için tasarlandı."},
     {"q": "VST eklentilerimi kullanabilir miyim?", "a": "Evet, masaüstü uygulamasında: Windows, Mac ve Linux'ta VST3, Mac'te AU ve Linux'ta LV2. VST2 ve CLAP eklentileri henüz desteklenmiyor. Online sürüm dahili enstrümanları ve efektleri kullanır."},
     {"q": "Online sürümle masaüstü sürümü arasındaki fark ne?", "a": "Editör aynı. Masaüstü uygulaması ayrıca yerel ses motoru, eklentiler, ses kartı ve buffer ayarları ile FLAC ve OGG dışa aktarma sunar. Online sürüm, programı denemek ya da hiçbir şey kuramadığın bir bilgisayarda çalışmak için pratik."},

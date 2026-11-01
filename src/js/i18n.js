@@ -22,22 +22,25 @@ const I18N = (() => {
   const pick = () => {
     for (const l of navigator.languages || [navigator.language || '']) {
       const full = String(l).toLowerCase(), primary = full.split('-')[0];
+      if (primary === 'zh') return /hant|-tw|-hk|-mo/.test(full) ? 'zh-tw' : 'zh-cn';  // script or region decides
       const hit = [full, alias[full], primary, alias[primary]].find(c => c && known.has(c) && c !== 'qps');
       if (hit) return hit;
     }
-    return 'it';
+    return 'en';  // a language without a translation: English is the most widely understood
   };
   const lang = saved && known.has(saved) ? saved : pick();
   const map = new Map();
   const tr = data[lang];
   // The pseudo-language brackets every known text, so a text shown without brackets was never marked.
-  if (lang === 'qps') data.src.forEach(s => map.set(s, '⟦' + s + '⟧'));
+  if (lang === 'qps') data.src.forEach(s => map.set(s, '⟦' + s.split('||')[0] + '⟧'));
   else if (Array.isArray(tr)) data.src.forEach((s, i) => { if (tr[i]) map.set(s, tr[i]); });
   return { lang, map, saved: !!saved };
 })();
 
+// A text can carry a context after "||" when the same Italian word means two things in the app
+// ("Velocità||rate" is a modulation speed, "Velocità" a note velocity): the context is never shown.
 function T(s, ...args) {
-  let r = I18N.map.get(s) || s;
+  let r = I18N.map.get(s) || s.split('||')[0];
   if (args.length) r = r.replace(/\{(\d+)\}/g, (m, i) => (args[i] == null ? '' : String(args[i])));
   return r;
 }

@@ -345,7 +345,7 @@ function channelMenu(ch, x, y) {
     { label: T('Sposta su'), key: 'Alt+↑', disabled: idx === 0, action: () => moveChannel(ch, -1) },
     { label: T('Sposta giù'), key: 'Alt+↓', disabled: idx === proj.channels.length - 1, action: () => moveChannel(ch, 1) },
     { col: true },
-    { label: T('Taglia'), action: () => { chanClipboard = JSON.parse(JSON.stringify(notes)); clearChannel(ch); } },
+    { label: T('Taglia||appunti'), action: () => { chanClipboard = JSON.parse(JSON.stringify(notes)); clearChannel(ch); } },
     { label: T('Copia'), action: () => { chanClipboard = JSON.parse(JSON.stringify(notes)); hint(T('Copiate {0} note di {1}', notes.length, ch.name)); } },
     { label: T('Incolla'), disabled: !chanClipboard, action: () => { p.notes[ch.id] = JSON.parse(JSON.stringify(chanClipboard)); commit(); afterNotesChanged(); } },
     '-',

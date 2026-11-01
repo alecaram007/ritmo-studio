@@ -137,13 +137,13 @@ const FXDEFS = {
     size: P(T('Durata'), 0.3, 8, 2.2, { unit: 's' }), damp: P(T('Smorzamento'), 1000, 16000, 6000, { unit: 'Hz', log: true }),
     pre: P(T('Pre-delay'), 0, 0.15, 0.02, { unit: 's' }), mix: P(T('Mix'), 0, 1, 0.25) } },
   chorus: { label: T('Chorus'), params: {
-    rate: P(T('Velocità'), 0.05, 5, 0.8, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.5), mix: P(T('Mix'), 0, 1, 0.45) } },
+    rate: P(T('Velocità||rate'), 0.05, 5, 0.8, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.5), mix: P(T('Mix'), 0, 1, 0.45) } },
   phaser: { label: T('Phaser'), params: {
-    rate: P(T('Velocità'), 0.05, 8, 0.5, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.6),
+    rate: P(T('Velocità||rate'), 0.05, 8, 0.5, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.6),
     freq: P(T('Frequenza'), 200, 4000, 800, { unit: 'Hz', log: true }), stages: S(T('Stadi'), [['4', '4'], ['6', '6'], ['8', '8'], ['12', '12']], '6'),
     fb: P(T('Feedback'), 0, 0.9, 0.4), mix: P(T('Mix'), 0, 1, 0.5) } },
   flanger: { label: T('Flanger'), params: {
-    rate: P(T('Velocità'), 0.05, 5, 0.25, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 5, 2, { unit: 'ms' }),
+    rate: P(T('Velocità||rate'), 0.05, 5, 0.25, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 5, 2, { unit: 'ms' }),
     delay: P(T('Ritardo'), 0.5, 10, 2.5, { unit: 'ms' }), fb: P(T('Feedback'), -0.95, 0.95, 0.5), mix: P(T('Mix'), 0, 1, 0.5) } },
   bitcrush: { label: T('Bitcrusher'), params: {
     bits: P(T('Bit'), 1, 16, 8, { step: 1 }), down: P(T('Riduzione campioni'), 1, 32, 4, { step: 1 }), mix: P(T('Mix'), 0, 1, 1) } },
@@ -153,7 +153,7 @@ const FXDEFS = {
     depth: P(T('Profondità'), 0, 1, 1), smooth: P(T('Morbidezza'), 0.001, 0.05, 0.004, { unit: 's', log: true }), mix: P(T('Mix'), 0, 1, 1) } },
   tremolo: { label: T('Tremolo / Auto-pan'), params: {
     mode: S(T('Modo'), [['trem', T('Tremolo')], ['pan', T('Auto-pan')]], 'trem'), shape: S(T('Forma'), [['sine', T('Sinusoide')], ['triangle', T('Triangolo')], ['square', T('Quadra')]], 'sine'),
-    rate: P(T('Velocità'), 0.1, 20, 4, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.6) } },
+    rate: P(T('Velocità||rate'), 0.1, 20, 4, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.6) } },
   ducker: { label: T('Sidechain (ducking)'), params: {
     src: P(T('Traccia sorgente'), 1, MAX_INSERTS, 1, { step: 1, track: true }), thr: P(T('Soglia'), -60, 0, -30, { unit: 'dB' }),
     range: P(T('Riduzione'), 0, 40, 18, { unit: 'dB' }), att: P(T('Attacco'), 0.001, 0.1, 0.005, { unit: 's', log: true }),
@@ -595,6 +595,14 @@ const Hist = {
   },
 };
 const commit = () => Hist.commit();
+
+// The letter of a shortcut as printed on the user's keyboard, so Ctrl+Z is the Z key on QWERTZ and AZERTY too.
+// On keyboards without Latin letters (Cyrillic, Greek, Arabic…) the key's position decides, as in other apps.
+function shortcutKey(e) {
+  const k = e.key && e.key.length === 1 ? e.key.toLowerCase() : '';
+  if (/^[a-z]$/.test(k)) return k;
+  return e.code && e.code.startsWith('Key') ? e.code.slice(3).toLowerCase() : '';
+}
 
 // A mixer track still has its default name ("Insert 3"), in Italian or in the interface language.
 function isDefaultInsertName(n) {

@@ -19,7 +19,7 @@
   "suggest_go": "Baca dalam bahasa Indonesia",
   "chip_free": "Gratis",
   "chip_version": "Versi {{VER}}",
-  "chip_ui": "Antarmuka dalam bahasa Italia",
+  "chip_ui": "Dalam 26 bahasa",
   "h1": "DAW gratis untuk bikin beat dan lagu",
   "lead": "Ritmo Studio adalah software bikin musik yang lengkap: step sequencer, Piano Roll, Playlist, dan Mixer, dengan instrumen dan efek bawaan plus plugin VST3 milikmu sendiri. Unduh untuk Windows, Mac, atau Linux, atau coba sekarang juga langsung di browser.",
   "dl_main": "Unduh gratis",
@@ -94,18 +94,18 @@
   "news_label": "Yang baru",
   "news_h2": "Yang baru di versi {{VER}}",
   "news": [
-    "Piano Roll dengan jalur event, properti not, 16 warna not, serta not slide dan portamento.",
-    "Alat baru: Lasso, Zoom, Listen, Articulate, LFO, Interpolate, dan Quick chop.",
-    "Birama proyek dan perubahan birama di Playlist; marker dengan loop, lompatan, dan jeda.",
-    "Klip audio dengan fade, crossfade, pitch, reverse, dan time-stretch.",
-    "Gabungkan pola, jadikan unik, render ke audio, dan beberapa aransemen dalam satu proyek."
+    "Antarmuka dalam 26 bahasa: terbuka dalam bahasa sistemmu, dan bisa kamu ganti lewat Opsi › Bahasa.",
+    "Menu dan dialog Simpan di aplikasi desktop juga mengikuti bahasa yang dipilih.",
+    "Pintasan seperti Ctrl+Z mengikuti huruf yang tercetak di keyboard-mu (QWERTZ, AZERTY…).",
+    "Font untuk alfabet Latin, Sirilik, Yunani, dan Vietnam.",
+    "Sudah termasuk semua fitur baru 1.4: jalur event, not slide, perubahan birama, alat klip audio, dan beberapa aransemen."
   ],
   "faq_label": "FAQ",
   "faq_h2": "Pertanyaan seputar Ritmo Studio",
   "faq": [
     {"q": "Apakah Ritmo Studio benar-benar gratis?", "a": "Ya. Tidak ada versi berbayar, langganan, masa uji coba, atau iklan, dan kamu tidak perlu akun. Semua fitur tersedia sejak awal."},
     {"q": "Bolehkah aku merilis dan menjual musik yang kubuat?", "a": "Boleh. Lagu yang kamu buat adalah milikmu: rilis di layanan streaming, jual, dan pakai di video maupun proyek komersial. Instrumen bawaannya hasil sintesis, jadi tidak ada lisensi sampel yang perlu dipusingkan."},
-    {"q": "Antarmukanya dalam bahasa apa?", "a": "Saat ini antarmukanya dalam bahasa Italia. Tata letaknya mengikuti alur kerja klasik DAW berbasis pola, jadi Channel Rack, Piano Roll, Playlist, dan Mixer mudah dikenali."},
+    {"q": "Antarmukanya dalam bahasa apa?", "a": "Ritmo Studio tersedia dalam 26 bahasa, termasuk bahasa Indonesia. Aplikasi terbuka dalam bahasa sistemmu, dan kamu bisa menggantinya kapan saja lewat Opsi › Bahasa."},
     {"q": "Bisa jalan di komputer apa saja?", "a": "Windows 10 dan 11 64-bit, macOS 13 Ventura atau lebih baru di Mac dengan Apple silicon dan Intel, Linux x64 (Ubuntu 22.04 atau lebih baru dan distribusi serupa), serta browser terbaru. Ritmo Studio dirancang untuk layar komputer, bukan ponsel."},
     {"q": "Bisakah aku memakai plugin VST-ku?", "a": "Bisa, di aplikasi desktop: VST3 di Windows, Mac, dan Linux, AU di Mac, dan LV2 di Linux. Plugin VST2 dan CLAP belum didukung. Versi online memakai instrumen dan efek bawaan."},
     {"q": "Apa bedanya versi online dan versi desktop?", "a": "Editornya sama. Aplikasi desktop menambahkan audio engine native, plugin, pengaturan sound card dan buffer, serta ekspor FLAC dan OGG. Versi online praktis untuk mencoba atau untuk bekerja di komputer tempat kamu tidak bisa menginstal apa pun."},

@@ -14,7 +14,7 @@ const PR_TOOLS = {
   play: { label: T('Ascolta'), hint: T('Tieni premuto e scorri: suonano le note sotto il cursore') },
 };
 // Event lane under the notes: one note property at a time.
-const PR_LANES = [['v', T('Vel')], ['rel', T('Rilascio')], ['pan', T('Pan')], ['fine', T('Fine')], ['mx', T('Mod X')], ['my', T('Mod Y')]];
+const PR_LANES = [['v', T('Vel')], ['rel', T('Rilascio')], ['pan', T('Pan')], ['fine', T('Fine||intonazione fine')], ['mx', T('Mod X')], ['my', T('Mod Y')]];
 
 const PR = {
   rowH: 14, lo: 24, hi: 109, // C1 … C8
@@ -386,20 +386,20 @@ const PR = {
       commit(); afterNotesChanged();
       return true;
     }
-    if (mod && e.code === 'KeyA') { this.sel = new Set(this.notes()); this.draw(); if (window.ChordPanel) ChordPanel.update(); return true; }
-    if (mod && e.code === 'KeyC' && this.sel.size) {
+    if (mod && shortcutKey(e) === 'a') { this.sel = new Set(this.notes()); this.draw(); if (window.ChordPanel) ChordPanel.update(); return true; }
+    if (mod && shortcutKey(e) === 'c' && this.sel.size) {
       this.clipboard = Array.from(this.sel).map(n => ({ ...n }));
       toast(T('{0} note copiate', this.clipboard.length));
       return true;
     }
-    if (mod && e.code === 'KeyV' && this.clipboard) {
+    if (mod && shortcutKey(e) === 'v' && this.clipboard) {
       const add = this.clipboard.map(n => ({ ...n }));
       (p.notes[ch.id] = p.notes[ch.id] || []).push(...add);
       this.sel = new Set(add);
       commit(); afterNotesChanged();
       return true;
     }
-    if (mod && e.code === 'KeyD' && this.sel.size) {
+    if (mod && shortcutKey(e) === 'd' && this.sel.size) {
       const sel = Array.from(this.sel), s0 = Math.min(...sel.map(n => n.s)), s1 = Math.max(...sel.map(n => n.s + n.l));
       const span = Math.ceil((s1 - s0) / 4) * 4 || 4;
       const add = sel.map(n => ({ ...n, s: n.s + span }));

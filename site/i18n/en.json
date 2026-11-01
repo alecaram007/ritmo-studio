@@ -19,7 +19,7 @@
   "suggest_go": "Read it in English",
   "chip_free": "Free",
   "chip_version": "Version {{VER}}",
-  "chip_ui": "Interface in Italian",
+  "chip_ui": "In 26 languages",
   "h1": "The free DAW for making beats and songs",
   "lead": "Ritmo Studio is complete music-making software: step sequencer, piano roll, playlist and mixer, with built-in instruments and effects plus your own VST3 plugins. Download it for Windows, Mac or Linux, or try it right now in your browser.",
   "dl_main": "Free download",
@@ -28,7 +28,12 @@
   "dl_linux": "Download for Linux",
   "dl_mobile": "Desktop downloads",
   "try_online": "Try it online",
-  "promise": ["Free forever", "No account", "No ads", "Your music is yours"],
+  "promise": [
+    "Free forever",
+    "No account",
+    "No ads",
+    "Your music is yours"
+  ],
   "hero_alt": "Ritmo Studio with the «Mezzanotte» demo project: sound browser, playlist with drum, bass, chord and melody clips, and the channel rack with the drum pattern",
   "hero_caption": "The «Mezzanotte» demo project in Ritmo Studio {{VER}}: browser, playlist and channel rack.",
   "seq_aria": "Try-out step sequencer",
@@ -36,42 +41,109 @@
   "seq_play": "Play",
   "seq_stop": "Stop",
   "seq_step": "step",
-  "voices": {"kick": "Kick", "clap": "Clap", "hat": "Hi-hat", "ohat": "Open hat"},
+  "voices": {
+    "kick": "Kick",
+    "clap": "Clap",
+    "hat": "Hi-hat",
+    "ohat": "Open hat"
+  },
   "features_label": "Features",
   "features_h2": "From the first beat to the finished track, in one program",
   "features_p": "Ritmo Studio's four windows cover the whole job: program the rhythm, play melodies and chords, arrange the song and mix it. Open, move and resize them however you like.",
   "features": [
-    {"tag": "Channel rack", "h3": "A beat in a few clicks with the step sequencer", "p": "Each row is an instrument, each box a sixteenth note: switch steps on and press Space. The pattern loops while you add sounds.",
-     "list": ["Synthesized drums: kick, snare, clap, hi-hats, tom, cowbell and crash", "Swing, per-step velocity and ready-made grooves to start from", "Drag your own samples from the browser straight onto the rack"],
-     "alt": "Ritmo Studio channel rack with kick, clap, hi-hats, 808 bass, pad and pluck"},
-    {"tag": "Piano roll", "h3": "Melodies, chords and basslines note by note", "p": "Draw notes with the mouse or play them on your computer keyboard or a MIDI controller. Under the notes, a lane for velocity, release, pan, fine pitch and two modulations.",
-     "list": ["Slide and portamento notes, 16 note colours that become MIDI channels for plugins", "Scales and chords, a chord progression tool and chord detection", "Articulate, LFO, Interpolate and Quick chop for your notes"],
-     "alt": "Ritmo Studio piano roll with an A minor arpeggio and the velocity lane"},
-    {"tag": "Playlist", "h3": "Arrange the song the way you hear it", "p": "Lay out patterns, audio clips and automation on the timeline. Copy, cut, stretch and try different versions of the same track without losing anything.",
-     "list": ["Audio clips with fades, pitch, reverse and time-stretch", "Markers with loops, jumps and pauses; time signature changes (3/4, 6/8, 7/8…)", "Several arrangements in one project, coloured track groups"],
-     "alt": "Ritmo Studio playlist with drum, bass, chord and melody tracks"},
-    {"tag": "Mixer", "h3": "Mix like in a studio, with 125 tracks", "p": "Every mixer track has 10 effect slots, a 3-band EQ, stereo separation, phase, outputs and sends. Finish the chain on the master with compressor and limiter.",
-     "list": ["15 built-in effects, from reverb to sidechain", "Automation clips for knobs, faders and plugin parameters", "Presets for channels, effects and whole mixer tracks"],
-     "alt": "Ritmo Studio mixer with the pluck track selected and delay and reverb effects"}
+    {
+      "tag": "Channel rack",
+      "h3": "A beat in a few clicks with the step sequencer",
+      "p": "Each row is an instrument, each box a sixteenth note: switch steps on and press Space. The pattern loops while you add sounds.",
+      "list": [
+        "Synthesized drums: kick, snare, clap, hi-hats, tom, cowbell and crash",
+        "Swing, per-step velocity and ready-made grooves to start from",
+        "Drag your own samples from the browser straight onto the rack"
+      ],
+      "alt": "Ritmo Studio channel rack with kick, clap, hi-hats, 808 bass, pad and pluck"
+    },
+    {
+      "tag": "Piano roll",
+      "h3": "Melodies, chords and basslines note by note",
+      "p": "Draw notes with the mouse or play them on your computer keyboard or a MIDI controller. Under the notes, a lane for velocity, release, pan, fine pitch and two modulations.",
+      "list": [
+        "Slide and portamento notes, 16 note colours that become MIDI channels for plugins",
+        "Scales and chords, a chord progression tool and chord detection",
+        "Articulate, LFO, Interpolate and Quick chop for your notes"
+      ],
+      "alt": "Ritmo Studio piano roll with an A minor arpeggio and the velocity lane"
+    },
+    {
+      "tag": "Playlist",
+      "h3": "Arrange the song the way you hear it",
+      "p": "Lay out patterns, audio clips and automation on the timeline. Copy, cut, stretch and try different versions of the same track without losing anything.",
+      "list": [
+        "Audio clips with fades, pitch, reverse and time-stretch",
+        "Markers with loops, jumps and pauses; time signature changes (3/4, 6/8, 7/8…)",
+        "Several arrangements in one project, coloured track groups"
+      ],
+      "alt": "Ritmo Studio playlist with drum, bass, chord and melody tracks"
+    },
+    {
+      "tag": "Mixer",
+      "h3": "Mix like in a studio, with 125 tracks",
+      "p": "Every mixer track has 10 effect slots, a 3-band EQ, stereo separation, phase, outputs and sends. Finish the chain on the master with compressor and limiter.",
+      "list": [
+        "15 built-in effects, from reverb to sidechain",
+        "Automation clips for knobs, faders and plugin parameters",
+        "Presets for channels, effects and whole mixer tracks"
+      ],
+      "alt": "Ritmo Studio mixer with the pluck track selected and delay and reverb effects"
+    }
   ],
   "inc_label": "All included",
   "inc_h2": "Sounds ready to go, plugins when you want them",
   "cards": [
-    {"h3": "10 instruments", "p": "808 bass, subtractive synth, pad, pluck, FM e-piano, supersaw, 303-style acid bass with slide, 4-operator FM, 9-drawbar organ and sampler."},
-    {"h3": "15 effects", "p": "EQ, filter, compressor, limiter, distortion, delay, reverb, chorus, phaser, flanger, bitcrusher, stereo, rhythmic gate, tremolo and sidechain."},
-    {"h3": "VST3, AU and LV2 plugins", "p": "In the desktop app the native audio engine loads your instruments and effects. The scan tries each plugin separately, so a broken one is skipped without crashing the program."},
-    {"h3": "Recording", "p": "Record notes from your keyboard or a MIDI controller, or audio from your sound card's input: vocals, guitar, anything."},
-    {"h3": "Export", "p": "WAV at 16, 24 or 32 bit, also track by track for mastering; FLAC and OGG in the desktop app. MIDI import and export with the song's time signature."},
-    {"h3": "Runs everywhere", "p": "Windows, Apple silicon and Intel Macs, Linux and the browser. Projects are saved to a file you can open on any system."}
+    {
+      "h3": "10 instruments",
+      "p": "808 bass, subtractive synth, pad, pluck, FM e-piano, supersaw, 303-style acid bass with slide, 4-operator FM, 9-drawbar organ and sampler."
+    },
+    {
+      "h3": "15 effects",
+      "p": "EQ, filter, compressor, limiter, distortion, delay, reverb, chorus, phaser, flanger, bitcrusher, stereo, rhythmic gate, tremolo and sidechain."
+    },
+    {
+      "h3": "VST3, AU and LV2 plugins",
+      "p": "In the desktop app the native audio engine loads your instruments and effects. The scan tries each plugin separately, so a broken one is skipped without crashing the program."
+    },
+    {
+      "h3": "Recording",
+      "p": "Record notes from your keyboard or a MIDI controller, or audio from your sound card's input: vocals, guitar, anything."
+    },
+    {
+      "h3": "Export",
+      "p": "WAV at 16, 24 or 32 bit, also track by track for mastering; FLAC and OGG in the desktop app. MIDI import and export with the song's time signature."
+    },
+    {
+      "h3": "Runs everywhere",
+      "p": "Windows, Apple silicon and Intel Macs, Linux and the browser. Projects are saved to a file you can open on any system."
+    }
   ],
   "how_label": "How to",
   "how_h2": "Your first beat in four steps",
   "how_p": "No experience needed. You can even try it above, in the sequencer on this page.",
   "steps": [
-    {"h": "Open Ritmo Studio", "p": "Download the app or open it in your browser: it starts with a demo project to listen to and change."},
-    {"h": "Put the kick on the beats", "p": "In the channel rack switch on steps 1, 5, 9 and 13 of the kick: the classic four-on-the-floor."},
-    {"h": "Add clap and hi-hats", "p": "Clap on steps 5 and 13, hi-hats on the even steps or wherever sounds good. Use swing for a looser groove."},
-    {"h": "Press Space and keep going", "p": "The beat loops. Then open the piano roll for bass and melody, and line them up in the playlist."}
+    {
+      "h": "Open Ritmo Studio",
+      "p": "Download the app or open it in your browser: it starts with a demo project to listen to and change."
+    },
+    {
+      "h": "Put the kick on the beats",
+      "p": "In the channel rack switch on steps 1, 5, 9 and 13 of the kick: the classic four-on-the-floor."
+    },
+    {
+      "h": "Add clap and hi-hats",
+      "p": "Clap on steps 5 and 13, hi-hats on the even steps or wherever sounds good. Use swing for a looser groove."
+    },
+    {
+      "h": "Press Space and keep going",
+      "p": "The beat loops. Then open the piano roll for bass and melody, and line them up in the playlist."
+    }
   ],
   "dl_label": "Download",
   "dl_h2": "Download Ritmo Studio {{VER}} for free",
@@ -94,26 +166,59 @@
   "news_label": "What's new",
   "news_h2": "What's in version {{VER}}",
   "news": [
-    "Piano roll with an event lane, note properties, 16 note colours and slide and portamento notes.",
-    "New tools: Lasso, Zoom, Listen, Articulate, LFO, Interpolate and Quick chop.",
-    "Project time signature and time signature changes in the playlist; markers with loops, jumps and pauses.",
-    "Audio clips with fades, crossfades, pitch, reverse and time-stretch.",
-    "Merge patterns, make unique, render to audio and several arrangements in one project."
+    "Interface in 26 languages: it starts in your system's language, and you can change it from Options › Language.",
+    "The desktop app's menus and Save dialogs follow the chosen language too.",
+    "Shortcuts like Ctrl+Z follow the letters printed on your keyboard (QWERTZ, AZERTY…).",
+    "Fonts for the Latin, Cyrillic, Greek and Vietnamese alphabets.",
+    "Includes everything new in 1.4: event lane, slide notes, time signature changes, audio clip tools and multiple arrangements."
   ],
   "faq_label": "FAQ",
   "faq_h2": "Questions about Ritmo Studio",
   "faq": [
-    {"q": "Is Ritmo Studio really free?", "a": "Yes. There are no paid editions, subscriptions, trials or ads, and you don't need an account. Every feature is available from the start."},
-    {"q": "Can I release and sell the music I make?", "a": "Yes. The songs you make are yours: release them on streaming services, sell them and use them in videos and commercial projects. The built-in instruments are synthesized, so there are no sample licences to worry about."},
-    {"q": "What language is the interface in?", "a": "The interface is currently in Italian. The layout follows the classic pattern-based DAW workflow, so channel rack, piano roll, playlist and mixer are easy to recognise."},
-    {"q": "Which computers does it run on?", "a": "64-bit Windows 10 and 11, macOS 13 Ventura or later on Apple silicon and Intel Macs, x64 Linux (Ubuntu 22.04 or later and similar distributions) and recent browsers. It is designed for a computer screen, not a phone."},
-    {"q": "Can I use my VST plugins?", "a": "Yes, in the desktop app: VST3 on Windows, Mac and Linux, AU on Mac and LV2 on Linux. VST2 and CLAP plugins are not supported yet. The online version uses the built-in instruments and effects."},
-    {"q": "What's the difference between the online and the desktop version?", "a": "The editor is the same. The desktop app adds the native audio engine, plugins, sound card and buffer settings, and FLAC and OGG export. The online version is handy for trying it out or working on a computer where you can't install anything."},
-    {"q": "Does it work offline?", "a": "Yes: once installed, the desktop app works completely offline and your projects stay on your computer."},
-    {"q": "Can I use a MIDI keyboard?", "a": "Yes. Connect the controller before opening Ritmo Studio: you can play the instruments, record notes into the piano roll and snap them to the chosen scale. You can also import and export MIDI files."},
-    {"q": "Windows says \"Windows protected your PC\". What do I do?", "a": "This happens because the installer has no paid code-signing certificate. Click \"More info\" and then \"Run anyway\"."},
-    {"q": "My Mac says the app can't be opened. What do I do?", "a": "After copying it to Applications, right-click the app and choose Open, then Open again. On macOS 15 and later, if that option isn't there, go to System Settings › Privacy & Security and choose \"Open Anyway\"."},
-    {"q": "Is the source code available?", "a": "Yes. The interface and desktop app are MIT licensed and the audio engine is AGPLv3. The code is on <a href=\"{{REPO_URL}}\">GitHub</a>."}
+    {
+      "q": "Is Ritmo Studio really free?",
+      "a": "Yes. There are no paid editions, subscriptions, trials or ads, and you don't need an account. Every feature is available from the start."
+    },
+    {
+      "q": "Can I release and sell the music I make?",
+      "a": "Yes. The songs you make are yours: release them on streaming services, sell them and use them in videos and commercial projects. The built-in instruments are synthesized, so there are no sample licences to worry about."
+    },
+    {
+      "q": "What language is the interface in?",
+      "a": "Ritmo Studio is available in 26 languages, including English. It starts in your system's language, and you can switch at any time from Options › Language."
+    },
+    {
+      "q": "Which computers does it run on?",
+      "a": "64-bit Windows 10 and 11, macOS 13 Ventura or later on Apple silicon and Intel Macs, x64 Linux (Ubuntu 22.04 or later and similar distributions) and recent browsers. It is designed for a computer screen, not a phone."
+    },
+    {
+      "q": "Can I use my VST plugins?",
+      "a": "Yes, in the desktop app: VST3 on Windows, Mac and Linux, AU on Mac and LV2 on Linux. VST2 and CLAP plugins are not supported yet. The online version uses the built-in instruments and effects."
+    },
+    {
+      "q": "What's the difference between the online and the desktop version?",
+      "a": "The editor is the same. The desktop app adds the native audio engine, plugins, sound card and buffer settings, and FLAC and OGG export. The online version is handy for trying it out or working on a computer where you can't install anything."
+    },
+    {
+      "q": "Does it work offline?",
+      "a": "Yes: once installed, the desktop app works completely offline and your projects stay on your computer."
+    },
+    {
+      "q": "Can I use a MIDI keyboard?",
+      "a": "Yes. Connect the controller before opening Ritmo Studio: you can play the instruments, record notes into the piano roll and snap them to the chosen scale. You can also import and export MIDI files."
+    },
+    {
+      "q": "Windows says \"Windows protected your PC\". What do I do?",
+      "a": "This happens because the installer has no paid code-signing certificate. Click \"More info\" and then \"Run anyway\"."
+    },
+    {
+      "q": "My Mac says the app can't be opened. What do I do?",
+      "a": "After copying it to Applications, right-click the app and choose Open, then Open again. On macOS 15 and later, if that option isn't there, go to System Settings › Privacy & Security and choose \"Open Anyway\"."
+    },
+    {
+      "q": "Is the source code available?",
+      "a": "Yes. The interface and desktop app are MIT licensed and the audio engine is AGPLv3. The code is on <a href=\"{{REPO_URL}}\">GitHub</a>."
+    }
   ],
   "final_h2": "Your next beat starts here",
   "final_p": "Download Ritmo Studio for free or open it in your browser: a minute from now you're making music.",
@@ -123,8 +228,30 @@
   "footer_online": "Online version",
   "footer_source": "Source code",
   "footer_versions": "All versions",
-  "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
   "date_format": "{month} {d}, {y}",
   "ld_description": "Free DAW for making beats and songs: step sequencer, piano roll, playlist, mixer, built-in instruments and effects, and VST3, AU and LV2 plugins.",
-  "ld_features": ["Step sequencer (channel rack)", "Piano roll with slide and portamento notes", "Playlist with audio clips, automation and markers", "125-track mixer with 10 effect slots", "10 instruments and 15 effects included", "VST3, AU and LV2 plugins", "MIDI and audio recording", "WAV, FLAC, OGG and MIDI export"]
+  "ld_features": [
+    "Step sequencer (channel rack)",
+    "Piano roll with slide and portamento notes",
+    "Playlist with audio clips, automation and markers",
+    "125-track mixer with 10 effect slots",
+    "10 instruments and 15 effects included",
+    "VST3, AU and LV2 plugins",
+    "MIDI and audio recording",
+    "WAV, FLAC, OGG and MIDI export"
+  ]
 }

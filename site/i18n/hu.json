@@ -19,7 +19,7 @@
   "suggest_go": "Olvasd magyarul",
   "chip_free": "Ingyenes",
   "chip_version": "{{VER}} verzió",
-  "chip_ui": "Olasz nyelvű felület",
+  "chip_ui": "26 nyelven",
   "h1": "Az ingyenes DAW beatek és dalok készítéséhez",
   "lead": "A Ritmo Studio teljes értékű zeneszerkesztő program: step sequencer, Piano Roll, Playlist és Mixer, beépített hangszerekkel és effektekkel, valamint a saját VST3 pluginjaiddal. Töltsd le Windowsra, Macre vagy Linuxra, vagy próbáld ki most rögtön a böngésződben.",
   "dl_main": "Ingyenes letöltés",
@@ -94,18 +94,18 @@
   "news_label": "Újdonságok",
   "news_h2": "Újdonságok ebben a verzióban: {{VER}}",
   "news": [
-    "Piano Roll eseménysávval, hangjegy-tulajdonságokkal, 16 hangjegyszínnel, valamint slide és portamento hangokkal.",
-    "Új eszközök: Lasszó, Nagyítás, Belehallgatás, Artikuláció, LFO, Interpoláció és Gyors darabolás.",
-    "Projekt-ütemmutató és ütemmutató-váltások a Playlistben; markerek loopokkal, ugrásokkal és szünetekkel.",
-    "Audioklipek be- és kiúsztatással, keresztúsztatással, hangmagasság-állítással, visszafelé lejátszással és time-stretch funkcióval.",
-    "Patternek összevonása, egyedivé tétel, renderelés audióba és több elrendezés egy projektben."
+    "Felület 26 nyelven: a rendszered nyelvén indul, és a Beállítások › Nyelv menüben bármikor megváltoztathatod.",
+    "Az asztali alkalmazás menüi és mentési ablakai is a kiválasztott nyelvet követik.",
+    "A billentyűparancsok, például a Ctrl+Z, a billentyűzeted betűihez igazodnak (QWERTZ, AZERTY…).",
+    "Betűkészletek a latin, cirill, görög és vietnami ábécéhez.",
+    "Benne van az 1.4 összes újdonsága: eseménysáv, slide hangok, ütemmutató-váltások, audioklip-eszközök és több elrendezés."
   ],
   "faq_label": "GYIK",
   "faq_h2": "Kérdések és válaszok a Ritmo Studio programról",
   "faq": [
     {"q": "Tényleg ingyenes a Ritmo Studio?", "a": "Igen. Nincsenek fizetős kiadások, előfizetések, próbaverziók vagy reklámok, és fiókra sincs szükséged. Minden funkció az első perctől elérhető."},
     {"q": "Kiadhatom és eladhatom a zenét, amit készítek?", "a": "Igen. A dalaid a tieid: megjelentetheted őket streamingszolgáltatásokon, eladhatod, és felhasználhatod őket videókban és kereskedelmi projektekben. A beépített hangszerek szintetizáltak, így nem kell sample-licencek miatt aggódnod."},
-    {"q": "Milyen nyelvű a felület?", "a": "A felület jelenleg olasz nyelvű. Az elrendezés a klasszikus, patternalapú DAW-munkafolyamatot követi, így a Channel Rack, a Piano Roll, a Playlist és a Mixer könnyen felismerhető."},
+    {"q": "Milyen nyelvű a felület?", "a": "A Ritmo Studio 26 nyelven érhető el, köztük magyarul is. A rendszered nyelvén indul, és bármikor átválthatsz a Beállítások › Nyelv menüben."},
     {"q": "Milyen számítógépeken fut?", "a": "64 bites Windows 10 és 11, macOS 13 Ventura vagy újabb Apple chipes és Intel-alapú Maceken, x64-es Linux (Ubuntu 22.04 vagy újabb és hasonló disztribúciók), valamint friss böngészők. Számítógép-képernyőre tervezték, nem telefonra."},
     {"q": "Használhatom a VST pluginjaimat?", "a": "Igen, az asztali alkalmazásban: VST3 Windowson, Macen és Linuxon, AU Macen, LV2 Linuxon. A VST2 és CLAP pluginok egyelőre nem támogatottak. Az online verzió a beépített hangszereket és effekteket használja."},
     {"q": "Mi a különbség az online és az asztali verzió között?", "a": "A szerkesztő ugyanaz. Az asztali alkalmazás emellett natív hangmotort, pluginokat, hangkártya- és pufferbeállításokat, valamint FLAC és OGG exportot kínál. Az online verzió kipróbáláshoz praktikus, vagy ha olyan gépen dolgozol, amelyre nem telepíthetsz semmit."},
