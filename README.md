@@ -2,7 +2,7 @@
 
 DAW gratuita con Channel Rack, Piano Roll, Playlist e Mixer. Gira nel browser e come app desktop per macOS (Apple Silicon e Intel), Windows e Linux. Nell'app desktop un motore audio nativo carica i plugin VST3, AU (Mac) e LV2.
 
-Sito: https://alecaram007.github.io/ritmo-studio/ — download per tutti i sistemi e versione online.
+Sito: https://alecaram007.github.io/ritmo-studio/ — in 26 lingue, con download per tutti i sistemi e versione online.
 
 ## Funzioni principali
 
@@ -33,7 +33,7 @@ Sito: https://alecaram007.github.io/ritmo-studio/ — download per tutti i siste
 | `engine/src/builtins/` | Gli strumenti e gli effetti interni, versione nativa |
 | `desktop/` | L'app Electron che unisce interfaccia e motore, e crea gli installer |
 | `.github/workflows/build.yml` | Compila motore e installer per Mac, Windows e Linux su GitHub Actions |
-| `site/` | Il sito (pagine in italiano e inglese, screenshot, sitemap): `python3 site/build.py --base <indirizzo>` lo crea in `site/_out`, il workflow `site.yml` lo pubblica su GitHub Pages |
+| `site/` | Il sito in 26 lingue: testi in `site/i18n/<lingua>.json` (controllo: `python3 site/i18n/check.py`), immagini social con `python3 site/make_og.py`; `python3 site/build.py --base <indirizzo>` lo crea in `site/_out`, il workflow `site.yml` lo pubblica su GitHub Pages |
 
 ## Compilare
 

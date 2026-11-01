@@ -1,4 +1,38 @@
 (() => {
+  // Offer the visitor's own language with a bar (never a redirect, so search engines see every page as it is).
+  const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } };
+  const data = JSON.parse((document.getElementById('langs-data') || {}).textContent || '{}');
+  document.querySelectorAll('.langs a, .foot-langs a').forEach(a => a.addEventListener('click', () => store('ritmo-lang', a.hreflang.toLowerCase())));
+  if (data.pages && !store('ritmo-lang')) {
+    const alias = { 'zh-hk': 'zh-tw', 'zh-mo': 'zh-tw', 'zh-hant': 'zh-tw', 'zh-sg': 'zh-cn', 'zh-hans': 'zh-cn', zh: 'zh-cn', iw: 'he' };
+    let want = '';
+    for (const l of navigator.languages || [navigator.language || '']) {
+      const full = l.toLowerCase(), primary = full.split('-')[0];
+      want = [full, alias[full], primary, alias[primary]].find(c => c && data.pages[c]) || '';
+      if (want) break;
+    }
+    const bar = document.getElementById('suggest');
+    if (want && want !== data.current && bar) {
+      const [href, text, go] = data.pages[want];
+      const lang = want.replace(/-(\w+)$/, (m, r) => '-' + r.toUpperCase());
+      document.getElementById('suggest-text').textContent = text;
+      const link = document.getElementById('suggest-link');
+      link.href = href; link.textContent = go; link.hreflang = lang;
+      bar.lang = lang;
+      bar.dir = ['ar', 'he'].includes(want) ? 'rtl' : 'ltr';
+      link.addEventListener('click', () => store('ritmo-lang', want));
+      document.getElementById('suggest-close').addEventListener('click', () => { bar.hidden = true; store('ritmo-lang', data.current); });
+      bar.hidden = false;
+    }
+  }
+
+  // The language menu closes on a click elsewhere or on Escape.
+  const menu = document.querySelector('.langs');
+  if (menu) {
+    document.addEventListener('click', e => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
+  }
+
   // Point the main download button at the visitor's system and highlight its card.
   const ua = navigator.userAgent;
   const plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';

@@ -1,39 +1,56 @@
 #!/usr/bin/env python3
-"""Builds the Ritmo Studio website (Italian + English landing pages, online app, sitemap) into site/_out.
+"""Builds the Ritmo Studio website into site/_out: one landing page per language (Italian at the root,
+the others under /<code>/), the online app, sitemap, robots and manifest.
 
     python3 site/build.py --base https://example.org
 
---base is the public address of the site, without a trailing slash: canonical links, the sitemap,
-structured data and social previews need it. Download links point at the GitHub release of the version
-in desktop/package.json; file sizes and the release date come from that release when `gh` can read it.
+--base is the public address of the site, without a trailing slash: canonical and hreflang links, the
+sitemap, structured data and social previews need it. Texts live in site/i18n/<code>.json (check them with
+site/i18n/check.py). Download links point at the GitHub release of the version in desktop/package.json;
+file sizes and the release date come from that release when `gh` can read it.
 """
 import argparse, datetime, html, json, os, re, shutil, subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(HERE, 'src')
-FONTS = ['Unbounded-600', 'Barlow-400', 'Barlow-600', 'BarlowCondensed-600', 'JetBrainsMono-500']
+I18N = os.path.join(HERE, 'i18n')
+
+# code (file and folder name), hreflang, native name, short label, text direction, Open Graph locale
+LANGS = [
+    ('it', 'it', 'Italiano', 'IT', 'ltr', 'it_IT'),
+    ('en', 'en', 'English', 'EN', 'ltr', 'en_US'),
+    ('es', 'es', 'Español', 'ES', 'ltr', 'es_ES'),
+    ('pt', 'pt', 'Português', 'PT', 'ltr', 'pt_BR'),
+    ('fr', 'fr', 'Français', 'FR', 'ltr', 'fr_FR'),
+    ('de', 'de', 'Deutsch', 'DE', 'ltr', 'de_DE'),
+    ('nl', 'nl', 'Nederlands', 'NL', 'ltr', 'nl_NL'),
+    ('sv', 'sv', 'Svenska', 'SV', 'ltr', 'sv_SE'),
+    ('pl', 'pl', 'Polski', 'PL', 'ltr', 'pl_PL'),
+    ('cs', 'cs', 'Čeština', 'CS', 'ltr', 'cs_CZ'),
+    ('ro', 'ro', 'Română', 'RO', 'ltr', 'ro_RO'),
+    ('hu', 'hu', 'Magyar', 'HU', 'ltr', 'hu_HU'),
+    ('tr', 'tr', 'Türkçe', 'TR', 'ltr', 'tr_TR'),
+    ('el', 'el', 'Ελληνικά', 'EL', 'ltr', 'el_GR'),
+    ('ru', 'ru', 'Русский', 'RU', 'ltr', 'ru_RU'),
+    ('uk', 'uk', 'Українська', 'UK', 'ltr', 'uk_UA'),
+    ('ar', 'ar', 'العربية', 'AR', 'rtl', 'ar_AR'),
+    ('he', 'he', 'עברית', 'HE', 'rtl', 'he_IL'),
+    ('hi', 'hi', 'हिन्दी', 'HI', 'ltr', 'hi_IN'),
+    ('id', 'id', 'Bahasa Indonesia', 'ID', 'ltr', 'id_ID'),
+    ('vi', 'vi', 'Tiếng Việt', 'VI', 'ltr', 'vi_VN'),
+    ('th', 'th', 'ไทย', 'TH', 'ltr', 'th_TH'),
+    ('ja', 'ja', '日本語', 'JA', 'ltr', 'ja_JP'),
+    ('ko', 'ko', '한국어', 'KO', 'ltr', 'ko_KR'),
+    ('zh-cn', 'zh-CN', '简体中文', '简', 'ltr', 'zh_CN'),
+    ('zh-tw', 'zh-TW', '繁體中文', '繁', 'ltr', 'zh_TW'),
+]
+DEFAULT = 'en'  # x-default: the page for visitors whose language has no page of its own
+LATIN = {'it', 'en', 'es', 'pt', 'fr', 'de', 'nl', 'sv', 'pl', 'cs', 'ro', 'hu', 'tr', 'id', 'vi'}
 
 # The drum pattern of the demo song «Mezzanotte», 16 steps.
 PATTERN = [('kick', [0, 4, 8, 12]), ('clap', [4, 12]), ('hat', [0, 1, 3, 4, 5, 7, 8, 9, 11, 12, 13, 15]), ('ohat', [2, 6, 10, 14])]
-TEXT = {
-    'it': {
-        'voices': {'kick': 'Cassa', 'clap': 'Clap', 'hat': 'Hi-hat', 'ohat': 'Hi-hat aperto'},
-        'step': 'passo', 'play': 'Play', 'stop': 'Stop', 'aria': 'Step sequencer di prova',
-        'note': 'Il pattern di batteria della demo «Mezzanotte». Premi Play e clicca i passi per cambiarlo.',
-        'months': ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'],
-        'desc': 'DAW gratuita per creare beat e canzoni: step sequencer, Piano Roll, Playlist, Mixer, strumenti ed effetti inclusi e plugin VST3, AU e LV2.',
-        'features': ['Step sequencer (Channel Rack)', 'Piano Roll con note Slide e Portamento', 'Playlist con clip audio, automazioni e marcatori', 'Mixer a 125 tracce con 10 slot effetto', '10 strumenti e 15 effetti inclusi', 'Plugin VST3, AU e LV2', 'Registrazione MIDI e audio', 'Esportazione WAV, FLAC, OGG e MIDI'],
-    },
-    'en': {
-        'voices': {'kick': 'Kick', 'clap': 'Clap', 'hat': 'Hi-hat', 'ohat': 'Open hat'},
-        'step': 'step', 'play': 'Play', 'stop': 'Stop', 'aria': 'Try-out step sequencer',
-        'note': 'The drum pattern of the «Mezzanotte» demo. Press Play and click the steps to change it.',
-        'months': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        'desc': 'Free DAW for making beats and songs: step sequencer, piano roll, playlist, mixer, built-in instruments and effects, and VST3, AU and LV2 plugins.',
-        'features': ['Step sequencer (channel rack)', 'Piano roll with slide and portamento notes', 'Playlist with audio clips, automation and markers', '125-track mixer with 10 effect slots', '10 instruments and 15 effects included', 'VST3, AU and LV2 plugins', 'MIDI and audio recording', 'WAV, FLAC, OGG and MIDI export'],
-    },
-}
+SHOTS = [('main', 'accent'), ('piano', 'teal'), ('playlist', 'blue'), ('mixer', 'pink')]
 
 
 def read(*p):
@@ -47,6 +64,10 @@ def write(path, text):
         f.write(text)
 
 
+def attr(s):
+    return html.escape(s, quote=True)
+
+
 def release_info(repo, tag):
     try:
         out = subprocess.run(['gh', 'release', 'view', tag, '-R', repo, '--json', 'assets,publishedAt'],
@@ -58,45 +79,60 @@ def release_info(repo, tag):
         return {}, datetime.date.today().isoformat()
 
 
-def seq_markup(lang):
-    t = TEXT[lang]
+def seq_markup(t):
     rows = []
     for voice, on in PATTERN:
         name = t['voices'][voice]
-        steps = ''.join(f'<button type="button" class="st" aria-pressed="{"true" if i in on else "false"}" aria-label="{name}, {t["step"]} {i + 1}"></button>' for i in range(16))
+        steps = ''.join(f'<button type="button" class="st" aria-pressed="{"true" if i in on else "false"}" aria-label="{attr(name)}, {attr(t["seq_step"])} {i + 1}"></button>' for i in range(16))
         rows.append(f'<div class="seq-row" data-voice="{voice}"><span class="seq-ch">{name}</span><div class="seq-steps">{steps}</div></div>')
-    return (f'<div class="seq" id="seq" data-bpm="124" role="group" aria-label="{t["aria"]}">'
-            f'<div class="seq-head"><button type="button" class="seq-play" id="seq-play" aria-pressed="false" data-play="{t["play"]}" data-stop="{t["stop"]}">'
+    return (f'<div class="seq" id="seq" data-bpm="124" role="group" aria-label="{attr(t["seq_aria"])}">'
+            f'<div class="seq-head"><button type="button" class="seq-play" id="seq-play" aria-pressed="false" data-play="{attr(t["seq_play"])}" data-stop="{attr(t["seq_stop"])}">'
             '<svg viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>'
-            f'<span>{t["play"]}</span></button><span class="seq-bpm"><b>124</b> BPM</span><p class="seq-note">{t["note"]}</p></div>'
+            f'<span>{t["seq_play"]}</span></button><span class="seq-bpm"><b>124</b> BPM</span><p class="seq-note">{t["seq_note"]}</p></div>'
             + ''.join(rows) + '</div>')
 
 
-def faq_entries(page):
-    out = []
-    for q, a in re.findall(r'<details class="q"><summary>(.*?)</summary><div class="ans">(.*?)</div></details>', page, re.S):
-        text = html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', a))).strip()
-        out.append({'@type': 'Question', 'name': html.unescape(q), 'acceptedAnswer': {'@type': 'Answer', 'text': text}})
-    return out
+def blocks(t):
+    feats = []
+    for (img, color), f in zip(SHOTS, t['features']):
+        ticks = ''.join(f'<li>{x}</li>' for x in f['list'])
+        feats.append(
+            f'<article class="feat"><div class="feat-text"><span class="tag" style="color:var(--{color})">{f["tag"]}</span>'
+            f'<h3>{f["h3"]}</h3><p>{f["p"]}</p><ul class="ticks">{ticks}</ul></div>'
+            f'<div class="shot"><img src="{{{{R}}}}img/{img}-800.webp" srcset="{{{{R}}}}img/{img}-800.webp 800w, {{{{R}}}}img/{img}-1600.webp 1600w" '
+            f'sizes="(max-width:860px) calc(100vw - 32px), 620px" width="1600" height="1000" loading="lazy" decoding="async" alt="{attr(f["alt"])}"></div></article>')
+    return {
+        'FEATURES': '\n'.join(feats),
+        'CARDS': ''.join(f'<div class="card"><h3>{c["h3"]}</h3><p>{c["p"]}</p></div>' for c in t['cards']),
+        'STEPS': ''.join(f'<li><strong>{s["h"]}</strong>{s["p"]}</li>' for s in t['steps']),
+        'NEWS': ''.join(f'<li>{n}</li>' for n in t['news']),
+        'PROMISE': ''.join(f'<li>{p}</li>' for p in t['promise']),
+        'FAQ': ''.join(f'<details class="q"><summary>{q["q"]}</summary><div class="ans"><p>{q["a"]}</p></div></details>' for q in t['faq']),
+        'SEQ': seq_markup(t),
+    }
 
 
-def jsonld(lang, page, base, ver, date, repo_url):
-    t = TEXT[lang]
-    url = base + ('/' if lang == 'it' else '/en/')
+def plain(s):
+    return html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', s))).strip()
+
+
+def jsonld(t, lang, url, base, ver, date, repo_url, fill_text):
     graph = [
-        {'@type': 'WebSite', '@id': base + '/#website', 'url': base + '/', 'name': 'Ritmo Studio', 'inLanguage': ['it', 'en']},
+        {'@type': 'WebSite', '@id': base + '/#website', 'url': base + '/', 'name': 'Ritmo Studio',
+         'inLanguage': [l[1] for l in LANGS]},
         {'@type': 'SoftwareApplication', '@id': base + '/#app', 'name': 'Ritmo Studio', 'url': url,
-         'description': t['desc'], 'applicationCategory': 'MultimediaApplication',
+         'description': t['ld_description'], 'applicationCategory': 'MultimediaApplication',
          'applicationSubCategory': 'Digital Audio Workstation',
          'operatingSystem': 'Windows 10, Windows 11, macOS 13+, Linux, Web browser',
          'softwareVersion': ver, 'dateModified': date, 'isAccessibleForFree': True,
          'offers': {'@type': 'Offer', 'price': '0', 'priceCurrency': 'EUR'},
          'downloadUrl': url + '#download', 'installUrl': base + '/app/',
-         'image': f'{base}/img/og-{lang}.png',
-         'screenshot': [f'{base}/img/{n}-1600.webp' for n in ('main', 'piano', 'playlist', 'mixer')],
-         'featureList': t['features'], 'inLanguage': 'it', 'codeRepository': repo_url,
+         'image': f'{base}/img/og/{lang[0]}.jpg',
+         'screenshot': [f'{base}/img/{n}-1600.webp' for n, _ in SHOTS],
+         'featureList': t['ld_features'], 'inLanguage': 'it', 'codeRepository': repo_url,
          'license': 'https://opensource.org/licenses/MIT'},
-        {'@type': 'FAQPage', '@id': url + '#faq', 'inLanguage': lang, 'mainEntity': faq_entries(page)},
+        {'@type': 'FAQPage', '@id': url + '#faq', 'inLanguage': lang[1],
+         'mainEntity': [{'@type': 'Question', 'name': plain(q['q']), 'acceptedAnswer': {'@type': 'Answer', 'text': plain(fill_text(q['a']))}} for q in t['faq']]},
     ]
     return json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 
@@ -104,9 +140,6 @@ def jsonld(lang, page, base, ver, date, repo_url):
 def fill(text, values):
     for k, v in values.items():
         text = text.replace('{{' + k + '}}', v)
-    left = sorted(set(re.findall(r'\{\{[A-Z_]+\}\}', text)))
-    if left:
-        raise SystemExit(f'placeholders without a value: {left}')
     return text
 
 
@@ -134,28 +167,69 @@ def main():
     missing = [n for n in files.values() if sizes and n not in sizes]
     if missing:  # still uploading, or a file was renamed: the links to these files will not work yet
         print(f'warning: the release {tag} lacks {missing}')
-    d = datetime.date.fromisoformat(date)
-    common = {'BASE': base, 'VER': ver, 'DATE': date, 'REPO_URL': repo_url, 'RELEASE_URL': repo_url + '/releases',
-              'DATE_TEXT': f'{d.day} {TEXT["it"]["months"][d.month - 1]} {d.year}',
-              'DATE_TEXT_EN': f'{TEXT["en"]["months"][d.month - 1]} {d.day}, {d.year}'}
+    common = {'BASE': base, 'VER': ver, 'REPO_URL': repo_url, 'RELEASE_URL': repo_url + '/releases'}
     for k, n in files.items():
         common['DL_' + k] = f'{repo_url}/releases/download/{tag}/{n}'
         common['SZ_' + k] = mb(sizes.get(n, 0))
 
+    texts = {l[0]: json.loads(read(I18N, l[0] + '.json')) for l in LANGS if os.path.exists(os.path.join(I18N, l[0] + '.json'))}
+    langs = [l for l in LANGS if l[0] in texts]
+    skipped = [l[0] for l in LANGS if l[0] not in texts]
+    if skipped:
+        print('warning: no translation yet for', skipped)
+    path = {l[0]: '' if l[0] == 'it' else l[0] + '/' for l in langs}
+    url = {c: f'{base}/{p}' for c, p in path.items()}
+    alternates = [(l[1], url[l[0]]) for l in langs] + [('x-default', url[DEFAULT if DEFAULT in url else 'it'])]
+    hreflang_tags = '\n'.join(f'<link rel="alternate" hreflang="{h}" href="{u}">' for h, u in alternates)
+    d = datetime.date.fromisoformat(date)
+    css = re.sub(r'\n\s*', '\n', read(SRC, 'style.css').replace('{{FONTS}}', read(SRC, 'fonts.css')))
+    js = read(SRC, 'site.js')
+    template = read(SRC, 'page.html')
+
     out = a.out
     shutil.rmtree(out, ignore_errors=True)
-    css, js = read(SRC, 'style.css'), read(SRC, 'site.js')
-    for lang, dest, rel in (('it', 'index.html', ''), ('en', 'en/index.html', '../')):
-        page = read(SRC, lang + '.html')
-        page = page.replace('{{CSS}}', re.sub(r'\n\s*', '\n', css.replace('{{R}}', rel))).replace('{{JS}}', js).replace('{{SEQ}}', seq_markup(lang))
-        page = fill(page.replace('{{R}}', rel), {**common, 'JSONLD': '@@JSONLD@@'})
-        page = page.replace('@@JSONLD@@', jsonld(lang, page, base, ver, date, repo_url))
-        write(os.path.join(out, dest), page)
+    for lang in langs:
+        code, hreflang, name, short, direction, og_locale = lang
+        t = texts[code]
+        rel = '' if code == 'it' else '../'
+        date_text = t['date_format'].format(d=d.day, m=d.month, y=d.year, month=t['months'][d.month - 1])
+        values = dict(common, URL=url[code], R=rel, HOME='./', HREFLANG=hreflang_tags,
+                      DATE_HTML=f'<time datetime="{date}">{date_text}</time>')
+        if code in LATIN:
+            values['PRELOAD'] = (f'<link rel="preload" href="{rel}fonts/Unbounded-600-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
+                                 f'<link rel="preload" href="{rel}fonts/Barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin>')
+        elif code in ('ru', 'uk'):
+            values['PRELOAD'] = f'<link rel="preload" href="{rel}fonts/Unbounded-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>'
+        else:
+            values['PRELOAD'] = ''
+        cur = ' aria-current="page"'
+        values['LANG_ITEMS'] = ''.join(
+            f'<li><a href="{rel}{path[l[0]]}" hreflang="{l[1]}" lang="{l[1]}"{cur if l[0] == code else ""}>{l[2]}</a></li>' for l in langs)
+        values['LANG_LINKS'] = ''.join(
+            f'<a href="{rel}{path[l[0]]}" hreflang="{l[1]}" lang="{l[1]}"{cur if l[0] == code else ""}>{l[2]}</a>' for l in langs)
+        values['LANGS_JSON'] = json.dumps({'current': hreflang.lower(), 'pages': {
+            l[1].lower(): [f'{rel}{path[l[0]]}', texts[l[0]]['suggest'], texts[l[0]]['suggest_go']] for l in langs}},
+            ensure_ascii=False).replace('</', '<\\/')
+
+        page = template
+        for k, v in blocks(t).items():
+            page = page.replace('{{' + k + '}}', v)
+        page = re.sub(r'\{\{t:(\w+)\}\}', lambda m: t[m.group(1)], page)
+        page = re.sub(r'\{\{a:(\w+)\}\}', lambda m: attr(fill(t[m.group(1)], values)), page)
+        meta = {'code': code, 'hreflang': hreflang, 'dir': direction, 'short': short, 'og_locale': og_locale}
+        page = re.sub(r'\{\{L:(\w+)\}\}', lambda m: meta[m.group(1)], page)
+        page = page.replace('{{CSS}}', css).replace('{{JS}}', js)
+        page = fill(fill(page, values), values)  # texts can hold placeholders such as {{VER}} or {{R}}
+        page = page.replace('{{JSONLD}}', jsonld(t, lang, url[code], base, ver, date, repo_url, lambda s: fill(s, values)))
+        left = sorted(set(re.findall(r'\{\{[^}]+\}\}', page)))
+        if left:
+            raise SystemExit(f'{code}: placeholders without a value: {left}')
+        write(os.path.join(out, path[code], 'index.html'), page)
         title = re.search(r'<title>(.*?)</title>', page).group(1)
         desc = re.search(r'<meta name="description" content="(.*?)">', page).group(1)
-        print(f'{dest}: title {len(title)} chars, description {len(desc)} chars, {len(page) // 1024} KB')
+        print(f'{code:6} title {len(html.unescape(title)):3}  description {len(html.unescape(desc)):3}  {len(page) // 1024} KB')
 
-    # The online app, with its own title, description and links for search engines and social previews.
+    # The online app (its interface is Italian), with its own title, description and links for search engines.
     app = read(ROOT, 'RitmoStudio.html')
     app = app.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '')
     app = app.replace('<title>Ritmo Studio</title>', '<title>Ritmo Studio online – DAW gratis nel browser</title>', 1)
@@ -167,7 +241,7 @@ def main():
             '<meta property="og:type" content="website">\n<meta property="og:site_name" content="Ritmo Studio">\n'
             f'<meta property="og:url" content="{base}/app/">\n<meta property="og:title" content="Ritmo Studio online – DAW gratis nel browser">\n'
             '<meta property="og:description" content="Fai musica nel browser, gratis e senza installare nulla.">\n'
-            f'<meta property="og:image" content="{base}/img/og-it.png">\n<meta name="twitter:card" content="summary_large_image">\n')
+            f'<meta property="og:image" content="{base}/img/og/it.jpg">\n<meta name="twitter:card" content="summary_large_image">\n')
     app = app.replace('<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n',
                       '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n' + head, 1)
     assert head in app, 'could not add the head tags to the online app'
@@ -178,13 +252,11 @@ def main():
     write(os.path.join(out, 'app', 'index.html'), app)
 
     shutil.copytree(os.path.join(SRC, 'img'), os.path.join(out, 'img'))
+    shutil.copytree(os.path.join(SRC, 'fonts'), os.path.join(out, 'fonts'))
     shutil.copy(os.path.join(SRC, 'favicon.ico'), out)
     for f in os.listdir(SRC):  # the IndexNow key, which tells search engines the site is ours
         if re.fullmatch(r'[0-9a-f]{32}\.txt', f):
             shutil.copy(os.path.join(SRC, f), out)
-    os.makedirs(os.path.join(out, 'fonts'))
-    for f in FONTS:
-        shutil.copy(os.path.join(ROOT, 'fonts', f + '.woff2'), os.path.join(out, 'fonts'))
     write(os.path.join(out, '404.html'), fill(read(SRC, '404.html'), {'BASE': base}))
     write(os.path.join(out, '.nojekyll'), '')
     write(os.path.join(out, 'robots.txt'), f'User-agent: *\nAllow: /\n\nSitemap: {base}/sitemap.xml\n')
@@ -193,16 +265,14 @@ def main():
         'display': 'standalone', 'background_color': '#121618', 'theme_color': '#121618',
         'icons': [{'src': 'img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'},
                   {'src': 'img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}, indent=2))
-    alt = (f'<xhtml:link rel="alternate" hreflang="it" href="{base}/"/>'
-           f'<xhtml:link rel="alternate" hreflang="en" href="{base}/en/"/>'
-           f'<xhtml:link rel="alternate" hreflang="x-default" href="{base}/"/>')
-    urls = [(f'{base}/', alt, '1.0'), (f'{base}/en/', alt, '0.8'), (f'{base}/app/', '', '0.7')]
+    alt = ''.join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{u}"/>' for h, u in alternates)
+    entries = [(url[l[0]], alt, '1.0' if l[0] == 'it' else '0.8') for l in langs] + [(f'{base}/app/', '', '0.7')]
     write(os.path.join(out, 'sitemap.xml'),
           '<?xml version="1.0" encoding="UTF-8"?>\n'
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
-          + ''.join(f'  <url><loc>{u}</loc><lastmod>{date}</lastmod><priority>{p}</priority>{x}</url>\n' for u, x, p in urls)
+          + ''.join(f'  <url><loc>{u}</loc><lastmod>{date}</lastmod><priority>{p}</priority>{x}</url>\n' for u, x, p in entries)
           + '</urlset>\n')
-    print('site built in', out)
+    print(f'site built in {out}: {len(langs)} languages')
 
 
 if __name__ == '__main__':

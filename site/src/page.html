@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="{{L:hreflang}}" dir="{{L:dir}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{{a:title}}</title>
+<meta name="description" content="{{a:description}}">
+<link rel="canonical" href="{{URL}}">
+{{HREFLANG}}
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#121618">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ritmo Studio">
+<meta property="og:locale" content="{{L:og_locale}}">
+<meta property="og:url" content="{{URL}}">
+<meta property="og:title" content="{{a:og_title}}">
+<meta property="og:description" content="{{a:og_description}}">
+<meta property="og:image" content="{{BASE}}/img/og/{{L:code}}.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{a:og_image_alt}}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="{{R}}favicon.ico" sizes="any">
+<link rel="icon" href="{{R}}img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{R}}img/apple-touch-icon.png">
+<link rel="manifest" href="{{R}}site.webmanifest">
+{{PRELOAD}}
+<style>{{CSS}}</style>
+<script type="application/ld+json">{{JSONLD}}</script>
+</head>
+<body>
+<a class="skip" href="#main">{{t:skip}}</a>
+<div class="suggest" id="suggest" hidden><div class="wrap"><span id="suggest-text"></span><a id="suggest-link" href="#"></a><button type="button" id="suggest-close" aria-label="{{a:close}}">×</button></div></div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="{{HOME}}" aria-label="{{a:home_aria}}"><img src="{{R}}img/logo.svg" alt="" width="30" height="30">Ritmo Studio</a>
+    <nav class="nav" aria-label="{{a:nav_aria}}">
+      <a class="opt" href="#features">{{t:nav_features}}</a>
+      <a class="opt" href="#download">{{t:nav_download}}</a>
+      <a class="opt" href="#faq">{{t:nav_faq}}</a>
+      <details class="langs"><summary aria-label="{{a:languages}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z"/></svg>{{L:short}}</summary><ul>{{LANG_ITEMS}}</ul></details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="title">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="chip hot">{{t:chip_free}}</span><span class="chip">{{t:chip_version}}</span><span class="chip">{{t:chip_ui}}</span></div>
+        <h1 id="title">{{t:h1}}</h1>
+        <p class="lead">{{t:lead}}</p>
+        <div class="cta">
+          <a class="btn btn-main" id="dl-main" href="#download"
+             data-win-href="{{DL_WIN}}" data-win-label="{{a:dl_win}}"
+             data-mac-href="{{DL_MAC_ARM}}" data-mac-label="{{a:dl_mac}}"
+             data-linux-href="{{DL_APPIMAGE}}" data-linux-label="{{a:dl_linux}}"
+             data-mobile-href="#download" data-mobile-label="{{a:dl_mobile}}">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 17h12"/></svg><span>{{t:dl_main}}</span></a>
+          <a class="btn btn-ghost" href="{{R}}app/"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 4.5v11l9-5.5z"/></svg>{{t:try_online}}</a>
+        </div>
+        <ul class="promise">{{PROMISE}}</ul>
+      </div>
+      {{SEQ}}
+    </div>
+    <figure class="hero-shot">
+      <div class="shot">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="{{R}}img/main-1600.webp" srcset="{{R}}img/main-800.webp 800w, {{R}}img/main-1600.webp 1600w" sizes="(max-width:1212px) calc(100vw - 32px), 1148px" width="1600" height="1000" alt="{{a:hero_alt}}" fetchpriority="high">
+      </div>
+      <figcaption>{{t:hero_caption}}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="band band-alt" id="features" aria-labelledby="features-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">{{t:features_label}}</span>
+      <h2 id="features-t">{{t:features_h2}}</h2>
+      <p>{{t:features_p}}</p>
+    </div>
+    {{FEATURES}}
+  </div>
+</section>
+
+<section class="band" aria-labelledby="included-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">{{t:inc_label}}</span>
+      <h2 id="included-t">{{t:inc_h2}}</h2>
+    </div>
+    <div class="cards">{{CARDS}}</div>
+  </div>
+</section>
+
+<section class="band band-alt" aria-labelledby="beat-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">{{t:how_label}}</span>
+      <h2 id="beat-t">{{t:how_h2}}</h2>
+      <p>{{t:how_p}}</p>
+    </div>
+    <ol class="howto">{{STEPS}}</ol>
+  </div>
+</section>
+
+<section class="band" id="download" aria-labelledby="download-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">{{t:dl_label}}</span>
+      <h2 id="download-t">{{t:dl_h2}}</h2>
+      <p>{{t:dl_p}}</p>
+    </div>
+    <div class="dl">
+      <div class="dl-card" id="dl-win">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8m-4-4v4"/></svg>Windows</h3>
+        <p class="dl-req">{{t:win_req}}</p>
+        <a class="btn btn-main" href="{{DL_WIN}}">{{t:win_btn}} <small>{{SZ_WIN}}</small></a>
+        <ul class="dl-more"><li><a href="{{DL_WIN_ZIP}}">{{t:win_zip}}</a><span class="mono">{{SZ_WIN_ZIP}}</span></li></ul>
+      </div>
+      <div class="dl-card" id="dl-mac">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg>macOS</h3>
+        <p class="dl-req">{{t:mac_req}}</p>
+        <a class="btn btn-main" href="{{DL_MAC_ARM}}">{{t:mac_btn}} <small>{{SZ_MAC_ARM}}</small></a>
+        <ul class="dl-more"><li><a href="{{DL_MAC_X64}}">{{t:mac_x64}}</a><span class="mono">{{SZ_MAC_X64}}</span></li><li><a href="{{DL_MAC_ARM_ZIP}}">{{t:mac_arm_zip}}</a><span class="mono">{{SZ_MAC_ARM_ZIP}}</span></li><li><a href="{{DL_MAC_X64_ZIP}}">{{t:mac_x64_zip}}</a><span class="mono">{{SZ_MAC_X64_ZIP}}</span></li></ul>
+      </div>
+      <div class="dl-card" id="dl-linux">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m5 0h5"/></svg>Linux</h3>
+        <p class="dl-req">{{t:linux_req}}</p>
+        <a class="btn btn-main" href="{{DL_APPIMAGE}}">AppImage <small>{{SZ_APPIMAGE}}</small></a>
+        <ul class="dl-more"><li><a href="{{DL_DEB}}">{{t:linux_deb}}</a><span class="mono">{{SZ_DEB}}</span></li></ul>
+      </div>
+      <div class="dl-card" id="dl-web">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z"/></svg>{{t:web_title}}</h3>
+        <p class="dl-req">{{t:web_req}}</p>
+        <a class="btn btn-ghost" href="{{R}}app/">{{t:web_btn}}</a>
+        <ul class="dl-more"><li>{{t:web_note}}</li></ul>
+      </div>
+    </div>
+    <p class="dl-note">{{t:dl_note}}</p>
+  </div>
+</section>
+
+<section class="band band-alt" aria-labelledby="news-t">
+  <div class="wrap news">
+    <div>
+      <span class="label">{{t:news_label}}</span>
+      <p class="ver" aria-hidden="true">{{VER}}</p>
+      <h2 id="news-t">{{t:news_h2}}</h2>
+    </div>
+    <ul class="ticks">{{NEWS}}</ul>
+  </div>
+</section>
+
+<section class="band" id="faq" aria-labelledby="faq-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">{{t:faq_label}}</span>
+      <h2 id="faq-t">{{t:faq_h2}}</h2>
+    </div>
+    <div class="faq">{{FAQ}}</div>
+  </div>
+</section>
+
+<section class="band band-alt final" aria-labelledby="end-t">
+  <div class="wrap">
+    <h2 id="end-t">{{t:final_h2}}</h2>
+    <p>{{t:final_p}}</p>
+    <div class="cta">
+      <a class="btn btn-main" href="#download">{{t:final_dl}}</a>
+      <a class="btn btn-ghost" href="{{R}}app/">{{t:try_online}}</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Ritmo Studio {{VER}} · {{t:footer_license}}</span>
+    <nav aria-label="{{a:footer_aria}}">
+      <a href="#download">{{t:nav_download}}</a>
+      <a href="{{R}}app/">{{t:footer_online}}</a>
+      <a href="{{REPO_URL}}">{{t:footer_source}}</a>
+      <a href="{{RELEASE_URL}}">{{t:footer_versions}}</a>
+    </nav>
+    <nav class="foot-langs" aria-label="{{a:languages}}">{{LANG_LINKS}}</nav>
+  </div>
+</footer>
+<script type="application/json" id="langs-data">{{LANGS_JSON}}</script>
+<script>{{JS}}</script>
+</body>
+</html>
