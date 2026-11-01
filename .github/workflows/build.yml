@@ -112,7 +112,12 @@ jobs:
           files=(desktop/release/*.dmg desktop/release/*.zip desktop/release/*.exe desktop/release/*.AppImage desktop/release/*.deb)
           if [ ${#files[@]} -eq 0 ]; then echo "No installers found"; exit 1; fi
           ls -l "${files[@]}"
-          gh release upload "$TAG" -R "$REPO" --clobber "${files[@]}"
+          # GitHub's upload endpoint sometimes answers 404 for a moment; --clobber makes a retry safe.
+          for try in 1 2 3; do
+            gh release upload "$TAG" -R "$REPO" --clobber "${files[@]}" && break
+            [ $try -lt 3 ] || exit 1
+            sleep 20
+          done
 
       - name: Refresh the website with the new download sizes
         if: github.event_name == 'workflow_dispatch' || github.ref_type == 'tag'
