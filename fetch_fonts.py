@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Downloads the Latin subsets of the app's open-licence Google Fonts into fonts/ (run once).
+"""Downloads the app's open-licence Google Fonts into fonts/ (run once), with every alphabet they cover
+(Latin, Latin Extended, Vietnamese, Cyrillic, Greek); unicode-range lets the page use only what it needs.
 
 Barlow, Barlow Condensed, JetBrains Mono and Unbounded are all under the SIL Open Font License,
 so they can be embedded in the app and redistributed with it.
@@ -15,6 +16,7 @@ URL = (
     "&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600"
     "&family=Unbounded:wght@600&display=swap"
 )
+SUBSETS = {"latin", "latin-ext", "vietnamese", "cyrillic", "cyrillic-ext", "greek"}
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 
 
@@ -29,13 +31,13 @@ blocks = re.findall(r"/\*\s*([\w-]+)\s*\*/\s*(@font-face\s*{[^}]+})", css)
 OUT.mkdir(exist_ok=True)
 faces = []
 for subset, block in blocks:
-    if subset != "latin":
+    if subset not in SUBSETS:
         continue
     family = re.search(r"font-family:\s*'([^']+)'", block).group(1)
     weight = re.search(r"font-weight:\s*(\d+)", block).group(1)
     src = re.search(r"url\((https://[^)]+\.woff2)\)", block).group(1)
     urange = re.search(r"unicode-range:\s*([^;]+);", block).group(1)
-    name = f"{family.replace(' ', '')}-{weight}.woff2"
+    name = f"{family.replace(' ', '')}-{weight}.woff2" if subset == "latin" else f"{family.replace(' ', '')}-{weight}-{subset}.woff2"
     (OUT / name).write_bytes(get(src))
     faces.append(f"{family}|{weight}|{name}|{urange}")
     print("saved", name)

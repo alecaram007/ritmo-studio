@@ -12,7 +12,7 @@ const noteName = m => NOTE_NAMES[((m % 12) + 12) % 12] + (Math.floor(m / 12) - 1
 const isBlack = m => [1, 3, 6, 8, 10].includes(((m % 12) + 12) % 12);
 const h = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 const alphaHex = a => Math.round(clamp(a, 0, 1) * 255).toString(16).padStart(2, '0');
-const safeName = s => (s || 'progetto').replace(/[\\/:*?"<>|]+/g, '').trim().slice(0, 60) || 'progetto';
+const safeName = s => (s || T('progetto')).replace(/[\\/:*?"<>|]+/g, '').trim().slice(0, 60) || T('progetto');
 
 const SPB = 16;          // steps (sixteenth notes) per bar
 const NUM_INSERTS = 125; // mixer inserts, plus the master at index 0 and the current-channel view
@@ -23,142 +23,142 @@ const COLORS = ['#e8b55e', '#5ccab6', '#e7795b', '#8fa7f4', '#d682c6', '#9dcb6c'
 /* ---------- Parameter specs ---------- */
 function P(label, min, max, def, o = {}) { return { label, min, max, def, ...o }; }
 function S(label, options, def) { return { label, options, def, select: true }; }
-const WAVES = [['sine', 'Sinusoide'], ['triangle', 'Triangolo'], ['sawtooth', 'Dente di sega'], ['square', 'Quadra']];
+const WAVES = [['sine', T('Sinusoide')], ['triangle', T('Triangolo')], ['sawtooth', T('Dente di sega')], ['square', T('Quadra')]];
 const defaults = spec => Object.fromEntries(Object.entries(spec).map(([k, v]) => [k, v.def]));
 
 const INSTRUMENTS = {
-  kick: { label: 'Cassa', group: 'Batteria', glyph: 'K', params: {
-    tune: P('Intonazione', -12, 12, 0, { unit: 'st', step: 1 }), decay: P('Decadimento', 0.1, 1.6, 0.5, { unit: 's' }),
-    punch: P('Punch', 0, 1, 0.55), click: P('Click', 0, 1, 0.3), drive: P('Saturazione', 0, 1, 0.15) } },
-  snare: { label: 'Rullante', group: 'Batteria', glyph: 'SN', params: {
-    tune: P('Intonazione', -12, 12, 0, { unit: 'st', step: 1 }), decay: P('Decadimento', 0.05, 0.8, 0.22, { unit: 's' }),
-    tone: P('Corpo', 0, 1, 0.45), snappy: P('Cordiera', 0, 1, 0.7) } },
-  clap: { label: 'Clap', group: 'Batteria', glyph: 'CP', params: {
-    tone: P('Tono', 600, 4000, 1300, { unit: 'Hz', log: true }), decay: P('Coda', 0.05, 1, 0.28, { unit: 's' }),
-    spread: P('Apertura', 0.004, 0.03, 0.011, { unit: 's' }) } },
-  hat: { label: 'Hi-hat chiuso', group: 'Batteria', glyph: 'HH', params: {
-    tone: P('Brillantezza', 0, 1, 0.6), decay: P('Decadimento', 0.02, 0.4, 0.07, { unit: 's' }) } },
-  ohat: { label: 'Hi-hat aperto', group: 'Batteria', glyph: 'OH', mono: true, params: {
-    tone: P('Brillantezza', 0, 1, 0.55), decay: P('Decadimento', 0.1, 1.5, 0.42, { unit: 's' }) } },
-  tom: { label: 'Tom', group: 'Batteria', glyph: 'T', params: {
-    tune: P('Intonazione', -12, 12, 0, { unit: 'st', step: 1 }), decay: P('Decadimento', 0.1, 1.2, 0.4, { unit: 's' }),
-    sweep: P('Glissato', 0, 1, 0.5) } },
-  cowbell: { label: 'Campanaccio', group: 'Batteria', glyph: 'CB', params: {
-    tune: P('Intonazione', -12, 12, 0, { unit: 'st', step: 1 }), decay: P('Decadimento', 0.05, 1, 0.3, { unit: 's' }) } },
-  crash: { label: 'Piatto', group: 'Batteria', glyph: 'CR', mono: true, params: {
-    tone: P('Brillantezza', 0, 1, 0.4), decay: P('Decadimento', 0.3, 4, 1.8, { unit: 's' }) } },
-  bass808: { label: 'Basso 808', group: 'Synth', glyph: '808', melodic: true, mono: true, params: {
-    decay: P('Decadimento', 0.2, 4, 1.2, { unit: 's' }), glide: P('Glissato', 0, 1, 0.3),
-    drive: P('Saturazione', 0, 1, 0.3), tone: P('Tono', 200, 8000, 2400, { unit: 'Hz', log: true }) } },
-  synth: { label: 'Synth sottrattivo', group: 'Synth', glyph: 'SY', melodic: true, params: {
-    w1: S('Onda 1', WAVES, 'sawtooth'), w2: S('Onda 2', WAVES, 'square'),
-    mix: P('Miscela osc', 0, 1, 0.35), det: P('Detune', 0, 50, 8, { unit: 'ct' }), oct2: P('Ottava osc 2', -2, 2, 0, { step: 1 }),
-    cut: P('Cutoff', 60, 18000, 2200, { unit: 'Hz', log: true }), res: P('Risonanza', 0, 18, 3, { step: 0.1 }), env: P('Inv. filtro', 0, 1, 0.4),
-    a: P('Attacco', 0.001, 2, 0.005, { unit: 's', log: true }), d: P('Decadimento', 0.01, 3, 0.35, { unit: 's', log: true }),
-    s: P('Sustain', 0, 1, 0.6), r: P('Rilascio', 0.01, 4, 0.25, { unit: 's', log: true }), gain: P('Livello', 0, 1, 0.6) } },
-  pad: { label: 'Pad', group: 'Synth', glyph: 'PD', melodic: true, params: {
-    det: P('Detune', 0, 60, 22, { unit: 'ct' }), cut: P('Cutoff', 100, 12000, 1600, { unit: 'Hz', log: true }), res: P('Risonanza', 0, 12, 1, { step: 0.1 }),
-    a: P('Attacco', 0.01, 4, 0.9, { unit: 's', log: true }), s: P('Sustain', 0, 1, 0.8), r: P('Rilascio', 0.05, 6, 1.6, { unit: 's', log: true }),
-    gain: P('Livello', 0, 1, 0.45) } },
-  pluck: { label: 'Pluck', group: 'Synth', glyph: 'PL', melodic: true, params: {
-    bright: P('Brillantezza', 0, 1, 0.6), decay: P('Decadimento', 0.2, 6, 1.6, { unit: 's' }), gain: P('Livello', 0, 1, 0.7) } },
-  epiano: { label: 'E-Piano FM', group: 'Synth', glyph: 'EP', melodic: true, params: {
-    ratio: P('Rapporto FM', 0.5, 8, 1, { step: 0.5 }), index: P('Indice FM', 0, 10, 2.2, { step: 0.1 }),
-    decay: P('Decadimento', 0.2, 6, 1.8, { unit: 's' }), r: P('Rilascio', 0.02, 3, 0.35, { unit: 's' }),
-    trem: P('Tremolo', 0, 1, 0.2), gain: P('Livello', 0, 1, 0.55) } },
+  kick: { label: T('Cassa'), group: TM('Batteria'), glyph: 'K', params: {
+    tune: P(T('Intonazione'), -12, 12, 0, { unit: 'st', step: 1 }), decay: P(T('Decadimento'), 0.1, 1.6, 0.5, { unit: 's' }),
+    punch: P(T('Punch'), 0, 1, 0.55), click: P(T('Click'), 0, 1, 0.3), drive: P(T('Saturazione'), 0, 1, 0.15) } },
+  snare: { label: T('Rullante'), group: TM('Batteria'), glyph: 'SN', params: {
+    tune: P(T('Intonazione'), -12, 12, 0, { unit: 'st', step: 1 }), decay: P(T('Decadimento'), 0.05, 0.8, 0.22, { unit: 's' }),
+    tone: P(T('Corpo'), 0, 1, 0.45), snappy: P(T('Cordiera'), 0, 1, 0.7) } },
+  clap: { label: T('Clap'), group: TM('Batteria'), glyph: 'CP', params: {
+    tone: P(T('Tono'), 600, 4000, 1300, { unit: 'Hz', log: true }), decay: P(T('Coda'), 0.05, 1, 0.28, { unit: 's' }),
+    spread: P(T('Apertura'), 0.004, 0.03, 0.011, { unit: 's' }) } },
+  hat: { label: T('Hi-hat chiuso'), group: TM('Batteria'), glyph: 'HH', params: {
+    tone: P(T('Brillantezza'), 0, 1, 0.6), decay: P(T('Decadimento'), 0.02, 0.4, 0.07, { unit: 's' }) } },
+  ohat: { label: T('Hi-hat aperto'), group: TM('Batteria'), glyph: 'OH', mono: true, params: {
+    tone: P(T('Brillantezza'), 0, 1, 0.55), decay: P(T('Decadimento'), 0.1, 1.5, 0.42, { unit: 's' }) } },
+  tom: { label: T('Tom'), group: TM('Batteria'), glyph: 'T', params: {
+    tune: P(T('Intonazione'), -12, 12, 0, { unit: 'st', step: 1 }), decay: P(T('Decadimento'), 0.1, 1.2, 0.4, { unit: 's' }),
+    sweep: P(T('Glissato'), 0, 1, 0.5) } },
+  cowbell: { label: T('Campanaccio'), group: TM('Batteria'), glyph: 'CB', params: {
+    tune: P(T('Intonazione'), -12, 12, 0, { unit: 'st', step: 1 }), decay: P(T('Decadimento'), 0.05, 1, 0.3, { unit: 's' }) } },
+  crash: { label: T('Piatto'), group: TM('Batteria'), glyph: 'CR', mono: true, params: {
+    tone: P(T('Brillantezza'), 0, 1, 0.4), decay: P(T('Decadimento'), 0.3, 4, 1.8, { unit: 's' }) } },
+  bass808: { label: T('Basso 808'), group: TM('Synth'), glyph: '808', melodic: true, mono: true, params: {
+    decay: P(T('Decadimento'), 0.2, 4, 1.2, { unit: 's' }), glide: P(T('Glissato'), 0, 1, 0.3),
+    drive: P(T('Saturazione'), 0, 1, 0.3), tone: P(T('Tono'), 200, 8000, 2400, { unit: 'Hz', log: true }) } },
+  synth: { label: T('Synth sottrattivo'), group: TM('Synth'), glyph: 'SY', melodic: true, params: {
+    w1: S(T('Onda 1'), WAVES, 'sawtooth'), w2: S(T('Onda 2'), WAVES, 'square'),
+    mix: P(T('Miscela osc'), 0, 1, 0.35), det: P(T('Detune'), 0, 50, 8, { unit: 'ct' }), oct2: P(T('Ottava osc 2'), -2, 2, 0, { step: 1 }),
+    cut: P(T('Cutoff'), 60, 18000, 2200, { unit: 'Hz', log: true }), res: P(T('Risonanza'), 0, 18, 3, { step: 0.1 }), env: P(T('Inv. filtro'), 0, 1, 0.4),
+    a: P(T('Attacco'), 0.001, 2, 0.005, { unit: 's', log: true }), d: P(T('Decadimento'), 0.01, 3, 0.35, { unit: 's', log: true }),
+    s: P(T('Sustain'), 0, 1, 0.6), r: P(T('Rilascio'), 0.01, 4, 0.25, { unit: 's', log: true }), gain: P(T('Livello'), 0, 1, 0.6) } },
+  pad: { label: T('Pad'), group: TM('Synth'), glyph: 'PD', melodic: true, params: {
+    det: P(T('Detune'), 0, 60, 22, { unit: 'ct' }), cut: P(T('Cutoff'), 100, 12000, 1600, { unit: 'Hz', log: true }), res: P(T('Risonanza'), 0, 12, 1, { step: 0.1 }),
+    a: P(T('Attacco'), 0.01, 4, 0.9, { unit: 's', log: true }), s: P(T('Sustain'), 0, 1, 0.8), r: P(T('Rilascio'), 0.05, 6, 1.6, { unit: 's', log: true }),
+    gain: P(T('Livello'), 0, 1, 0.45) } },
+  pluck: { label: T('Pluck'), group: TM('Synth'), glyph: 'PL', melodic: true, params: {
+    bright: P(T('Brillantezza'), 0, 1, 0.6), decay: P(T('Decadimento'), 0.2, 6, 1.6, { unit: 's' }), gain: P(T('Livello'), 0, 1, 0.7) } },
+  epiano: { label: T('E-Piano FM'), group: TM('Synth'), glyph: 'EP', melodic: true, params: {
+    ratio: P(T('Rapporto FM'), 0.5, 8, 1, { step: 0.5 }), index: P(T('Indice FM'), 0, 10, 2.2, { step: 0.1 }),
+    decay: P(T('Decadimento'), 0.2, 6, 1.8, { unit: 's' }), r: P(T('Rilascio'), 0.02, 3, 0.35, { unit: 's' }),
+    trem: P(T('Tremolo'), 0, 1, 0.2), gain: P(T('Livello'), 0, 1, 0.55) } },
   // Each param has a tab: 'smp' sample, 'env' envelopes and filter, 'lfo' modulation (see the channel settings window)
-  sampler: { label: 'Sampler', group: 'Campionatore', glyph: 'SA', melodic: true, params: {
-    pitch: P('Intonazione', -24, 24, 0, { unit: 'st', step: 1 }), gain: P('Livello', 0, 1.5, 1),
-    cut: S('Durata', [['full', 'Intero campione'], ['note', 'Segue la nota']], 'full'),
-    rev: S('Direzione', [['fwd', 'Avanti'], ['rev', 'Al contrario']], 'fwd'),
-    start: P('Inizio', 0, 1, 0, { unit: '%', tab: 'smp' }), end: P('Fine', 0, 1, 1, { unit: '%', tab: 'smp' }),
-    fin: P('Dissolvenza in entrata', 0, 2, 0, { unit: 's', tab: 'smp' }), fout: P('Dissolvenza in uscita', 0, 2, 0, { unit: 's', tab: 'smp' }),
-    norm: S('Normalizza', [['off', 'No'], ['on', 'Sì']], 'off'),
-    loop: S('Loop', [['off', 'Nessuno'], ['fwd', 'In avanti'], ['ping', 'Ping-pong']], 'off'),
-    ls: P('Inizio loop', 0, 1, 0, { unit: '%', tab: 'smp' }), le: P('Fine loop', 0, 1, 1, { unit: '%', tab: 'smp' }),
-    a: P('Attacco', 0, 4, 0.002, { unit: 's', tab: 'env' }), h: P('Tenuta', 0, 4, 0, { unit: 's', tab: 'env' }),
-    d: P('Decadimento', 0, 8, 0, { unit: 's', tab: 'env' }), s: P('Sustain', 0, 1, 1, { tab: 'env' }),
-    r: P('Rilascio', 0.005, 8, 0.05, { unit: 's', tab: 'env' }),
-    ftype: S('Filtro', [['off', 'Spento'], ['lp', 'Passa-basso'], ['lp24', 'Passa-basso 24 dB'], ['hp', 'Passa-alto'], ['bp', 'Passa-banda'], ['notch', 'Elimina banda']], 'off'),
-    fcut: P('Cutoff', 20, 20000, 20000, { unit: 'Hz', log: true, tab: 'env' }), fres: P('Risonanza', 0, 18, 0.7, { step: 0.1, tab: 'env' }),
-    fenv: P('Inviluppo filtro', -1, 1, 0, { tab: 'env' }), fa: P('Attacco filtro', 0.001, 4, 0.01, { unit: 's', log: true, tab: 'env' }),
-    fd: P('Decadimento filtro', 0.01, 8, 0.3, { unit: 's', log: true, tab: 'env' }), fs: P('Sustain filtro', 0, 1, 0, { tab: 'env' }),
-    penv: P('Inviluppo intonazione', -24, 24, 0, { unit: 'st', step: 0.1, tab: 'env' }), pd: P('Durata intonazione', 0.005, 2, 0.1, { unit: 's', log: true, tab: 'env' }),
-    lshape: S('Forma LFO', [['sine', 'Sinusoide'], ['triangle', 'Triangolo'], ['square', 'Quadra'], ['sawtooth', 'Dente di sega']], 'sine'),
-    lrate: P('Velocità LFO', 0.05, 20, 4, { unit: 'Hz', log: true, tab: 'lfo' }), lvol: P('LFO → volume', 0, 1, 0, { tab: 'lfo' }),
-    lpan: P('LFO → pan', 0, 1, 0, { tab: 'lfo' }), lcut: P('LFO → filtro', 0, 1, 0, { tab: 'lfo' }),
-    lpit: P('LFO → intonazione', 0, 2, 0, { unit: 'st', step: 0.01, tab: 'lfo' }) } },
-  supersaw: { label: 'Supersaw', group: 'Synth', glyph: 'SS', melodic: true, params: {
-    voices: P('Voci', 1, 9, 7, { step: 1 }), det: P('Detune', 0, 100, 25, { unit: 'ct' }), mix: P('Voci laterali', 0, 1, 0.6),
-    width: P('Ampiezza stereo', 0, 1, 0.8), cut: P('Cutoff', 100, 18000, 6000, { unit: 'Hz', log: true }), res: P('Risonanza', 0, 18, 1, { step: 0.1 }),
-    env: P('Inv. filtro', 0, 1, 0.2), a: P('Attacco', 0.001, 2, 0.01, { unit: 's', log: true }), d: P('Decadimento', 0.01, 3, 0.4, { unit: 's', log: true }),
-    s: P('Sustain', 0, 1, 0.75), r: P('Rilascio', 0.01, 4, 0.35, { unit: 's', log: true }), gain: P('Livello', 0, 1, 0.5) } },
-  acid: { label: 'Acid Bass (303)', group: 'Synth', glyph: '303', melodic: true, mono: true, legato: true, params: {
-    wave: S('Onda', [['sawtooth', 'Dente di sega'], ['square', 'Quadra']], 'sawtooth'), cut: P('Cutoff', 60, 8000, 500, { unit: 'Hz', log: true }),
-    res: P('Risonanza', 0, 30, 18, { step: 0.1 }), env: P('Inv. filtro', 0, 1, 0.6), decay: P('Decadimento', 0.05, 2, 0.35, { unit: 's' }),
-    accent: P('Accento', 0, 1, 0.5), glide: P('Slide', 0.005, 0.5, 0.08, { unit: 's', log: true }), gain: P('Livello', 0, 1, 0.6) } },
-  fm4: { label: 'FM a 4 operatori', group: 'Synth', glyph: 'FM', melodic: true, params: {
-    alg: S('Algoritmo', [['stack', '4→3→2→1 (catena)'], ['branch', '3+4→2→1'], ['pairs', '4→3 e 2→1'], ['triple', '4→1,2,3'], ['add', 'Additivo']], 'stack'),
-    r1: P('Rapporto 1', 0.25, 16, 1, { step: 0.25 }), r2: P('Rapporto 2', 0.25, 16, 2, { step: 0.25 }),
-    r3: P('Rapporto 3', 0.25, 16, 3, { step: 0.25 }), r4: P('Rapporto 4', 0.25, 16, 1, { step: 0.25 }),
-    i2: P('Indice 2', 0, 12, 2, { step: 0.1 }), i3: P('Indice 3', 0, 12, 1, { step: 0.1 }), i4: P('Indice 4', 0, 12, 0.5, { step: 0.1 }),
-    mdec: P('Decad. modulatori', 0.02, 4, 0.6, { unit: 's', log: true }), msus: P('Sustain modulatori', 0, 1, 0.3),
-    a: P('Attacco', 0.001, 2, 0.003, { unit: 's', log: true }), d: P('Decadimento', 0.01, 4, 0.8, { unit: 's', log: true }),
-    s: P('Sustain', 0, 1, 0.4), r: P('Rilascio', 0.01, 4, 0.3, { unit: 's', log: true }), gain: P('Livello', 0, 1, 0.5) } },
-  organ: { label: 'Organo', group: 'Synth', glyph: 'OR', melodic: true, params: {
+  sampler: { label: T('Sampler'), group: TM('Campionatore'), glyph: 'SA', melodic: true, params: {
+    pitch: P(T('Intonazione'), -24, 24, 0, { unit: 'st', step: 1 }), gain: P(T('Livello'), 0, 1.5, 1),
+    cut: S(T('Durata'), [['full', T('Intero campione')], ['note', T('Segue la nota')]], 'full'),
+    rev: S(T('Direzione'), [['fwd', T('Avanti')], ['rev', T('Al contrario')]], 'fwd'),
+    start: P(T('Inizio'), 0, 1, 0, { unit: '%', tab: 'smp' }), end: P(T('Fine'), 0, 1, 1, { unit: '%', tab: 'smp' }),
+    fin: P(T('Dissolvenza in entrata'), 0, 2, 0, { unit: 's', tab: 'smp' }), fout: P(T('Dissolvenza in uscita'), 0, 2, 0, { unit: 's', tab: 'smp' }),
+    norm: S(T('Normalizza'), [['off', T('No')], ['on', T('Sì')]], 'off'),
+    loop: S(T('Loop'), [['off', T('Nessuno')], ['fwd', T('In avanti')], ['ping', T('Ping-pong')]], 'off'),
+    ls: P(T('Inizio loop'), 0, 1, 0, { unit: '%', tab: 'smp' }), le: P(T('Fine loop'), 0, 1, 1, { unit: '%', tab: 'smp' }),
+    a: P(T('Attacco'), 0, 4, 0.002, { unit: 's', tab: 'env' }), h: P(T('Tenuta'), 0, 4, 0, { unit: 's', tab: 'env' }),
+    d: P(T('Decadimento'), 0, 8, 0, { unit: 's', tab: 'env' }), s: P(T('Sustain'), 0, 1, 1, { tab: 'env' }),
+    r: P(T('Rilascio'), 0.005, 8, 0.05, { unit: 's', tab: 'env' }),
+    ftype: S(T('Filtro'), [['off', T('Spento')], ['lp', T('Passa-basso')], ['lp24', T('Passa-basso 24 dB')], ['hp', T('Passa-alto')], ['bp', T('Passa-banda')], ['notch', T('Elimina banda')]], 'off'),
+    fcut: P(T('Cutoff'), 20, 20000, 20000, { unit: 'Hz', log: true, tab: 'env' }), fres: P(T('Risonanza'), 0, 18, 0.7, { step: 0.1, tab: 'env' }),
+    fenv: P(T('Inviluppo filtro'), -1, 1, 0, { tab: 'env' }), fa: P(T('Attacco filtro'), 0.001, 4, 0.01, { unit: 's', log: true, tab: 'env' }),
+    fd: P(T('Decadimento filtro'), 0.01, 8, 0.3, { unit: 's', log: true, tab: 'env' }), fs: P(T('Sustain filtro'), 0, 1, 0, { tab: 'env' }),
+    penv: P(T('Inviluppo intonazione'), -24, 24, 0, { unit: 'st', step: 0.1, tab: 'env' }), pd: P(T('Durata intonazione'), 0.005, 2, 0.1, { unit: 's', log: true, tab: 'env' }),
+    lshape: S(T('Forma LFO'), [['sine', T('Sinusoide')], ['triangle', T('Triangolo')], ['square', T('Quadra')], ['sawtooth', T('Dente di sega')]], 'sine'),
+    lrate: P(T('Velocità LFO'), 0.05, 20, 4, { unit: 'Hz', log: true, tab: 'lfo' }), lvol: P(T('LFO → volume'), 0, 1, 0, { tab: 'lfo' }),
+    lpan: P(T('LFO → pan'), 0, 1, 0, { tab: 'lfo' }), lcut: P(T('LFO → filtro'), 0, 1, 0, { tab: 'lfo' }),
+    lpit: P(T('LFO → intonazione'), 0, 2, 0, { unit: 'st', step: 0.01, tab: 'lfo' }) } },
+  supersaw: { label: T('Supersaw'), group: TM('Synth'), glyph: 'SS', melodic: true, params: {
+    voices: P(T('Voci'), 1, 9, 7, { step: 1 }), det: P(T('Detune'), 0, 100, 25, { unit: 'ct' }), mix: P(T('Voci laterali'), 0, 1, 0.6),
+    width: P(T('Ampiezza stereo'), 0, 1, 0.8), cut: P(T('Cutoff'), 100, 18000, 6000, { unit: 'Hz', log: true }), res: P(T('Risonanza'), 0, 18, 1, { step: 0.1 }),
+    env: P(T('Inv. filtro'), 0, 1, 0.2), a: P(T('Attacco'), 0.001, 2, 0.01, { unit: 's', log: true }), d: P(T('Decadimento'), 0.01, 3, 0.4, { unit: 's', log: true }),
+    s: P(T('Sustain'), 0, 1, 0.75), r: P(T('Rilascio'), 0.01, 4, 0.35, { unit: 's', log: true }), gain: P(T('Livello'), 0, 1, 0.5) } },
+  acid: { label: T('Acid Bass (303)'), group: TM('Synth'), glyph: '303', melodic: true, mono: true, legato: true, params: {
+    wave: S(T('Onda'), [['sawtooth', T('Dente di sega')], ['square', T('Quadra')]], 'sawtooth'), cut: P(T('Cutoff'), 60, 8000, 500, { unit: 'Hz', log: true }),
+    res: P(T('Risonanza'), 0, 30, 18, { step: 0.1 }), env: P(T('Inv. filtro'), 0, 1, 0.6), decay: P(T('Decadimento'), 0.05, 2, 0.35, { unit: 's' }),
+    accent: P(T('Accento'), 0, 1, 0.5), glide: P(T('Slide'), 0.005, 0.5, 0.08, { unit: 's', log: true }), gain: P(T('Livello'), 0, 1, 0.6) } },
+  fm4: { label: T('FM a 4 operatori'), group: TM('Synth'), glyph: 'FM', melodic: true, params: {
+    alg: S(T('Algoritmo'), [['stack', T('4→3→2→1 (catena)')], ['branch', '3+4→2→1'], ['pairs', T('4→3 e 2→1')], ['triple', '4→1,2,3'], ['add', T('Additivo')]], 'stack'),
+    r1: P(T('Rapporto 1'), 0.25, 16, 1, { step: 0.25 }), r2: P(T('Rapporto 2'), 0.25, 16, 2, { step: 0.25 }),
+    r3: P(T('Rapporto 3'), 0.25, 16, 3, { step: 0.25 }), r4: P(T('Rapporto 4'), 0.25, 16, 1, { step: 0.25 }),
+    i2: P(T('Indice 2'), 0, 12, 2, { step: 0.1 }), i3: P(T('Indice 3'), 0, 12, 1, { step: 0.1 }), i4: P(T('Indice 4'), 0, 12, 0.5, { step: 0.1 }),
+    mdec: P(T('Decad. modulatori'), 0.02, 4, 0.6, { unit: 's', log: true }), msus: P(T('Sustain modulatori'), 0, 1, 0.3),
+    a: P(T('Attacco'), 0.001, 2, 0.003, { unit: 's', log: true }), d: P(T('Decadimento'), 0.01, 4, 0.8, { unit: 's', log: true }),
+    s: P(T('Sustain'), 0, 1, 0.4), r: P(T('Rilascio'), 0.01, 4, 0.3, { unit: 's', log: true }), gain: P(T('Livello'), 0, 1, 0.5) } },
+  organ: { label: T('Organo'), group: TM('Synth'), glyph: 'OR', melodic: true, params: {
     b1: P("16'", 0, 1, 1), b2: P("5⅓'", 0, 1, 1), b3: P("8'", 0, 1, 1), b4: P("4'", 0, 1, 0), b5: P("2⅔'", 0, 1, 0),
     b6: P("2'", 0, 1, 0), b7: P("1⅗'", 0, 1, 0), b8: P("1⅓'", 0, 1, 0), b9: P("1'", 0, 1, 0),
-    perc: P('Percussione', 0, 1, 0.3), vib: P('Vibrato', 0, 1, 0.3), click: P('Click', 0, 1, 0.3), gain: P('Livello', 0, 1, 0.45) } },
+    perc: P(T('Percussione'), 0, 1, 0.3), vib: P(T('Vibrato'), 0, 1, 0.3), click: P(T('Click'), 0, 1, 0.3), gain: P(T('Livello'), 0, 1, 0.45) } },
   // Third-party plug-ins (VST3, AU, LV2, CLAP) hosted by the native engine of the desktop app.
-  plugin: { label: 'Plugin', group: 'Plugin', glyph: 'VST', melodic: true, hidden: true, params: {} },
+  plugin: { label: T('Plugin'), group: TM('Plugin'), glyph: 'VST', melodic: true, hidden: true, params: {} },
 };
 
 const FXDEFS = {
-  eq: { label: 'EQ a 3 bande', params: {
-    low: P('Bassi', -18, 18, 0, { unit: 'dB' }), mid: P('Medi', -18, 18, 0, { unit: 'dB' }),
-    midf: P('Freq. medi', 150, 6000, 1000, { unit: 'Hz', log: true }), high: P('Alti', -18, 18, 0, { unit: 'dB' }) } },
-  filter: { label: 'Filtro', params: {
-    type: S('Tipo', [['lowpass', 'Passa-basso'], ['highpass', 'Passa-alto'], ['bandpass', 'Passa-banda']], 'lowpass'),
-    freq: P('Frequenza', 20, 20000, 8000, { unit: 'Hz', log: true }), q: P('Risonanza', 0.1, 18, 0.7, { step: 0.1 }) } },
-  comp: { label: 'Compressore', params: {
-    thr: P('Soglia', -60, 0, -18, { unit: 'dB' }), ratio: P('Rapporto', 1, 20, 4, { unit: ':1' }),
-    att: P('Attacco', 0.001, 0.3, 0.01, { unit: 's', log: true }), rel: P('Rilascio', 0.02, 1, 0.2, { unit: 's', log: true }),
-    makeup: P('Guadagno', 0, 24, 4, { unit: 'dB' }) } },
-  limiter: { label: 'Limiter', params: {
-    gain: P('Guadagno', 0, 18, 3, { unit: 'dB' }), ceil: P('Soglia', -12, 0, -1, { unit: 'dB' }) } },
-  dist: { label: 'Distorsione', params: {
-    drive: P('Drive', 0, 1, 0.4), tone: P('Tono', 500, 12000, 5000, { unit: 'Hz', log: true }),
-    mix: P('Mix', 0, 1, 1), out: P('Uscita', 0, 1.5, 0.8) } },
-  delay: { label: 'Delay', params: {
-    time: S('Tempo', [['0.25', '1/16'], ['0.5', '1/8'], ['0.333', '1/8 terzina'], ['0.75', '1/8 puntato'], ['1', '1/4'], ['1.5', '1/4 puntato'], ['2', '1/2']], '0.75'),
-    pp: S('Stereo', [['on', 'Ping-pong'], ['off', 'Normale']], 'on'),
-    fb: P('Feedback', 0, 0.92, 0.38), tone: P('Tono', 400, 12000, 4000, { unit: 'Hz', log: true }), mix: P('Mix', 0, 1, 0.3) } },
-  reverb: { label: 'Riverbero', params: {
-    size: P('Durata', 0.3, 8, 2.2, { unit: 's' }), damp: P('Smorzamento', 1000, 16000, 6000, { unit: 'Hz', log: true }),
-    pre: P('Pre-delay', 0, 0.15, 0.02, { unit: 's' }), mix: P('Mix', 0, 1, 0.25) } },
-  chorus: { label: 'Chorus', params: {
-    rate: P('Velocità', 0.05, 5, 0.8, { unit: 'Hz', log: true }), depth: P('Profondità', 0, 1, 0.5), mix: P('Mix', 0, 1, 0.45) } },
-  phaser: { label: 'Phaser', params: {
-    rate: P('Velocità', 0.05, 8, 0.5, { unit: 'Hz', log: true }), depth: P('Profondità', 0, 1, 0.6),
-    freq: P('Frequenza', 200, 4000, 800, { unit: 'Hz', log: true }), stages: S('Stadi', [['4', '4'], ['6', '6'], ['8', '8'], ['12', '12']], '6'),
-    fb: P('Feedback', 0, 0.9, 0.4), mix: P('Mix', 0, 1, 0.5) } },
-  flanger: { label: 'Flanger', params: {
-    rate: P('Velocità', 0.05, 5, 0.25, { unit: 'Hz', log: true }), depth: P('Profondità', 0, 5, 2, { unit: 'ms' }),
-    delay: P('Ritardo', 0.5, 10, 2.5, { unit: 'ms' }), fb: P('Feedback', -0.95, 0.95, 0.5), mix: P('Mix', 0, 1, 0.5) } },
-  bitcrush: { label: 'Bitcrusher', params: {
-    bits: P('Bit', 1, 16, 8, { step: 1 }), down: P('Riduzione campioni', 1, 32, 4, { step: 1 }), mix: P('Mix', 0, 1, 1) } },
-  width: { label: 'Stereo (ampiezza)', params: { width: P('Ampiezza', 0, 2, 1.4), gain: P('Uscita', 0, 1.5, 1) } },
-  gate: { label: 'Gate ritmico', params: {
-    pattern: S('Schema', [['8', 'Ottavi'], ['16', 'Sedicesimi'], ['dot', 'Puntato'], ['tranceA', 'Trance A'], ['tranceB', 'Trance B'], ['stutter', 'Stutter']], '16'),
-    depth: P('Profondità', 0, 1, 1), smooth: P('Morbidezza', 0.001, 0.05, 0.004, { unit: 's', log: true }), mix: P('Mix', 0, 1, 1) } },
-  tremolo: { label: 'Tremolo / Auto-pan', params: {
-    mode: S('Modo', [['trem', 'Tremolo'], ['pan', 'Auto-pan']], 'trem'), shape: S('Forma', [['sine', 'Sinusoide'], ['triangle', 'Triangolo'], ['square', 'Quadra']], 'sine'),
-    rate: P('Velocità', 0.1, 20, 4, { unit: 'Hz', log: true }), depth: P('Profondità', 0, 1, 0.6) } },
-  ducker: { label: 'Sidechain (ducking)', params: {
-    src: P('Traccia sorgente', 1, MAX_INSERTS, 1, { step: 1, track: true }), thr: P('Soglia', -60, 0, -30, { unit: 'dB' }),
-    range: P('Riduzione', 0, 40, 18, { unit: 'dB' }), att: P('Attacco', 0.001, 0.1, 0.005, { unit: 's', log: true }),
-    rel: P('Rilascio', 0.02, 1, 0.2, { unit: 's', log: true }) } },
-  plugin: { label: 'Plugin', hidden: true, params: {} },
+  eq: { label: T('EQ a 3 bande'), params: {
+    low: P(T('Bassi'), -18, 18, 0, { unit: 'dB' }), mid: P(T('Medi'), -18, 18, 0, { unit: 'dB' }),
+    midf: P(T('Freq. medi'), 150, 6000, 1000, { unit: 'Hz', log: true }), high: P(T('Alti'), -18, 18, 0, { unit: 'dB' }) } },
+  filter: { label: T('Filtro'), params: {
+    type: S(T('Tipo'), [['lowpass', T('Passa-basso')], ['highpass', T('Passa-alto')], ['bandpass', T('Passa-banda')]], 'lowpass'),
+    freq: P(T('Frequenza'), 20, 20000, 8000, { unit: 'Hz', log: true }), q: P(T('Risonanza'), 0.1, 18, 0.7, { step: 0.1 }) } },
+  comp: { label: T('Compressore'), params: {
+    thr: P(T('Soglia'), -60, 0, -18, { unit: 'dB' }), ratio: P(T('Rapporto'), 1, 20, 4, { unit: ':1' }),
+    att: P(T('Attacco'), 0.001, 0.3, 0.01, { unit: 's', log: true }), rel: P(T('Rilascio'), 0.02, 1, 0.2, { unit: 's', log: true }),
+    makeup: P(T('Guadagno'), 0, 24, 4, { unit: 'dB' }) } },
+  limiter: { label: T('Limiter'), params: {
+    gain: P(T('Guadagno'), 0, 18, 3, { unit: 'dB' }), ceil: P(T('Soglia'), -12, 0, -1, { unit: 'dB' }) } },
+  dist: { label: T('Distorsione'), params: {
+    drive: P(T('Drive'), 0, 1, 0.4), tone: P(T('Tono'), 500, 12000, 5000, { unit: 'Hz', log: true }),
+    mix: P(T('Mix'), 0, 1, 1), out: P(T('Uscita'), 0, 1.5, 0.8) } },
+  delay: { label: T('Delay'), params: {
+    time: S(T('Tempo'), [['0.25', '1/16'], ['0.5', '1/8'], ['0.333', T('1/8 terzina')], ['0.75', T('1/8 puntato')], ['1', '1/4'], ['1.5', T('1/4 puntato')], ['2', '1/2']], '0.75'),
+    pp: S(T('Stereo'), [['on', T('Ping-pong')], ['off', T('Normale')]], 'on'),
+    fb: P(T('Feedback'), 0, 0.92, 0.38), tone: P(T('Tono'), 400, 12000, 4000, { unit: 'Hz', log: true }), mix: P(T('Mix'), 0, 1, 0.3) } },
+  reverb: { label: T('Riverbero'), params: {
+    size: P(T('Durata'), 0.3, 8, 2.2, { unit: 's' }), damp: P(T('Smorzamento'), 1000, 16000, 6000, { unit: 'Hz', log: true }),
+    pre: P(T('Pre-delay'), 0, 0.15, 0.02, { unit: 's' }), mix: P(T('Mix'), 0, 1, 0.25) } },
+  chorus: { label: T('Chorus'), params: {
+    rate: P(T('Velocità'), 0.05, 5, 0.8, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.5), mix: P(T('Mix'), 0, 1, 0.45) } },
+  phaser: { label: T('Phaser'), params: {
+    rate: P(T('Velocità'), 0.05, 8, 0.5, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.6),
+    freq: P(T('Frequenza'), 200, 4000, 800, { unit: 'Hz', log: true }), stages: S(T('Stadi'), [['4', '4'], ['6', '6'], ['8', '8'], ['12', '12']], '6'),
+    fb: P(T('Feedback'), 0, 0.9, 0.4), mix: P(T('Mix'), 0, 1, 0.5) } },
+  flanger: { label: T('Flanger'), params: {
+    rate: P(T('Velocità'), 0.05, 5, 0.25, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 5, 2, { unit: 'ms' }),
+    delay: P(T('Ritardo'), 0.5, 10, 2.5, { unit: 'ms' }), fb: P(T('Feedback'), -0.95, 0.95, 0.5), mix: P(T('Mix'), 0, 1, 0.5) } },
+  bitcrush: { label: T('Bitcrusher'), params: {
+    bits: P(T('Bit'), 1, 16, 8, { step: 1 }), down: P(T('Riduzione campioni'), 1, 32, 4, { step: 1 }), mix: P(T('Mix'), 0, 1, 1) } },
+  width: { label: T('Stereo (ampiezza)'), params: { width: P(T('Ampiezza'), 0, 2, 1.4), gain: P(T('Uscita'), 0, 1.5, 1) } },
+  gate: { label: T('Gate ritmico'), params: {
+    pattern: S(T('Schema'), [['8', T('Ottavi')], ['16', T('Sedicesimi')], ['dot', T('Puntato')], ['tranceA', T('Trance A')], ['tranceB', T('Trance B')], ['stutter', T('Stutter')]], '16'),
+    depth: P(T('Profondità'), 0, 1, 1), smooth: P(T('Morbidezza'), 0.001, 0.05, 0.004, { unit: 's', log: true }), mix: P(T('Mix'), 0, 1, 1) } },
+  tremolo: { label: T('Tremolo / Auto-pan'), params: {
+    mode: S(T('Modo'), [['trem', T('Tremolo')], ['pan', T('Auto-pan')]], 'trem'), shape: S(T('Forma'), [['sine', T('Sinusoide')], ['triangle', T('Triangolo')], ['square', T('Quadra')]], 'sine'),
+    rate: P(T('Velocità'), 0.1, 20, 4, { unit: 'Hz', log: true }), depth: P(T('Profondità'), 0, 1, 0.6) } },
+  ducker: { label: T('Sidechain (ducking)'), params: {
+    src: P(T('Traccia sorgente'), 1, MAX_INSERTS, 1, { step: 1, track: true }), thr: P(T('Soglia'), -60, 0, -30, { unit: 'dB' }),
+    range: P(T('Riduzione'), 0, 40, 18, { unit: 'dB' }), att: P(T('Attacco'), 0.001, 0.1, 0.005, { unit: 's', log: true }),
+    rel: P(T('Rilascio'), 0.02, 1, 0.2, { unit: 's', log: true }) } },
+  plugin: { label: T('Plugin'), hidden: true, params: {} },
 };
 
 /* ---------- Data model ---------- */
@@ -264,12 +264,12 @@ function seededRandom(n) { const x = Math.sin(n * 12.9898) * 43758.5453; return 
 function newPattern(name, color) { return { id: uid(), name, color, len: 16, notes: {} }; }
 function newMixerTrack(i) {
   return {
-    name: i === 0 ? 'Master' : 'Insert ' + i, vol: i === 0 ? 0.9 : 0.8, pan: 0, mute: false, fx: Array(FX_SLOTS).fill(null),
+    name: i === 0 ? T('Master') : T('Insert {0}', i), vol: i === 0 ? 0.9 : 0.8, pan: 0, mute: false, fx: Array(FX_SLOTS).fill(null),
     out: 0, sends: [], eq: { low: 0, mid: 0, midf: 1000, high: 0 }, width: 1, phase: false, swap: false,
   };
 }
 const numInserts = () => proj.mixer.length - 1;
-const MARKER_ACTS = { '': 'Nessuna azione', start: 'Inizio del brano', loop: 'Punto di ritorno del loop', mloop: 'Ripeti fino al prossimo marcatore', skip: 'Salta al prossimo marcatore', pause: 'Pausa', ts: 'Cambio di metro' };
+const MARKER_ACTS = { '': TM('Nessuna azione'), start: TM('Inizio del brano'), loop: TM('Punto di ritorno del loop'), mloop: TM('Ripeti fino al prossimo marcatore'), skip: TM('Salta al prossimo marcatore'), pause: TM('Pausa'), ts: TM('Cambio di metro') };
 function normalizeMarkers(list) {
   return (Array.isArray(list) ? list : []).filter(m => m && Number.isFinite(+m.s)).map(m => {
     const o = { id: m.id || uid(), s: Math.max(0, Math.round(+m.s)), name: String(m.name || ''), act: MARKER_ACTS[m.act] != null ? m.act : '' };
@@ -280,9 +280,9 @@ function normalizeMarkers(list) {
 function normalizePlaylist(pl, p) {
   pl = pl && typeof pl === 'object' ? pl : { tracks: [], clips: [] };
   pl.tracks = Array.isArray(pl.tracks) ? pl.tracks : [];
-  while (pl.tracks.length < 16) pl.tracks.push({ name: 'Traccia ' + (pl.tracks.length + 1), mute: false });
+  while (pl.tracks.length < 16) pl.tracks.push({ name: T('Traccia {0}', pl.tracks.length + 1), mute: false });
   pl.tracks.forEach((t, i) => {
-    t.name = String(t.name || 'Traccia ' + (i + 1));
+    t.name = String(t.name || T('Traccia {0}', i + 1));
     t.mute = !!t.mute;
     if (t.h != null) t.h = clamp(t.h | 0, 24, 160);
     t.sub = !!t.sub && i > 0;
@@ -329,15 +329,15 @@ function fxSlot(type, params = {}) { return { type, on: true, params: { ...defau
 
 function emptyProject(withKit = true) {
   const p = {
-    app: 'ritmo-studio', version: 1, name: 'Senza titolo', bpm: 128, swing: 0,
-    channels: [], patterns: [newPattern('Pattern 1', COLORS[0])],
-    playlist: { tracks: Array.from({ length: 16 }, (_, i) => ({ name: 'Traccia ' + (i + 1), mute: false })), clips: [] },
+    app: 'ritmo-studio', version: 1, name: T('Senza titolo'), bpm: 128, swing: 0,
+    channels: [], patterns: [newPattern(T('Pattern {0}', 1), COLORS[0])],
+    playlist: { tracks: Array.from({ length: 16 }, (_, i) => ({ name: T('Traccia {0}', i + 1), mute: false })), clips: [] },
     mixer: Array.from({ length: NUM_INSERTS + 1 }, (_, i) => newMixerTrack(i)),
     automation: [], ts: { num: 4, den: 4 }, markers: [], arrId: uid(),
   };
-  p.arrangements = [{ id: p.arrId, name: 'Arrangiamento', playlist: null, markers: [], loop: null }];
+  p.arrangements = [{ id: p.arrId, name: T('Arrangiamento'), playlist: null, markers: [], loop: null }];
   if (withKit) {
-    [['kick', 'Cassa'], ['clap', 'Clap'], ['hat', 'Hi-hat'], ['snare', 'Rullante']].forEach(([t, n], i) => {
+    [['kick', T('Cassa')], ['clap', T('Clap')], ['hat', T('Hi-hat')], ['snare', T('Rullante')]].forEach(([t, n], i) => {
       p.channels.push(newChannel(t, { name: n, mixer: i + 1, color: COLORS[i] }));
       p.mixer[i + 1].name = n;
     });
@@ -356,17 +356,17 @@ function demoProject() {
     p.mixer[mixer].name = name;
     return ch;
   };
-  const kick = add('kick', 'Cassa', 1, COLORS[0], { vol: 0.86 });
-  const clap = add('clap', 'Clap', 2, COLORS[2], { vol: 0.62 });
-  const hat = add('hat', 'Hi-hat', 3, COLORS[6], { vol: 0.42 });
-  const ohat = add('ohat', 'Hi-hat aperto', 3, COLORS[7], { vol: 0.34 });
-  const bass = add('bass808', 'Basso 808', 4, COLORS[4], { vol: 0.72, params: { decay: 0.9, glide: 0.25, drive: 0.35 } });
-  const pad = add('pad', 'Pad notturno', 5, COLORS[3], { vol: 0.56 });
-  const pluck = add('pluck', 'Pluck', 6, COLORS[1], { vol: 0.5, params: { bright: 0.55, decay: 1.2 } });
-  p.mixer[3].name = 'Hi-hat';
+  const kick = add('kick', T('Cassa'), 1, COLORS[0], { vol: 0.86 });
+  const clap = add('clap', T('Clap'), 2, COLORS[2], { vol: 0.62 });
+  const hat = add('hat', T('Hi-hat'), 3, COLORS[6], { vol: 0.42 });
+  const ohat = add('ohat', T('Hi-hat aperto'), 3, COLORS[7], { vol: 0.34 });
+  const bass = add('bass808', T('Basso 808'), 4, COLORS[4], { vol: 0.72, params: { decay: 0.9, glide: 0.25, drive: 0.35 } });
+  const pad = add('pad', T('Pad notturno'), 5, COLORS[3], { vol: 0.56 });
+  const pluck = add('pluck', T('Pluck'), 6, COLORS[1], { vol: 0.5, params: { bright: 0.55, decay: 1.2 } });
+  p.mixer[3].name = T('Hi-hat');
 
   const steps = (idx, m, v) => idx.map(i => ({ s: i, l: 1, m, v: typeof v === 'function' ? v(i) : v }));
-  const drums = newPattern('Batteria', COLORS[0]);
+  const drums = newPattern(T('Batteria'), COLORS[0]);
   drums.notes[kick.id] = steps([0, 4, 8, 12], 60, 0.9);
   drums.notes[clap.id] = steps([4, 12], 60, 0.8);
   drums.notes[hat.id] = steps([0, 1, 3, 4, 5, 7, 8, 9, 11, 12, 13, 15], 60, i => (i % 2 ? 0.45 : 0.72));
@@ -375,9 +375,9 @@ function demoProject() {
   // A minor: Am7 – Fmaj7 – Cmaj7 – G6, one bar each
   const roots = [33, 29, 36, 31];
   const chords = [[57, 60, 64, 67], [53, 57, 60, 64], [55, 59, 60, 64], [55, 59, 62, 64]];
-  const bassPat = newPattern('Basso', COLORS[4]); bassPat.len = 64;
-  const padPat = newPattern('Accordi', COLORS[3]); padPat.len = 64;
-  const melPat = newPattern('Melodia', COLORS[1]); melPat.len = 64;
+  const bassPat = newPattern(T('Basso'), COLORS[4]); bassPat.len = 64;
+  const padPat = newPattern(T('Accordi'), COLORS[3]); padPat.len = 64;
+  const melPat = newPattern(T('Melodia'), COLORS[1]); melPat.len = 64;
   bassPat.notes[bass.id] = []; padPat.notes[pad.id] = []; melPat.notes[pluck.id] = [];
   roots.forEach((r, b) => {
     const o = b * SPB;
@@ -388,7 +388,7 @@ function demoProject() {
   });
   p.patterns = [drums, bassPat, padPat, melPat];
 
-  ['Batteria', 'Basso', 'Accordi', 'Melodia'].forEach((n, i) => { p.playlist.tracks[i].name = n; });
+  [T('Batteria'), T('Basso'), T('Accordi'), T('Melodia')].forEach((n, i) => { p.playlist.tracks[i].name = n; });
   const clip = (pat, t, s, l) => p.playlist.clips.push({ id: uid(), p: pat.id, t, s, l });
   clip(drums, 0, 64, 192);
   [64, 128, 192].forEach(s => clip(bassPat, 1, s, 64));
@@ -406,10 +406,10 @@ function demoProject() {
 }
 
 function normalizeProject(p) {
-  if (!p || !Array.isArray(p.channels) || !Array.isArray(p.patterns)) throw new Error('il file non contiene un progetto Ritmo Studio');
+  if (!p || !Array.isArray(p.channels) || !Array.isArray(p.patterns)) throw new Error(T('il file non contiene un progetto Ritmo Studio'));
   p.bpm = clamp(+p.bpm || 128, 40, 300);
   p.swing = clamp(+p.swing || 0, 0, 1);
-  p.name = String(p.name || 'Senza titolo');
+  p.name = String(p.name || T('Senza titolo'));
   p.channels.forEach(ch => {
     if (!INSTRUMENTS[ch.type]) ch.type = 'synth';
     ch.id = ch.id || uid();
@@ -423,7 +423,7 @@ function normalizeProject(p) {
     ch.mute = !!ch.mute; ch.solo = !!ch.solo;
     normalizeChannelMode(ch);
   });
-  if (!p.patterns.length) p.patterns.push(newPattern('Pattern 1', COLORS[0]));
+  if (!p.patterns.length) p.patterns.push(newPattern(T('Pattern {0}', 1), COLORS[0]));
   p.patterns.forEach(pt => {
     pt.id = pt.id || uid();
     pt.len = clamp((pt.len | 0) || 16, 1, 512);
@@ -446,9 +446,9 @@ function normalizeProject(p) {
   // Arrangements: alternative playlists of the same patterns. The current one lives in p.playlist / p.markers / p.loop;
   // its entry in the list only keeps its name and place.
   p.arrangements = (Array.isArray(p.arrangements) ? p.arrangements : []).filter(a => a && a.id).map(a => ({
-    id: a.id, name: String(a.name || 'Arrangiamento').slice(0, 40), playlist: a.playlist || null, markers: normalizeMarkers(a.markers), loop: a.loop && a.loop.e > a.loop.s ? a.loop : null,
+    id: a.id, name: String(a.name || T('Arrangiamento')).slice(0, 40), playlist: a.playlist || null, markers: normalizeMarkers(a.markers), loop: a.loop && a.loop.e > a.loop.s ? a.loop : null,
   }));
-  if (!p.arrangements.some(a => a.id === p.arrId)) { p.arrId = uid(); p.arrangements.unshift({ id: p.arrId, name: 'Arrangiamento', playlist: null, markers: [], loop: null }); }
+  if (!p.arrangements.some(a => a.id === p.arrId)) { p.arrId = uid(); p.arrangements.unshift({ id: p.arrId, name: T('Arrangiamento'), playlist: null, markers: [], loop: null }); }
   p.arrangements.forEach(a => {
     if (a.id === p.arrId) { a.playlist = null; a.markers = []; a.loop = null; } else a.playlist = normalizePlaylist(a.playlist, p);
   });
@@ -483,7 +483,7 @@ const patById = id => proj.patterns.find(p => p.id === id);
 const curPat = () => patById(ui.selPat) || proj.patterns[0];
 const anySolo = () => proj.channels.some(c => c.solo);
 const audible = ch => !ch.mute && (!anySolo() || ch.solo);
-const mixerName = i => (i === 0 ? 'Master' : i + ' · ' + proj.mixer[i].name);
+const mixerName = i => (i === 0 ? T('Master') : i + ' · ' + proj.mixer[i].name);
 
 function patLen(p) {
   let end = p.len;
@@ -552,12 +552,12 @@ const songStart = () => { const m = (proj.markers || []).find(k => k.act === 'st
 
 /* ---------- Per-note properties (stored only when they differ from the default) ---------- */
 const NOTE_PROPS = {
-  v: { label: 'Velocità', min: 0, max: 1, def: 0.8 },
-  rel: { label: 'Rilascio', min: 0, max: 1, def: 0.5 },
-  pan: { label: 'Pan', min: -1, max: 1, def: 0 },
-  fine: { label: 'Intonazione fine', min: -1, max: 1, def: 0 },
-  mx: { label: 'Mod X (filtro)', min: 0, max: 1, def: 0.5 },
-  my: { label: 'Mod Y (risonanza)', min: 0, max: 1, def: 0.5 },
+  v: { label: T('Velocità'), min: 0, max: 1, def: 0.8 },
+  rel: { label: T('Rilascio'), min: 0, max: 1, def: 0.5 },
+  pan: { label: T('Pan'), min: -1, max: 1, def: 0 },
+  fine: { label: T('Intonazione fine'), min: -1, max: 1, def: 0 },
+  mx: { label: T('Mod X (filtro)'), min: 0, max: 1, def: 0.5 },
+  my: { label: T('Mod Y (risonanza)'), min: 0, max: 1, def: 0.5 },
 };
 const np = (n, k) => (n[k] ?? NOTE_PROPS[k].def);
 const NOTE_COLORS = ['#7ec7f0', '#f0a35e', '#9ddc6c', '#e07ab3', '#c3a4f5', '#f0d36a', '#6be0c8', '#f07e7e', '#a8b4c0', '#d6a77a', '#8fa3f0', '#e0e07a', '#7ae09a', '#f0b0d0', '#b0d0f0', '#d0b0f0'];
@@ -576,25 +576,31 @@ const Hist = {
     autosave();
   },
   undo() {
-    if (!this.undoStack.length) { toast('Niente da annullare'); return; }
+    if (!this.undoStack.length) { toast(T('Niente da annullare')); return; }
     this.redoStack.push(this.last);
     this.last = this.undoStack.pop();
     proj = JSON.parse(this.last);
     onProjectReplaced();
     autosave();
-    hint('Annullato');
+    hint(T('Annullato'));
   },
   redo() {
-    if (!this.redoStack.length) { toast('Niente da ripetere'); return; }
+    if (!this.redoStack.length) { toast(T('Niente da ripetere')); return; }
     this.undoStack.push(this.last);
     this.last = this.redoStack.pop();
     proj = JSON.parse(this.last);
     onProjectReplaced();
     autosave();
-    hint('Ripetuto');
+    hint(T('Ripetuto'));
   },
 };
 const commit = () => Hist.commit();
+
+// A mixer track still has its default name ("Insert 3"), in Italian or in the interface language.
+function isDefaultInsertName(n) {
+  const local = T('Insert {0}').replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace('\\{0\\}', '\\d+');
+  return /^Insert \d+$/.test(n) || new RegExp('^' + local + '$').test(n);
+}
 
 /* ---------- Browser storage (per-viewer convenience) ---------- */
 const STORE_KEY = 'ritmo-studio/project-v1';

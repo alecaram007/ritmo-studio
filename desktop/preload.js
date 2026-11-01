@@ -32,3 +32,8 @@ contextBridge.exposeInMainWorld('ritmoFiles', {
     remove: (kind, name) => ipcRenderer.invoke('presets:remove', kind, name),
   },
 });
+
+// The page reports its interface language, so menus and Save dialogs use the same one.
+contextBridge.exposeInMainWorld('ritmoApp', {
+  setLang: code => ipcRenderer.send('i18n:lang', code),
+});

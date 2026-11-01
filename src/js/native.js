@@ -128,7 +128,7 @@ if (NE.active) {
         const insert = recordTarget(), input = proj.mixer[insert].input || 1;
         NE.rec = { insert, from };
         send({ t: 'recStart', from, input, req: 'rec' });
-        hint('Registrazione audio su ' + mixerName(insert) + '… premi Stop per finire');
+        hint(T('Registrazione audio su {0}… premi Stop per finire', mixerName(insert)));
       } else send({ t: 'play', from });
       this.playing = true;
       NE.pos = from;
@@ -169,17 +169,17 @@ if (NE.active) {
   const webSaveProject = saveProject;
   saveProject = async function () { await refreshPluginStates(); webSaveProject(); };
 
-  const FORMAT_NAMES = { wav: 'Audio WAV', flac: 'Audio FLAC', ogg: 'Audio OGG Vorbis' };
+  const FORMAT_NAMES = { wav: T('Audio WAV'), flac: T('Audio FLAC'), ogg: T('Audio OGG Vorbis') };
   window.NativeIO = {
     async render(o, stems) {
       const ext = o.format || 'wav';
       const path = await N.saveDialog({
-        title: stems.length ? 'Esporta le tracce separate (nome di base dei file)' : 'Esporta il brano',
+        title: stems.length ? T('Esporta le tracce separate (nome di base dei file)') : T('Esporta il brano'),
         defaultPath: safeName(proj.name) + '.' + ext, filters: [{ name: FORMAT_NAMES[ext], extensions: [ext] }],
       });
       if (!path) return;
       syncNow(true);
-      hint(ui.mode === 'song' ? 'Rendering della playlist in corso…' : 'Rendering del pattern “' + curPat().name + '” in corso…');
+      hint(ui.mode === 'song' ? T('Rendering della playlist in corso…') : T('Rendering del pattern “{0}” in corso…', curPat().name));
       $('#btn-export').disabled = true;
       const res = await request({
         t: 'render', path, mode: ui.mode, pattern: curPat().id, format: ext, bits: o.bits, quality: o.quality,
@@ -188,8 +188,8 @@ if (NE.active) {
         project: ui.mode === 'song' && proj.loop ? wireProject({ ...proj, loop: undefined }) : undefined,
       }, 'renderDone', 60 * 60 * 1000);
       $('#btn-export').disabled = false;
-      if (res && res.ok) { hint('Esportato: ' + res.seconds.toFixed(1) + ' s · ' + res.files + ' file in ' + res.path.replace(/[^/\\]+$/, '')); toast(res.files > 1 ? res.files + ' file esportati' : 'Brano esportato'); }
-      else toast('Esportazione non riuscita' + (res && res.error ? ': ' + res.error : ''));
+      if (res && res.ok) { hint(T('Esportato: {0} s · {1} file in {2}', res.seconds.toFixed(1), res.files, res.path.replace(/[^/\\]+$/, ''))); toast(res.files > 1 ? T('{0} file esportati', res.files) : T('Brano esportato')); }
+      else toast(res && res.error ? T('Esportazione non riuscita: {0}', res.error) : T('Esportazione non riuscita'));
     },
     // A pattern, or a stand-in project's clips, rendered without a file: the engine answers with a WAV in base64.
     async renderData(o) {
@@ -199,7 +199,7 @@ if (NE.active) {
         t: 'render', data: true, tail: false, mode: o.mode || 'song', pattern: o.pattern || curPat().id,
         project: o.project ? wireProject(o.project) : undefined,
       }, 'renderDone', 10 * 60 * 1000);
-      if (!res || !res.ok || !res.data) throw new Error(res && res.error ? res.error : 'nessun audio ricevuto');
+      if (!res || !res.ok || !res.data) throw new Error(res && res.error ? res.error : T('nessun audio ricevuto'));
       return res.data;
     },
     getDevices: () => request({ t: 'getDevices' }, 'devices', 10000),
@@ -212,17 +212,17 @@ if (NE.active) {
       for (let k = 0; k < ins.length; k += 2) out.push({ id: k / 2 + 1, name: ins[k] + (ins[k + 1] ? ' - ' + ins[k + 1] : '') });
       return out;
     },
-    inputName(id) { const x = this.inputs().find(p => p.id === id); return x ? x.name : 'Ingresso ' + id; },
-    outputName() { return NE.device || 'Uscita audio'; },
+    inputName(id) { const x = this.inputs().find(p => p.id === id); return x ? x.name : T('Ingresso {0}', id); },
+    outputName() { return NE.device || T('Uscita audio'); },
   };
 
   window.NativeTools = {
     async audioLog() {
-      const path = await N.saveDialog({ title: 'Audio Logger: ultimi 60 secondi', defaultPath: safeName(proj.name) + ' - audio logger.wav', filters: [{ name: 'Audio WAV', extensions: ['wav'] }] });
+      const path = await N.saveDialog({ title: T('Audio Logger: ultimi 60 secondi'), defaultPath: safeName(proj.name) + ' - audio logger.wav', filters: [{ name: T('Audio WAV'), extensions: ['wav'] }] });
       if (!path) return;
       const res = await request({ t: 'audioLog', path }, 'audioLogDone');
-      if (res && res.ok) toast('Audio Logger: salvati ' + res.seconds.toFixed(1) + ' secondi');
-      else toast('Audio Logger vuoto: suona qualcosa e riprova');
+      if (res && res.ok) toast(T('Audio Logger: salvati {0} secondi', res.seconds.toFixed(1)));
+      else toast(T('Audio Logger vuoto: suona qualcosa e riprova'));
     },
   };
 
@@ -232,24 +232,24 @@ if (NE.active) {
     addInstrument(p) {
       const ch = addChannel('plugin', { name: p.name.slice(0, 30), plugin: { id: p.id, name: p.name, vendor: p.vendor, format: p.format } });
       NE.openOnLoad.add('ch:' + ch.id);
-      hint('Carico ' + p.name + '…');
+      hint(T('Carico {0}…', p.name));
     },
     addEffect(p, i = ui.selMix, k = proj.mixer[i].fx.findIndex(s => !s)) {
       const t = proj.mixer[i];
       WM.open('mixer');
-      if (k < 0) { toast('Gli slot di ' + mixerName(i) + ' sono tutti occupati'); return; }
+      if (k < 0) { toast(T('Gli slot di {0} sono tutti occupati', mixerName(i))); return; }
       t.fx[k] = { type: 'plugin', on: true, params: {}, plugin: { id: p.id, name: p.name, vendor: p.vendor, format: p.format } };
       NE.openOnLoad.add('fx:' + i + ':' + k);
       commit();
       Mixer.render();
-      hint('Carico ' + p.name + ' su ' + mixerName(i) + '…');
+      hint(T('Carico {0} su {1}…', p.name, mixerName(i)));
     },
     // Automatable parameters of a loaded plug-in: pick one to create an automation clip for it.
     async paramMenu(target, label) {
       const res = await request({ t: 'params', target }, 'params', 8000);
-      if (!res || !res.list || !res.list.length) { toast('Il plugin non è caricato o non ha parametri automatizzabili'); return; }
-      const items = [{ title: label + ' · ' + res.list.length + ' parametri' }];
-      res.list.slice(0, 400).forEach(p => items.push({ label: p.name || 'Parametro ' + p.i, action: () => createAutomation({ kind: 'plugin', target, pid: p.i, name: label, pname: p.name, value: p.value }) }));
+      if (!res || !res.list || !res.list.length) { toast(T('Il plugin non è caricato o non ha parametri automatizzabili')); return; }
+      const items = [{ title: T('{0} · {1} parametri', label, res.list.length) }];
+      res.list.slice(0, 400).forEach(p => items.push({ label: p.name || T('Parametro {0}', p.i), action: () => createAutomation({ kind: 'plugin', target, pid: p.i, name: label, pname: p.name, value: p.value }) }));
       openMenu(lastPointer.x, lastPointer.y, items);
     },
   };
@@ -259,7 +259,7 @@ if (NE.active) {
   updateStatusRight = function () {
     $('#sys-audio').textContent = NE.connected && NE.sampleRate
       ? (NE.sampleRate / 1000).toFixed(1).replace('.', ',') + ' kHz · ' + NE.bufferSize
-      : 'avvio…';
+      : T('avvio…');
   };
   const refreshTree = () => { if (proj) Tree.render(); };
 
@@ -273,7 +273,7 @@ if (NE.active) {
         NE.lastSent = '';
         syncNow(true);
         send({ t: 'scan', mode: 'list' });
-        if (msg.audioError) toast('Scheda audio: ' + msg.audioError);
+        if (msg.audioError) toast(T('Scheda audio: {0}', msg.audioError));
         updateStatusRight();
         break;
       case 'device':
@@ -287,10 +287,10 @@ if (NE.active) {
       case 'recDone': {
         const r = NE.rec;
         NE.rec = null;
-        if (!msg.ok) { toast(msg.error || 'Registrazione non riuscita'); break; }
+        if (!msg.ok) { toast(msg.error || T('Registrazione non riuscita')); break; }
         const u8 = b64ToBytes(msg.data);
-        decodeBytes(u8).then(buffer => placeRecording('Registrazione ' + new Date().toLocaleTimeString().slice(0, 5) + '.wav', u8, buffer, msg.from, msg.latency, r ? r.insert : recordTarget()))
-          .catch(() => toast('La registrazione non si può leggere'));
+        decodeBytes(u8).then(buffer => placeRecording(T('Registrazione {0}', new Date().toLocaleTimeString().slice(0, 5)) + '.wav', u8, buffer, msg.from, msg.latency, r ? r.insert : recordTarget()))
+          .catch(() => toast(T('La registrazione non si può leggere')));
         break;
       }
       case 'status': {
@@ -326,18 +326,18 @@ if (NE.active) {
         break;
       case 'scanProgress':
         NE.scan = { done: msg.done, total: msg.total, current: msg.current };
-        hint('Scansione plugin: ' + msg.done + '/' + msg.total + ' — ' + msg.current);
+        hint(T('Scansione plugin: {0}/{1} — {2}', msg.done, msg.total, msg.current));
         if (msg.done % 10 === 0 || msg.done === msg.total) refreshTree();
         break;
       case 'plugins':
         NE.plugins = msg.list || [];
         NE.scan = null;
-        if (msg.scanned != null) toast('Plugin trovati: ' + NE.plugins.length);
+        if (msg.scanned != null) toast(T('Plugin trovati: {0}', NE.plugins.length));
         refreshTree();
         break;
       case 'pluginLoaded':
         NE.loaded.add(msg.target);
-        hint('Caricato: ' + msg.name);
+        hint(T('Caricato: {0}', msg.name));
         if (NE.openOnLoad.delete(msg.target)) NativePlugins.open(msg.target, msg.name);
         if (proj && ui.editCh) renderEditor();
         break;
@@ -348,28 +348,28 @@ if (NE.active) {
       case 'previewEnd':
         Preview.playing = false;
         Browser.renderBar();
-        if (!msg.ok) toast('Questo file non si può ascoltare');
+        if (!msg.ok) toast(T('Questo file non si può ascoltare'));
         break;
       case 'sampleLoaded':
-        if (!msg.ok) toast('Il motore non riesce a leggere un campione audio');
+        if (!msg.ok) toast(T('Il motore non riesce a leggere un campione audio'));
         break;
       case 'renderProgress':
-        hint('Rendering: ' + msg.progress + '%');
+        hint(T('Rendering: {0}%', msg.progress));
         break;
       case 'paused':
         if (Transport.playing) { Transport.playing = false; Rec.flush(); }
         ui.songPos = msg.pos;
         onTransportChange();
-        hint('Pausa al marcatore: premi Play per continuare');
+        hint(T('Pausa al marcatore: premi Play per continuare'));
         break;
       case 'engineExit':
         NE.connected = false;
         if (Transport.playing) { Transport.playing = false; onTransportChange(); }
-        toast('Il motore audio si è riavviato');
+        toast(T('Il motore audio si è riavviato'));
         break;
       case 'engineFailed':
         NE.connected = false;
-        toast('Il motore audio non parte: ' + (msg.error || 'errore sconosciuto'));
+        toast(T('Il motore audio non parte: {0}', msg.error || T('errore sconosciuto')));
         break;
     }
     if (msg.req && NE.waiting.has(msg.req)) {

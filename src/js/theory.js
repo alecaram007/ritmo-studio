@@ -3,45 +3,45 @@
    melody / bass / drum generators (Riff Machine, Loop Starter) and Standard MIDI Files. */
 
 const SCALES = {
-  none: { label: 'Nessuna', steps: null },
-  major: { label: 'Maggiore', steps: [0, 2, 4, 5, 7, 9, 11] },
-  minor: { label: 'Minore naturale', steps: [0, 2, 3, 5, 7, 8, 10] },
-  harmonic: { label: 'Minore armonica', steps: [0, 2, 3, 5, 7, 8, 11] },
-  melodic: { label: 'Minore melodica', steps: [0, 2, 3, 5, 7, 9, 11] },
-  dorian: { label: 'Dorica', steps: [0, 2, 3, 5, 7, 9, 10] },
-  phrygian: { label: 'Frigia', steps: [0, 1, 3, 5, 7, 8, 10] },
-  lydian: { label: 'Lidia', steps: [0, 2, 4, 6, 7, 9, 11] },
-  mixolydian: { label: 'Misolidia', steps: [0, 2, 4, 5, 7, 9, 10] },
-  locrian: { label: 'Locria', steps: [0, 1, 3, 5, 6, 8, 10] },
-  pentaMaj: { label: 'Pentatonica maggiore', steps: [0, 2, 4, 7, 9] },
-  pentaMin: { label: 'Pentatonica minore', steps: [0, 3, 5, 7, 10] },
-  blues: { label: 'Blues', steps: [0, 3, 5, 6, 7, 10] },
+  none: { label: T('Nessuna'), steps: null },
+  major: { label: T('Maggiore'), steps: [0, 2, 4, 5, 7, 9, 11] },
+  minor: { label: T('Minore naturale'), steps: [0, 2, 3, 5, 7, 8, 10] },
+  harmonic: { label: T('Minore armonica'), steps: [0, 2, 3, 5, 7, 8, 11] },
+  melodic: { label: T('Minore melodica'), steps: [0, 2, 3, 5, 7, 9, 11] },
+  dorian: { label: T('Dorica'), steps: [0, 2, 3, 5, 7, 9, 10] },
+  phrygian: { label: T('Frigia'), steps: [0, 1, 3, 5, 7, 8, 10] },
+  lydian: { label: T('Lidia'), steps: [0, 2, 4, 6, 7, 9, 11] },
+  mixolydian: { label: T('Misolidia'), steps: [0, 2, 4, 5, 7, 9, 10] },
+  locrian: { label: T('Locria'), steps: [0, 1, 3, 5, 6, 8, 10] },
+  pentaMaj: { label: T('Pentatonica maggiore'), steps: [0, 2, 4, 7, 9] },
+  pentaMin: { label: T('Pentatonica minore'), steps: [0, 3, 5, 7, 10] },
+  blues: { label: T('Blues'), steps: [0, 3, 5, 6, 7, 10] },
 };
 
 const CHORDS = {
-  maj: { label: 'Maggiore', iv: [0, 4, 7], sym: '' },
-  min: { label: 'Minore', iv: [0, 3, 7], sym: 'm' },
-  dim: { label: 'Diminuito', iv: [0, 3, 6], sym: 'dim' },
-  aug: { label: 'Aumentato', iv: [0, 4, 8], sym: 'aug' },
+  maj: { label: T('Maggiore'), iv: [0, 4, 7], sym: '' },
+  min: { label: T('Minore'), iv: [0, 3, 7], sym: 'm' },
+  dim: { label: T('Diminuito'), iv: [0, 3, 6], sym: 'dim' },
+  aug: { label: T('Aumentato'), iv: [0, 4, 8], sym: 'aug' },
   sus2: { label: 'Sus2', iv: [0, 2, 7], sym: 'sus2' },
   sus4: { label: 'Sus4', iv: [0, 5, 7], sym: 'sus4' },
-  pow: { label: 'Bicordo (5)', iv: [0, 7, 12], sym: '5' },
-  six: { label: 'Sesta', iv: [0, 4, 7, 9], sym: '6' },
-  min6: { label: 'Minore sesta', iv: [0, 3, 7, 9], sym: 'm6' },
-  dom7: { label: 'Settima', iv: [0, 4, 7, 10], sym: '7' },
-  maj7: { label: 'Settima maggiore', iv: [0, 4, 7, 11], sym: 'maj7' },
-  min7: { label: 'Minore settima', iv: [0, 3, 7, 10], sym: 'm7' },
-  minMaj7: { label: 'Minore settima maggiore', iv: [0, 3, 7, 11], sym: 'm(maj7)' },
-  m7b5: { label: 'Semidiminuito', iv: [0, 3, 6, 10], sym: 'm7b5' },
-  dim7: { label: 'Settima diminuita', iv: [0, 3, 6, 9], sym: 'dim7' },
+  pow: { label: T('Bicordo (5)'), iv: [0, 7, 12], sym: '5' },
+  six: { label: T('Sesta'), iv: [0, 4, 7, 9], sym: '6' },
+  min6: { label: T('Minore sesta'), iv: [0, 3, 7, 9], sym: 'm6' },
+  dom7: { label: T('Settima'), iv: [0, 4, 7, 10], sym: '7' },
+  maj7: { label: T('Settima maggiore'), iv: [0, 4, 7, 11], sym: 'maj7' },
+  min7: { label: T('Minore settima'), iv: [0, 3, 7, 10], sym: 'm7' },
+  minMaj7: { label: T('Minore settima maggiore'), iv: [0, 3, 7, 11], sym: 'm(maj7)' },
+  m7b5: { label: T('Semidiminuito'), iv: [0, 3, 6, 10], sym: 'm7b5' },
+  dim7: { label: T('Settima diminuita'), iv: [0, 3, 6, 9], sym: 'dim7' },
   add9: { label: 'Add9', iv: [0, 4, 7, 14], sym: 'add9' },
-  madd9: { label: 'Minore add9', iv: [0, 3, 7, 14], sym: 'madd9' },
-  dom9: { label: 'Nona', iv: [0, 4, 7, 10, 14], sym: '9' },
-  maj9: { label: 'Nona maggiore', iv: [0, 4, 7, 11, 14], sym: 'maj9' },
-  min9: { label: 'Minore nona', iv: [0, 3, 7, 10, 14], sym: 'm9' },
-  dom11: { label: 'Undicesima', iv: [0, 7, 10, 14, 17], sym: '11' },
-  min11: { label: 'Minore undicesima', iv: [0, 3, 7, 10, 14, 17], sym: 'm11' },
-  dom13: { label: 'Tredicesima', iv: [0, 4, 7, 10, 14, 21], sym: '13' },
+  madd9: { label: T('Minore add9'), iv: [0, 3, 7, 14], sym: 'madd9' },
+  dom9: { label: T('Nona'), iv: [0, 4, 7, 10, 14], sym: '9' },
+  maj9: { label: T('Nona maggiore'), iv: [0, 4, 7, 11, 14], sym: 'maj9' },
+  min9: { label: T('Minore nona'), iv: [0, 3, 7, 10, 14], sym: 'm9' },
+  dom11: { label: T('Undicesima'), iv: [0, 7, 10, 14, 17], sym: '11' },
+  min11: { label: T('Minore undicesima'), iv: [0, 3, 7, 10, 14, 17], sym: 'm11' },
+  dom13: { label: T('Tredicesima'), iv: [0, 4, 7, 10, 14, 21], sym: '13' },
 };
 
 const pc = m => ((m % 12) + 12) % 12;
@@ -105,7 +105,7 @@ function detectChord(notes) {
   }
   if (!best || best.score < 4) return pcs.length === 2 ? pcName(uniq[0]) + ' + ' + pcName(uniq[1]) : '';
   const name = NOTE_NAMES[best.root] + CHORDS[best.key].sym;
-  return (best.root !== bass ? name + '/' + NOTE_NAMES[bass] : name) + (best.complete ? '' : ' (parziale)');
+  return (best.root !== bass ? name + '/' + NOTE_NAMES[bass] : name) + (best.complete ? '' : ' ' + T('(parziale)'));
 }
 
 /** Picks the inversion of `notes` closest to the previous chord, keeping it near `center`. */
@@ -126,18 +126,18 @@ function voiceLead(notes, prev, center = 60) {
 }
 
 const PROGRESSIONS = [
-  { label: 'I – V – vi – IV (pop)', mode: 'major', deg: [0, 4, 5, 3] },
+  { label: T('I – V – vi – IV (pop)'), mode: 'major', deg: [0, 4, 5, 3] },
   { label: 'vi – IV – I – V', mode: 'major', deg: [5, 3, 0, 4] },
-  { label: 'I – vi – IV – V (anni ’50)', mode: 'major', deg: [0, 5, 3, 4] },
-  { label: 'ii – V – I (jazz)', mode: 'major', deg: [1, 4, 0, 0] },
+  { label: T('I – vi – IV – V (anni ’50)'), mode: 'major', deg: [0, 5, 3, 4] },
+  { label: T('ii – V – I (jazz)'), mode: 'major', deg: [1, 4, 0, 0] },
   { label: 'I – IV – V – IV', mode: 'major', deg: [0, 3, 4, 3] },
-  { label: 'I – V – vi – iii – IV – I – IV – V (Canone)', mode: 'major', deg: [0, 4, 5, 2, 3, 0, 3, 4] },
-  { label: 'i – VI – III – VII (epico)', mode: 'minor', deg: [0, 5, 2, 6] },
+  { label: T('I – V – vi – iii – IV – I – IV – V (Canone)'), mode: 'major', deg: [0, 4, 5, 2, 3, 0, 3, 4] },
+  { label: T('i – VI – III – VII (epico)'), mode: 'minor', deg: [0, 5, 2, 6] },
   { label: 'i – iv – v – i', mode: 'minor', deg: [0, 3, 4, 0] },
   { label: 'i – VII – VI – VII', mode: 'minor', deg: [0, 6, 5, 6] },
-  { label: 'i – VI – VII – i (trap)', mode: 'minor', deg: [0, 5, 6, 0] },
-  { label: 'i – iv – VI – v (lo-fi)', mode: 'minor', deg: [0, 3, 5, 4] },
-  { label: 'ii – v – i (minore)', mode: 'minor', deg: [1, 4, 0, 0] },
+  { label: T('i – VI – VII – i (trap)'), mode: 'minor', deg: [0, 5, 6, 0] },
+  { label: T('i – iv – VI – v (lo-fi)'), mode: 'minor', deg: [0, 3, 5, 4] },
+  { label: T('ii – v – i (minore)'), mode: 'minor', deg: [1, 4, 0, 0] },
 ];
 
 /** Chords (root position) of a progression in a key: [{ root, notes, name }]. */
@@ -148,7 +148,7 @@ function progressionChords(prog, keyRoot, mode, size = 3, octave = 4) {
     const st = SCALES[type].steps;
     const rootMidi = base + st[d % 7];
     const notes = diatonicChord(rootMidi, keyRoot, type, size);
-    return { root: rootMidi, notes, name: detectChord(notes).replace(' (parziale)', '') };
+    return { root: rootMidi, notes, name: detectChord(notes).replace(' ' + T('(parziale)'), '') };
   });
 }
 
@@ -216,13 +216,13 @@ function bassLine(chords, { stepsPerChord = 16, style = 'root', octave = 2, seed
 }
 
 const GENRES = {
-  house: { label: 'House', bpm: 124, swing: 0.1, bass: 'offbeat', chordInst: 'synth', keys: 'stab' },
-  techno: { label: 'Techno', bpm: 130, swing: 0, bass: 'eighth', chordInst: 'pad', keys: 'pad' },
-  trap: { label: 'Trap', bpm: 140, swing: 0, bass: 'trap', chordInst: 'pad', keys: 'pad' },
-  hiphop: { label: 'Hip Hop (boom bap)', bpm: 90, swing: 0.35, bass: 'boom', chordInst: 'epiano', keys: 'hold' },
-  lofi: { label: 'Lo-fi', bpm: 78, swing: 0.45, bass: 'root', chordInst: 'epiano', keys: 'hold' },
-  reggaeton: { label: 'Reggaeton', bpm: 95, swing: 0, bass: 'house', chordInst: 'pluck', keys: 'stab' },
-  dnb: { label: 'Drum & Bass', bpm: 174, swing: 0, bass: 'root', chordInst: 'pad', keys: 'pad' },
+  house: { label: T('House'), bpm: 124, swing: 0.1, bass: 'offbeat', chordInst: 'synth', keys: 'stab' },
+  techno: { label: T('Techno'), bpm: 130, swing: 0, bass: 'eighth', chordInst: 'pad', keys: 'pad' },
+  trap: { label: T('Trap'), bpm: 140, swing: 0, bass: 'trap', chordInst: 'pad', keys: 'pad' },
+  hiphop: { label: T('Hip Hop (boom bap)'), bpm: 90, swing: 0.35, bass: 'boom', chordInst: 'epiano', keys: 'hold' },
+  lofi: { label: T('Lo-fi'), bpm: 78, swing: 0.45, bass: 'root', chordInst: 'epiano', keys: 'hold' },
+  reggaeton: { label: T('Reggaeton'), bpm: 95, swing: 0, bass: 'house', chordInst: 'pluck', keys: 'stab' },
+  dnb: { label: T('Drum & Bass'), bpm: 174, swing: 0, bass: 'root', chordInst: 'pad', keys: 'pad' },
 };
 
 /** Drum parts for one bar, by genre: { kick, snare, clap, hat, ohat } as arrays of [step, velocity]. */
@@ -286,9 +286,9 @@ function readMidi(u8) {
   const u32 = () => { const v = (u8[p] << 24) | (u8[p + 1] << 16) | (u8[p + 2] << 8) | u8[p + 3]; p += 4; return v >>> 0; };
   const u16 = () => { const v = (u8[p] << 8) | u8[p + 1]; p += 2; return v; };
   const readVlq = () => { let v = 0, b; do { b = u8[p++]; v = (v << 7) | (b & 0x7f); } while (b & 0x80); return v; };
-  if (str(4) !== 'MThd') throw new Error('non è un file MIDI');
+  if (str(4) !== 'MThd') throw new Error(T('non è un file MIDI'));
   const hlen = u32(); u16(); const ntr = u16(); const div = u16(); p += hlen - 6;
-  if (div & 0x8000) throw new Error('formato temporale SMPTE non supportato');
+  if (div & 0x8000) throw new Error(T('formato temporale SMPTE non supportato'));
   const tps = div / 4;
   let bpm = 120, ts = null;
   const tracks = [];
@@ -324,7 +324,7 @@ function readMidi(u8) {
     p = end;
     if (notes.length) {
       const channel = [...chans.entries()].sort((a, b) => b[1] - a[1])[0][0];
-      tracks.push({ name: name || 'Traccia ' + (tracks.length + 1), channel, notes });
+      tracks.push({ name: name || T('Traccia {0}', tracks.length + 1), channel, notes });
     }
   }
   return { bpm, tracks, ts };

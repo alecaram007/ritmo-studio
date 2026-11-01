@@ -1,4 +1,5 @@
 'use strict';
+const { T } = require('./i18n');
 // Disk access for the page's browser. The user adds folders with the system picker; the page can list, read and
 // search files only inside those folders, and read and write its own presets folder. Nothing else on disk is reachable.
 const { app, BrowserWindow, dialog, ipcMain, shell } = require('electron');
@@ -62,7 +63,7 @@ function register() {
   ipcMain.handle('files:roots', () => roots.map(p => ({ path: p, name: path.basename(p) || p })));
   ipcMain.handle('files:pick', async event => {
     const win = BrowserWindow.fromWebContents(event.sender);
-    const res = await dialog.showOpenDialog(win, { title: 'Aggiungi una cartella al browser', properties: ['openDirectory', 'multiSelections', 'createDirectory'] });
+    const res = await dialog.showOpenDialog(win, { title: T('Aggiungi una cartella al browser'), properties: ['openDirectory', 'multiSelections', 'createDirectory'] });
     if (res.canceled) return [];
     for (const p of res.filePaths) if (!roots.includes(p)) roots.push(p);
     saveRoots();

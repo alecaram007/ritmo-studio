@@ -28,10 +28,10 @@ function derivedData(d) {
 }
 // Pitch in semitones keeps the duration; stretch changes the duration (×) and keeps the pitch.
 function processAudio(buf, semis, rev, stretch) {
-  const sr = buf.sampleRate, P = Math.pow(2, semis / 12), T = stretch || 1;
+  const sr = buf.sampleRate, P = Math.pow(2, semis / 12), stretchBy = stretch || 1;
   let ch = Array.from({ length: buf.numberOfChannels }, (_, i) => buf.getChannelData(i));
   if (rev) ch = ch.map(d => Float32Array.from(d).reverse());
-  if (Math.abs(T * P - 1) > 1e-4) ch = wsola(ch, T * P, sr);
+  if (Math.abs(stretchBy * P - 1) > 1e-4) ch = wsola(ch, stretchBy * P, sr);
   if (Math.abs(P - 1) > 1e-4) ch = ch.map(d => resample(d, P));
   const out = new AudioBuffer({ length: Math.max(1, ch[0].length), numberOfChannels: ch.length, sampleRate: sr });
   ch.forEach((d, i) => out.getChannelData(i).set(d.subarray(0, out.length)));
@@ -86,7 +86,7 @@ const clipSteps = c => { const s = clipSample(c); return s && s.buffer ? Math.ma
 async function renderToBuffer(o) {
   if (window.NativeIO && NativeIO.renderData) {
     const b64 = await NativeIO.renderData(o);
-    if (!b64) throw new Error('il motore audio non ha risposto');
+    if (!b64) throw new Error(T('il motore audio non ha risposto'));
     const u8 = b64ToBytes(b64);
     return { u8, buffer: await decodeBytes(u8) };
   }
@@ -100,18 +100,18 @@ function projectWithClips(clips, from) {
 }
 let arrRendering = false;
 async function withRender(label, fn) {
-  if (arrRendering) { toast('Un rendering è già in corso'); return; }
+  if (arrRendering) { toast(T('Un rendering è già in corso')); return; }
   arrRendering = true;
   hint(label + '…');
-  try { await fn(); } catch (e) { console.warn(e); toast('Rendering non riuscito: ' + (e && e.message ? e.message : e)); } finally { arrRendering = false; }
+  try { await fn(); } catch (e) { console.warn(e); toast(T('Rendering non riuscito: {0}', e && e.message ? e.message : e)); } finally { arrRendering = false; }
 }
 // Consolidate: the clips become one audio clip (through the mixer, so it goes straight to the master).
 function consolidateClips(list, replace = true) {
   list = list.filter(c => !c.a && !c.mu);
-  if (!list.length) { toast('Seleziona clip di pattern o audio da consolidare'); return; }
+  if (!list.length) { toast(T('Seleziona clip di pattern o audio da consolidare')); return; }
   const from = Math.min(...list.map(c => c.s)), to = Math.max(...list.map(c => c.s + c.l)), t = Math.min(...list.map(c => c.t));
-  const name = (list.length === 1 && list[0].p && patById(list[0].p) ? patById(list[0].p).name : 'Consolidato') + '.wav';
-  return withRender('Rendering in audio', async () => {
+  const name = (list.length === 1 && list[0].p && patById(list[0].p) ? patById(list[0].p).name : T('Consolidato')) + '.wav';
+  return withRender(T('Rendering in audio'), async () => {
     const { u8, buffer } = await renderToBuffer({ mode: 'song', project: projectWithClips(list, from) });
     const id = addSampleFromBytes(name, u8, buffer);
     if (replace) list.forEach(c => PL.removeClip(c));
@@ -120,12 +120,12 @@ function consolidateClips(list, replace = true) {
     PL.select([c]);
     commit();
     PL.renderPatterns(); PL.draw(); Tree.render();
-    toast(replace ? 'Clip sostituite da una clip audio' : 'Clip audio creata');
+    toast(replace ? T('Clip sostituite da una clip audio') : T('Clip audio creata'));
   });
 }
 // A pattern rendered once (with its mixer effects) as an audio clip on a free track at the song position.
 function renderPatternToClip(p) {
-  return withRender('Rendering del pattern “' + p.name + '”', async () => {
+  return withRender(T('Rendering del pattern “{0}”', p.name), async () => {
     const { u8, buffer } = await renderToBuffer({ mode: 'pattern', pattern: p.id });
     const id = addSampleFromBytes(p.name + '.wav', u8, buffer), l = patLen(p), s = barAt(ui.songPos || 0).barStart;
     let t = proj.playlist.tracks.findIndex((_, i) => !proj.playlist.clips.some(c => c.t === i && c.s < s + l && c.s + c.l > s));
@@ -136,7 +136,7 @@ function renderPatternToClip(p) {
     commit();
     if (ui.mode !== 'song') setMode('song');
     PL.renderPatterns(); PL.draw(); Tree.render();
-    toast('Pattern renderizzato in una clip audio sulla ' + proj.playlist.tracks[t].name);
+    toast(T('Pattern renderizzato in una clip audio sulla {0}', proj.playlist.tracks[t].name));
   });
 }
 
@@ -167,15 +167,15 @@ function makeUnique(c) {
   commit();
   selectPattern(q.id, true);
   renderAll();
-  hint('“' + q.name + '”: pattern unico per questa clip');
+  hint(T('“{0}”: pattern unico per questa clip', q.name));
 }
 // Merge pattern clips: one new pattern holding what the selected clips play, where they play it.
 function mergePatternClips(list) {
   list = list.filter(c => c.p && patById(c.p));
-  if (list.length < 2) { toast('Seleziona almeno due clip di pattern'); return; }
+  if (list.length < 2) { toast(T('Seleziona almeno due clip di pattern')); return; }
   const from = Math.min(...list.map(c => c.s)), to = Math.max(...list.map(c => c.s + c.l));
-  if (to - from > 512) { toast('Le clip coprono più di 512 passi: troppo per un pattern solo'); return; }
-  const first = patById(list[0].p), base = first.name.replace(/ #\d+$/, '') + ' unito';
+  if (to - from > 512) { toast(T('Le clip coprono più di 512 passi: troppo per un pattern solo')); return; }
+  const first = patById(list[0].p), base = T('{0} unito', first.name.replace(/ #\d+$/, ''));
   const q = newPattern(proj.patterns.some(p => p.name === base) ? nextCopyName(base) : base, first.color);
   q.len = Math.ceil(to - from);
   for (const c of list) {
@@ -200,7 +200,7 @@ function mergePatternClips(list) {
   commit();
   selectPattern(q.id, true);
   renderAll();
-  toast(list.length + ' clip unite nel pattern “' + q.name + '”');
+  toast(T('{0} clip unite nel pattern “{1}”', list.length, q.name));
 }
 // Fades of two overlapping audio clips on one track become a crossfade over the overlap.
 function crossfadeNext(c) {
@@ -210,7 +210,7 @@ function crossfadeNext(c) {
   c.fout = ov; d.fin = ov;
   commit();
   PL.draw();
-  hint('Dissolvenza incrociata di ' + ov + ' passi');
+  hint(T('Dissolvenza incrociata di {0} passi', ov));
 }
 const nextOverlap = c => proj.playlist.clips.filter(d => d !== c && d.smp && d.t === c.t && d.s > c.s && d.s < c.s + c.l).sort((a, b) => a.s - b.s)[0] || null;
 // Fit to tempo: stretch the sample to the nearest whole number of quarter notes at the project tempo.
@@ -223,7 +223,7 @@ function fitToTempo(c) {
   c.l = beats * 4;
   commit();
   PL.draw();
-  hint('Clip adattata al tempo: ' + beats + ' quarti a ' + proj.bpm + ' BPM');
+  hint(T('Clip adattata al tempo: {0} quarti a {1} BPM', beats, proj.bpm));
 }
 
 /* ---------- Song timeline: space, markers, metre ---------- */
@@ -234,7 +234,7 @@ function insertSpace(at, len) {
   if (proj.loop && proj.loop.s >= at) { proj.loop.s += len; proj.loop.e += len; }
   commit();
   PL.draw();
-  hint('Inserito spazio: ' + len + ' passi alla posizione ' + barAt(at).bar);
+  hint(T('Inserito spazio: {0} passi alla posizione {1}', len, barAt(at).bar));
 }
 function deleteSpace(at, len) {
   const end = at + len;
@@ -248,11 +248,11 @@ function deleteSpace(at, len) {
   PL.sel.clear();
   commit();
   PL.draw();
-  hint('Eliminato spazio: ' + len + ' passi');
+  hint(T('Eliminato spazio: {0} passi', len));
 }
 const METRES = [[2, 4], [3, 4], [4, 4], [5, 4], [6, 4], [7, 4], [3, 8], [5, 8], [6, 8], [7, 8], [9, 8], [12, 8], [2, 2], [3, 2], [7, 16]];
 function addMarker(s, act = '', extra = {}) {
-  const name = act === 'ts' ? extra.num + '/' + extra.den : 'Marcatore ' + (proj.markers.filter(m => m.act !== 'ts').length + 1);
+  const name = act === 'ts' ? extra.num + '/' + extra.den : T('Marcatore {0}', proj.markers.filter(m => m.act !== 'ts').length + 1);
   const m = { id: uid(), s: Math.max(0, Math.round(s)), name, act, ...extra };
   proj.markers = normalizeMarkers([...proj.markers.filter(k => !(act === 'ts' && k.act === 'ts' && k.s === m.s)), m]);
   commit();
@@ -266,21 +266,21 @@ function renameMarker(m, rect) {
 function markerMenu(m, x, y) {
   const acts = Object.entries(MARKER_ACTS).filter(([k]) => k !== 'ts');
   openMenu(x, y, [
-    { title: (m.name || 'Marcatore') + ' · battuta ' + barAt(m.s).bar },
-    { label: 'Vai al marcatore', action: () => { ui.songPos = m.s; if (ui.mode !== 'song') setMode('song'); else Transport.restart(); onTransportChange(); } },
-    { label: 'Rinomina…', action: () => renameMarker(m, { left: x, top: y, width: 160, height: 24 }) },
+    { title: (m.name || T('Marcatore')) + ' · ' + T('battuta {0}', barAt(m.s).bar) },
+    { label: T('Vai al marcatore'), action: () => { ui.songPos = m.s; if (ui.mode !== 'song') setMode('song'); else Transport.restart(); onTransportChange(); } },
+    { label: T('Rinomina…'), action: () => renameMarker(m, { left: x, top: y, width: 160, height: 24 }) },
     m.act === 'ts'
-      ? { label: 'Metro: ' + m.num + '/' + m.den, sub: METRES.map(([n, d]) => ({ label: n + '/' + d, checked: m.num === n && m.den === d, action: () => { m.num = n; m.den = d; m.name = n + '/' + d; commit(); PL.draw(); PR.draw(); } })) }
-      : { label: 'Azione: ' + MARKER_ACTS[m.act], sub: acts.map(([k, l]) => ({ label: l, checked: m.act === k, action: () => { m.act = k; commit(); PL.draw(); } })) },
+      ? { label: T('Metro: {0}', m.num + '/' + m.den), sub: METRES.map(([n, d]) => ({ label: n + '/' + d, checked: m.num === n && m.den === d, action: () => { m.num = n; m.den = d; m.name = n + '/' + d; commit(); PL.draw(); PR.draw(); } })) }
+      : { label: T('Azione: {0}', T(MARKER_ACTS[m.act])), sub: acts.map(([k, l]) => ({ label: T(l), checked: m.act === k, action: () => { m.act = k; commit(); PL.draw(); } })) },
     '-',
-    { label: 'Elimina il marcatore', danger: true, action: () => { proj.markers = proj.markers.filter(k => k !== m); commit(); PL.draw(); PR.draw(); } },
+    { label: T('Elimina il marcatore'), danger: true, action: () => { proj.markers = proj.markers.filter(k => k !== m); commit(); PL.draw(); PR.draw(); } },
   ]);
 }
 function setProjectMetre(num, den) {
   proj.ts = { num, den };
   commit();
   renderAll();
-  hint('Metro del progetto: ' + num + '/' + den);
+  hint(T('Metro del progetto: {0}', num + '/' + den));
 }
 function metreMenuItems() {
   return METRES.map(([n, d]) => ({ label: n + '/' + d, checked: proj.ts.num === n && proj.ts.den === d, action: () => setProjectMetre(n, d) }));
@@ -303,13 +303,13 @@ function switchArrangement(id) {
   commit();
   rebuildEngine();
   renderAll();
-  hint('Arrangiamento: ' + target.name);
+  hint(T('Arrangiamento: {0}', target.name));
 }
 function newArrangement(clone) {
   const cur = curArrangement(), id = uid();
   const playlist = clone ? JSON.parse(JSON.stringify(proj.playlist)) : { tracks: proj.playlist.tracks.map(t => ({ name: t.name, mute: false, color: t.color, h: t.h, sub: t.sub })), clips: [] };
   if (clone) playlist.clips.forEach(c => { c.id = uid(); });
-  const name = clone ? cur.name.replace(/ #\d+$/, '') + ' #' + (proj.arrangements.length + 1) : 'Arrangiamento ' + (proj.arrangements.length + 1);
+  const name = clone ? cur.name.replace(/ #\d+$/, '') + ' #' + (proj.arrangements.length + 1) : T('Arrangiamento {0}', proj.arrangements.length + 1);
   proj.arrangements.splice(proj.arrangements.indexOf(cur) + 1, 0, { id, name, playlist, markers: clone ? JSON.parse(JSON.stringify(proj.markers)) : [], loop: clone && proj.loop ? { ...proj.loop } : null });
   switchArrangement(id);
 }
@@ -320,17 +320,17 @@ function deleteArrangement() {
   proj.arrangements = proj.arrangements.filter(a => a !== cur);
   commit();
   renderAll();
-  toast('Arrangiamento “' + cur.name + '” eliminato (Ctrl+Z per annullare)');
+  toast(T('Arrangiamento “{0}” eliminato (Ctrl+Z per annullare)', cur.name));
 }
 function arrangementMenu(anchor) {
   const cur = curArrangement();
   menuAt(anchor, [
-    { title: 'Arrangiamenti' },
+    { title: T('Arrangiamenti') },
     ...proj.arrangements.map(a => ({ label: a.name, checked: a === cur, action: () => switchArrangement(a.id) })),
     '-',
-    { label: 'Nuovo arrangiamento', action: () => newArrangement(false) },
-    { label: 'Clona questo arrangiamento', action: () => newArrangement(true) },
-    { label: 'Rinomina…', action: () => inlineEdit(anchor, cur.name, v => { cur.name = v.slice(0, 40); commit(); PL.renderTitle(); }) },
-    { label: 'Elimina questo arrangiamento', danger: true, disabled: proj.arrangements.length < 2, action: deleteArrangement },
+    { label: T('Nuovo arrangiamento'), action: () => newArrangement(false) },
+    { label: T('Clona questo arrangiamento'), action: () => newArrangement(true) },
+    { label: T('Rinomina…'), action: () => inlineEdit(anchor, cur.name, v => { cur.name = v.slice(0, 40); commit(); PL.renderTitle(); }) },
+    { label: T('Elimina questo arrangiamento'), danger: true, disabled: proj.arrangements.length < 2, action: deleteArrangement },
   ]);
 }

@@ -1,0 +1,7549 @@
+[
+ {
+  "s": "Ritmo Studio",
+  "at": [
+   "index.html:1"
+  ]
+ },
+ {
+  "s": "File",
+  "at": [
+   "index.html:631",
+   "app.js:361",
+   "../../desktop/main.js:383"
+  ]
+ },
+ {
+  "s": "Modifica",
+  "at": [
+   "index.html:632",
+   "../../desktop/main.js:390"
+  ]
+ },
+ {
+  "s": "Aggiungi",
+  "at": [
+   "index.html:633"
+  ]
+ },
+ {
+  "s": "Pattern",
+  "at": [
+   "index.html:634",
+   "index.html:795",
+   "app.js:368"
+  ]
+ },
+ {
+  "s": "Vista",
+  "at": [
+   "index.html:635",
+   "../../desktop/main.js:405"
+  ]
+ },
+ {
+  "s": "Opzioni",
+  "at": [
+   "index.html:636"
+  ]
+ },
+ {
+  "s": "Strumenti",
+  "at": [
+   "index.html:637",
+   "plugins-ui.js:18"
+  ]
+ },
+ {
+  "s": "Aiuto",
+  "at": [
+   "index.html:638",
+   "index.html:986",
+   "index.html:694",
+   "../../desktop/main.js:437"
+  ]
+ },
+ {
+  "s": "PAT",
+  "at": [
+   "index.html:642"
+  ]
+ },
+ {
+  "s": "SONG",
+  "at": [
+   "index.html:642"
+  ]
+ },
+ {
+  "s": "BPM",
+  "at": [
+   "index.html:654"
+  ]
+ },
+ {
+  "s": "M:S:CS",
+  "at": [
+   "index.html:668",
+   "app.js:1382",
+   "app.js:1386"
+  ]
+ },
+ {
+  "s": "Audio",
+  "at": [
+   "index.html:672"
+  ]
+ },
+ {
+  "s": "spento",
+  "at": [
+   "index.html:672",
+   "playlist.js:306",
+   "app.js:226"
+  ]
+ },
+ {
+  "s": "Memoria",
+  "at": [
+   "index.html:673"
+  ]
+ },
+ {
+  "s": "Clicca i passi del Channel Rack, poi premi Spazio.",
+  "at": [
+   "index.html:712"
+  ]
+ },
+ {
+  "s": "Battuta",
+  "at": [
+   "index.html:741"
+  ]
+ },
+ {
+  "s": "Battito",
+  "at": [
+   "index.html:741"
+  ]
+ },
+ {
+  "s": "Passo",
+  "at": [
+   "index.html:741",
+   "app.js:886"
+  ]
+ },
+ {
+  "s": "Playlist",
+  "at": [
+   "index.html:790",
+   "index.html:723",
+   "index.html:772"
+  ]
+ },
+ {
+  "s": "Arrangiamento ▾",
+  "at": [
+   "index.html:791"
+  ]
+ },
+ {
+  "s": "Channel rack",
+  "at": [
+   "index.html:810"
+  ]
+ },
+ {
+  "s": "Velocità",
+  "at": [
+   "index.html:819",
+   "core.js:140",
+   "core.js:142",
+   "core.js:146"
+  ]
+ },
+ {
+  "s": "Intonazione",
+  "at": [
+   "index.html:819",
+   "core.js:31",
+   "core.js:34",
+   "core.js:44"
+  ]
+ },
+ {
+  "s": "Loop Starter",
+  "at": [
+   "index.html:820",
+   "index.html:960",
+   "index.html:958",
+   "tools.js:376"
+  ]
+ },
+ {
+  "s": "Piano roll",
+  "at": [
+   "index.html:833",
+   "rack.js:330"
+  ]
+ },
+ {
+  "s": "Canale",
+  "at": [
+   "index.html:837",
+   "automation.js:13"
+  ]
+ },
+ {
+  "s": "Griglia",
+  "at": [
+   "index.html:838"
+  ]
+ },
+ {
+  "s": "1 battuta",
+  "at": [
+   "index.html:840",
+   "index.html:920",
+   "playlist.js:650",
+   "app.js:881"
+  ]
+ },
+ {
+  "s": "Slide",
+  "at": [
+   "index.html:855",
+   "core.js:99",
+   "pianoroll.js:800"
+  ]
+ },
+ {
+  "s": "Porta",
+  "at": [
+   "index.html:856",
+   "pianoroll.js:800"
+  ]
+ },
+ {
+  "s": "Accordo",
+  "at": [
+   "index.html:857"
+  ]
+ },
+ {
+  "s": "Dall'alto",
+  "at": [
+   "index.html:858"
+  ]
+ },
+ {
+  "s": "Scala",
+  "at": [
+   "index.html:859"
+  ]
+ },
+ {
+  "s": "Strumenti ▾",
+  "at": [
+   "index.html:860"
+  ]
+ },
+ {
+  "s": "Quantizza",
+  "at": [
+   "index.html:861"
+  ]
+ },
+ {
+  "s": "Fantasma",
+  "at": [
+   "index.html:862"
+  ]
+ },
+ {
+  "s": "Svuota",
+  "at": [
+   "index.html:865",
+   "rack.js:356"
+  ]
+ },
+ {
+  "s": "Mixer",
+  "at": [
+   "index.html:884",
+   "index.html:732",
+   "index.html:881",
+   "mixer.js:211"
+  ]
+ },
+ {
+  "s": "Largo",
+  "at": [
+   "index.html:888"
+  ]
+ },
+ {
+  "s": "Effetto",
+  "at": [
+   "index.html:904",
+   "index.html:900"
+  ]
+ },
+ {
+  "s": "Automazione",
+  "at": [
+   "index.html:915",
+   "playlist.js:276",
+   "automation.js:23"
+  ]
+ },
+ {
+  "s": "2 battute",
+  "at": [
+   "index.html:920",
+   "playlist.js:650"
+  ]
+ },
+ {
+  "s": "4 battute",
+  "at": [
+   "index.html:920",
+   "playlist.js:650"
+  ]
+ },
+ {
+  "s": "8 battute",
+  "at": [
+   "index.html:920",
+   "playlist.js:650"
+  ]
+ },
+ {
+  "s": "16 battute",
+  "at": [
+   "index.html:920"
+  ]
+ },
+ {
+  "s": "Forma ▾",
+  "at": [
+   "index.html:922"
+  ]
+ },
+ {
+  "s": "Elimina",
+  "at": [
+   "index.html:923",
+   "playlist.js:65",
+   "playlist.js:272"
+  ]
+ },
+ {
+  "s": "Esporta",
+  "at": [
+   "index.html:932",
+   "index.html:685",
+   "index.html:931"
+  ]
+ },
+ {
+  "s": "- audio",
+  "at": [
+   "index.html:932"
+  ]
+ },
+ {
+  "s": "Impostazioni audio",
+  "at": [
+   "index.html:938",
+   "index.html:937"
+  ]
+ },
+ {
+  "s": "Benvenuto in Ritmo Studio",
+  "at": [
+   "index.html:953",
+   "index.html:951"
+  ]
+ },
+ {
+  "s": "· idee per genere e tonalità",
+  "at": [
+   "index.html:960"
+  ]
+ },
+ {
+  "s": "Chord Progression Tool",
+  "at": [
+   "index.html:967",
+   "index.html:965"
+  ]
+ },
+ {
+  "s": "· progressioni e basso",
+  "at": [
+   "index.html:967"
+  ]
+ },
+ {
+  "s": "Accordi",
+  "at": [
+   "index.html:974",
+   "core.js:379",
+   "core.js:391",
+   "pianoroll.js:863"
+  ]
+ },
+ {
+  "s": "· rilevamento",
+  "at": [
+   "index.html:974"
+  ]
+ },
+ {
+  "s": "· scorciatoie",
+  "at": [
+   "index.html:986"
+  ]
+ },
+ {
+  "s": "Spazio",
+  "at": [
+   "index.html:990"
+  ]
+ },
+ {
+  "s": "Play / Stop",
+  "at": [
+   "index.html:990"
+  ]
+ },
+ {
+  "s": "L",
+  "at": [
+   "index.html:991"
+  ]
+ },
+ {
+  "s": "Cambia modalità PAT / SONG",
+  "at": [
+   "index.html:991"
+  ]
+ },
+ {
+  "s": "F6 · F7 · F9",
+  "at": [
+   "index.html:992"
+  ]
+ },
+ {
+  "s": "Channel Rack · Piano Roll · Mixer",
+  "at": [
+   "index.html:992"
+  ]
+ },
+ {
+  "s": "Alt+F8",
+  "at": [
+   "index.html:993"
+  ]
+ },
+ {
+  "s": "Browser",
+  "at": [
+   "index.html:993",
+   "index.html:735",
+   "index.html:754",
+   "app.js:508"
+  ]
+ },
+ {
+  "s": "Z … M",
+  "at": [
+   "index.html:994"
+  ]
+ },
+ {
+  "s": "Suona note con la tastiera (ottava bassa)",
+  "at": [
+   "index.html:994"
+  ]
+ },
+ {
+  "s": "Q … P",
+  "at": [
+   "index.html:995"
+  ]
+ },
+ {
+  "s": "Suona note (ottava alta)",
+  "at": [
+   "index.html:995"
+  ]
+ },
+ {
+  "s": "Sposta di un'ottava la tastiera",
+  "at": [
+   "index.html:996"
+  ]
+ },
+ {
+  "s": "Ctrl+Z · Ctrl+Y",
+  "at": [
+   "index.html:997"
+  ]
+ },
+ {
+  "s": "Annulla · Ripeti",
+  "at": [
+   "index.html:997"
+  ]
+ },
+ {
+  "s": "Ctrl+S · Ctrl+O",
+  "at": [
+   "index.html:998"
+  ]
+ },
+ {
+  "s": "Salva · Apri progetto",
+  "at": [
+   "index.html:998"
+  ]
+ },
+ {
+  "s": "Ctrl+R",
+  "at": [
+   "index.html:999"
+  ]
+ },
+ {
+  "s": "Esporta: WAV, FLAC, OGG o tracce separate",
+  "at": [
+   "index.html:999"
+  ]
+ },
+ {
+  "s": "Clic destro",
+  "at": [
+   "index.html:1000"
+  ]
+ },
+ {
+  "s": "Cancella note, passi e clip; menu del canale",
+  "at": [
+   "index.html:1000"
+  ]
+ },
+ {
+  "s": "Ctrl+trascina",
+  "at": [
+   "index.html:1001"
+  ]
+ },
+ {
+  "s": "Seleziona più note nel Piano Roll",
+  "at": [
+   "index.html:1001"
+  ]
+ },
+ {
+  "s": "Ctrl+C · Ctrl+V · Ctrl+D",
+  "at": [
+   "index.html:1002"
+  ]
+ },
+ {
+  "s": "Copia · Incolla · Duplica note",
+  "at": [
+   "index.html:1002"
+  ]
+ },
+ {
+  "s": "Frecce",
+  "at": [
+   "index.html:1003"
+  ]
+ },
+ {
+  "s": "Sposta le note selezionate (Maiusc: di un'ottava)",
+  "at": [
+   "index.html:1003"
+  ]
+ },
+ {
+  "s": "Ctrl+rotella",
+  "at": [
+   "index.html:1004"
+  ]
+ },
+ {
+  "s": "Zoom orizzontale",
+  "at": [
+   "index.html:1004"
+  ]
+ },
+ {
+  "s": "Maiusc+↑ · Maiusc+↓",
+  "at": [
+   "index.html:1005"
+  ]
+ },
+ {
+  "s": "Suono precedente o successivo della cartella del browser nel canale selezionato",
+  "at": [
+   "index.html:1005"
+  ]
+ },
+ {
+  "s": "Ritmo Studio è un progetto indipendente, gratuito e open source. Non è affiliato a Image-Line né a FL Studio. Tutti i suoni sono sintetizzati in tempo reale.",
+  "at": [
+   "index.html:1007"
+  ]
+ },
+ {
+  "s": "Menu principale",
+  "at": [
+   "index.html:630"
+  ]
+ },
+ {
+  "s": "Modalità pattern o brano (L)",
+  "at": [
+   "index.html:641"
+  ]
+ },
+ {
+  "s": "Modalità di riproduzione",
+  "at": [
+   "index.html:641"
+  ]
+ },
+ {
+  "s": "Play / Pausa (Spazio)",
+  "at": [
+   "index.html:644"
+  ]
+ },
+ {
+  "s": "Play",
+  "at": [
+   "index.html:644"
+  ]
+ },
+ {
+  "s": "Stop (premi di nuovo per tornare all'inizio)",
+  "at": [
+   "index.html:647"
+  ]
+ },
+ {
+  "s": "Stop",
+  "at": [
+   "index.html:647"
+  ]
+ },
+ {
+  "s": "Registra: note dalla tastiera o dal MIDI, oppure audio dall'ingresso (vedi Opzioni)",
+  "at": [
+   "index.html:650"
+  ]
+ },
+ {
+  "s": "Registra",
+  "at": [
+   "index.html:650"
+  ]
+ },
+ {
+  "s": "Trascina in verticale per cambiare il tempo",
+  "at": [
+   "index.html:654"
+  ]
+ },
+ {
+  "s": "Metronomo",
+  "at": [
+   "index.html:659",
+   "index.html:659",
+   "app.js:516"
+  ]
+ },
+ {
+  "s": "Cosa registra il tasto Rec: note o audio",
+  "at": [
+   "index.html:662"
+  ]
+ },
+ {
+  "s": "Modalità di registrazione",
+  "at": [
+   "index.html:662"
+  ]
+ },
+ {
+  "s": "Clic: alterna minuti:secondi e battute:battiti",
+  "at": [
+   "index.html:666"
+  ]
+ },
+ {
+  "s": "Stato audio",
+  "at": [
+   "index.html:671"
+  ]
+ },
+ {
+  "s": "Nuovo progetto",
+  "at": [
+   "index.html:676",
+   "index.html:676",
+   "app.js:453",
+   "tools.js:375"
+  ]
+ },
+ {
+  "s": "Apri progetto (Ctrl+O)",
+  "at": [
+   "index.html:679"
+  ]
+ },
+ {
+  "s": "Apri",
+  "at": [
+   "index.html:679",
+   "mixer.js:332"
+  ]
+ },
+ {
+  "s": "Salva progetto (Ctrl+S)",
+  "at": [
+   "index.html:682"
+  ]
+ },
+ {
+  "s": "Salva",
+  "at": [
+   "index.html:682",
+   "app.js:456",
+   "../../desktop/main.js:157"
+  ]
+ },
+ {
+  "s": "Esporta il brano: WAV, FLAC, OGG o tracce separate (Ctrl+R)",
+  "at": [
+   "index.html:685"
+  ]
+ },
+ {
+  "s": "Annulla (Ctrl+Z)",
+  "at": [
+   "index.html:688"
+  ]
+ },
+ {
+  "s": "Annulla",
+  "at": [
+   "index.html:688",
+   "app.js:469",
+   "../../desktop/main.js:392"
+  ]
+ },
+ {
+  "s": "Ripeti (Ctrl+Maiusc+Z)",
+  "at": [
+   "index.html:691"
+  ]
+ },
+ {
+  "s": "Ripeti",
+  "at": [
+   "index.html:691",
+   "app.js:470",
+   "../../desktop/main.js:393"
+  ]
+ },
+ {
+  "s": "Aiuto e scorciatoie",
+  "at": [
+   "index.html:694"
+  ]
+ },
+ {
+  "s": "Ritmo Studio — gratuito e open source",
+  "at": [
+   "index.html:699"
+  ]
+ },
+ {
+  "s": "Nome del progetto",
+  "at": [
+   "index.html:711"
+  ]
+ },
+ {
+  "s": "Volume master",
+  "at": [
+   "index.html:714",
+   "app.js:1341"
+  ]
+ },
+ {
+  "s": "Tastiera del computer come tastiera musicale",
+  "at": [
+   "index.html:718"
+  ]
+ },
+ {
+  "s": "Tastiera musicale",
+  "at": [
+   "index.html:718"
+  ]
+ },
+ {
+  "s": "Playlist (F5)",
+  "at": [
+   "index.html:723"
+  ]
+ },
+ {
+  "s": "Piano Roll (F7)",
+  "at": [
+   "index.html:726"
+  ]
+ },
+ {
+  "s": "Piano Roll",
+  "at": [
+   "index.html:726",
+   "index.html:830",
+   "app.js:506",
+   "app.js:913"
+  ]
+ },
+ {
+  "s": "Channel Rack (F6)",
+  "at": [
+   "index.html:729"
+  ]
+ },
+ {
+  "s": "Channel Rack",
+  "at": [
+   "index.html:729",
+   "index.html:804",
+   "app.js:505"
+  ]
+ },
+ {
+  "s": "Mixer (F9)",
+  "at": [
+   "index.html:732"
+  ]
+ },
+ {
+  "s": "Browser (Alt+F8)",
+  "at": [
+   "index.html:735"
+  ]
+ },
+ {
+  "s": "Griglia della playlist",
+  "at": [
+   "index.html:739",
+   "index.html:741"
+  ]
+ },
+ {
+  "s": "Pattern precedente",
+  "at": [
+   "index.html:744",
+   "index.html:744",
+   "app.js:497"
+  ]
+ },
+ {
+  "s": "Pattern corrente",
+  "at": [
+   "index.html:745"
+  ]
+ },
+ {
+  "s": "Pattern successivo",
+  "at": [
+   "index.html:746",
+   "index.html:746",
+   "app.js:498"
+  ]
+ },
+ {
+  "s": "Nuovo pattern",
+  "at": [
+   "index.html:747",
+   "index.html:747",
+   "app.js:492"
+  ]
+ },
+ {
+  "s": "Cerca suoni, strumenti, effetti…",
+  "at": [
+   "index.html:757"
+  ]
+ },
+ {
+  "s": "Cerca nel browser",
+  "at": [
+   "index.html:757"
+  ]
+ },
+ {
+  "s": "Aggiungi una cartella di campioni al browser",
+  "at": [
+   "index.html:758"
+  ]
+ },
+ {
+  "s": "Aggiungi una cartella",
+  "at": [
+   "index.html:758"
+  ]
+ },
+ {
+  "s": "Ascolta",
+  "at": [
+   "index.html:764",
+   "index.html:784",
+   "index.html:852",
+   "pianoroll.js:14"
+  ]
+ },
+ {
+  "s": "Volume dell'anteprima",
+  "at": [
+   "index.html:766",
+   "index.html:766"
+  ]
+ },
+ {
+  "s": "Strumenti della Playlist",
+  "at": [
+   "index.html:775"
+  ]
+ },
+ {
+  "s": "Disegna (Ctrl+trascina duplica)",
+  "at": [
+   "index.html:776"
+  ]
+ },
+ {
+  "s": "Disegna",
+  "at": [
+   "index.html:776",
+   "index.html:844",
+   "index.html:844",
+   "pianoroll.js:6"
+  ]
+ },
+ {
+  "s": "Pennello: dipinge clip in fila",
+  "at": [
+   "index.html:777"
+  ]
+ },
+ {
+  "s": "Pennello",
+  "at": [
+   "index.html:777",
+   "index.html:845",
+   "index.html:845",
+   "pianoroll.js:7"
+  ]
+ },
+ {
+  "s": "Cancella",
+  "at": [
+   "index.html:778",
+   "index.html:778",
+   "index.html:846",
+   "index.html:846"
+  ]
+ },
+ {
+  "s": "Muta clip",
+  "at": [
+   "index.html:779"
+  ]
+ },
+ {
+  "s": "Muta",
+  "at": [
+   "index.html:779",
+   "index.html:847",
+   "index.html:847",
+   "pianoroll.js:9"
+  ]
+ },
+ {
+  "s": "Slip: fa scorrere il contenuto della clip",
+  "at": [
+   "index.html:780"
+  ]
+ },
+ {
+  "s": "Slip",
+  "at": [
+   "index.html:780"
+  ]
+ },
+ {
+  "s": "Taglia clip",
+  "at": [
+   "index.html:781"
+  ]
+ },
+ {
+  "s": "Taglia",
+  "at": [
+   "index.html:781",
+   "index.html:848",
+   "index.html:848",
+   "rack.js:348"
+  ]
+ },
+ {
+  "s": "Seleziona (Maiusc aggiunge)",
+  "at": [
+   "index.html:782"
+  ]
+ },
+ {
+  "s": "Seleziona",
+  "at": [
+   "index.html:782",
+   "index.html:849",
+   "index.html:849",
+   "pianoroll.js:11"
+  ]
+ },
+ {
+  "s": "Zoom: trascina sul tratto da ingrandire",
+  "at": [
+   "index.html:783"
+  ]
+ },
+ {
+  "s": "Zoom",
+  "at": [
+   "index.html:783",
+   "index.html:851",
+   "index.html:851",
+   "pianoroll.js:13"
+  ]
+ },
+ {
+  "s": "Ascolta: tieni premuto sulla griglia",
+  "at": [
+   "index.html:784"
+  ]
+ },
+ {
+  "s": "Riduci zoom",
+  "at": [
+   "index.html:785",
+   "index.html:785",
+   "index.html:863"
+  ]
+ },
+ {
+  "s": "Aumenta zoom",
+  "at": [
+   "index.html:786",
+   "index.html:786",
+   "index.html:864"
+  ]
+ },
+ {
+  "s": "Righello: clic per la posizione, trascina per un loop, clic destro toglie il loop",
+  "at": [
+   "index.html:789"
+  ]
+ },
+ {
+  "s": "Arrangiamenti: cambia, crea, clona, rinomina",
+  "at": [
+   "index.html:791"
+  ]
+ },
+ {
+  "s": "Clic: posizione di partenza del brano",
+  "at": [
+   "index.html:797"
+  ]
+ },
+ {
+  "s": "Filtra i canali per tipo",
+  "at": [
+   "index.html:807"
+  ]
+ },
+ {
+  "s": "Swing",
+  "at": [
+   "index.html:814",
+   "rack.js:83"
+  ]
+ },
+ {
+  "s": "Lunghezza del pattern",
+  "at": [
+   "index.html:815"
+  ]
+ },
+ {
+  "s": "Passi del pattern",
+  "at": [
+   "index.html:815"
+  ]
+ },
+ {
+  "s": "Graph Editor: velocità o intonazione di ogni passo del canale selezionato",
+  "at": [
+   "index.html:818"
+  ]
+ },
+ {
+  "s": "Parametro del Graph Editor",
+  "at": [
+   "index.html:819"
+  ]
+ },
+ {
+  "s": "Loop Starter: crea un'idea di loop per genere e tonalità",
+  "at": [
+   "index.html:820"
+  ]
+ },
+ {
+  "s": "Aggiungi un canale",
+  "at": [
+   "index.html:825"
+  ]
+ },
+ {
+  "s": "Aggiungi canale",
+  "at": [
+   "index.html:825"
+  ]
+ },
+ {
+  "s": "Canale nel Piano Roll",
+  "at": [
+   "index.html:837"
+  ]
+ },
+ {
+  "s": "Strumenti del Piano Roll",
+  "at": [
+   "index.html:843"
+  ]
+ },
+ {
+  "s": "Lazo: selezione a mano libera",
+  "at": [
+   "index.html:850"
+  ]
+ },
+ {
+  "s": "Lazo",
+  "at": [
+   "index.html:850",
+   "pianoroll.js:12"
+  ]
+ },
+ {
+  "s": "Ascolta le note sotto il cursore",
+  "at": [
+   "index.html:852"
+  ]
+ },
+ {
+  "s": "Colore delle nuove note",
+  "at": [
+   "index.html:854",
+   "pianoroll.js:820"
+  ]
+ },
+ {
+  "s": "Slide: le nuove note fanno scivolare l'intonazione delle note che suonano",
+  "at": [
+   "index.html:855",
+   "pianoroll.js:67"
+  ]
+ },
+ {
+  "s": "Porta: le nuove note partono dall'intonazione della nota precedente",
+  "at": [
+   "index.html:856",
+   "pianoroll.js:68"
+  ]
+ },
+ {
+  "s": "Chord Stamp",
+  "at": [
+   "index.html:857"
+  ]
+ },
+ {
+  "s": "Chord Stamp dall'alto: la nota cliccata è la voce più acuta",
+  "at": [
+   "index.html:858"
+  ]
+ },
+ {
+  "s": "Tonica della scala",
+  "at": [
+   "index.html:859"
+  ]
+ },
+ {
+  "s": "Tipo di scala",
+  "at": [
+   "index.html:859"
+  ]
+ },
+ {
+  "s": "Strumenti di editing: arpeggio, strum, legato, Riff Machine…",
+  "at": [
+   "index.html:860"
+  ]
+ },
+ {
+  "s": "Allinea le note alla griglia",
+  "at": [
+   "index.html:861"
+  ]
+ },
+ {
+  "s": "Mostra le note degli altri canali",
+  "at": [
+   "index.html:862"
+  ]
+ },
+ {
+  "s": "Riduci",
+  "at": [
+   "index.html:863",
+   "app.js:142",
+   "../../desktop/main.js:412"
+  ]
+ },
+ {
+  "s": "Ingrandisci",
+  "at": [
+   "index.html:864",
+   "app.js:101",
+   "app.js:143",
+   "../../desktop/main.js:411"
+  ]
+ },
+ {
+  "s": "Cancella tutte le note del canale nel pattern",
+  "at": [
+   "index.html:865"
+  ]
+ },
+ {
+  "s": "Clic per ascoltare",
+  "at": [
+   "index.html:872"
+  ]
+ },
+ {
+  "s": "Corsia degli eventi",
+  "at": [
+   "index.html:874"
+  ]
+ },
+ {
+  "s": "Proprietà mostrata nella corsia degli eventi",
+  "at": [
+   "index.html:874"
+  ]
+ },
+ {
+  "s": "Trascina per cambiare la dinamica delle note",
+  "at": [
+   "index.html:875"
+  ]
+ },
+ {
+  "s": "Strisce larghe o strette",
+  "at": [
+   "index.html:888"
+  ]
+ },
+ {
+  "s": "Traccia selezionata",
+  "at": [
+   "index.html:894"
+  ]
+ },
+ {
+  "s": "Clip di automazione",
+  "at": [
+   "index.html:911"
+  ]
+ },
+ {
+  "s": "Nome della clip",
+  "at": [
+   "index.html:918"
+  ]
+ },
+ {
+  "s": "Lunghezza della clip",
+  "at": [
+   "index.html:919"
+  ]
+ },
+ {
+  "s": "Elimina la clip e le sue copie nella Playlist",
+  "at": [
+   "index.html:923"
+  ]
+ },
+ {
+  "s": "Clic: aggiungi un punto · trascina: sposta · clic destro: elimina il punto (Maiusc: senza griglia)",
+  "at": [
+   "index.html:927"
+  ]
+ },
+ {
+  "s": "Impostazioni canale",
+  "at": [
+   "index.html:943"
+  ]
+ },
+ {
+  "s": "Nome del canale",
+  "at": [
+   "index.html:946"
+  ]
+ },
+ {
+  "s": "Rilevamento accordi",
+  "at": [
+   "index.html:972",
+   "app.js:540"
+  ]
+ },
+ {
+  "s": "Scorciatoie",
+  "at": [
+   "index.html:984"
+  ]
+ },
+ {
+  "s": "progetto",
+  "at": [
+   "core.js:15",
+   "core.js:15"
+  ]
+ },
+ {
+  "s": "Sinusoide",
+  "at": [
+   "core.js:26",
+   "core.js:87",
+   "core.js:155"
+  ]
+ },
+ {
+  "s": "Triangolo",
+  "at": [
+   "core.js:26",
+   "core.js:87",
+   "core.js:155"
+  ]
+ },
+ {
+  "s": "Dente di sega",
+  "at": [
+   "core.js:26",
+   "core.js:87",
+   "core.js:97"
+  ]
+ },
+ {
+  "s": "Quadra",
+  "at": [
+   "core.js:26",
+   "core.js:87",
+   "core.js:97",
+   "core.js:155"
+  ]
+ },
+ {
+  "s": "Cassa",
+  "at": [
+   "core.js:30",
+   "core.js:340",
+   "core.js:359",
+   "tools.js:106"
+  ]
+ },
+ {
+  "s": "Batteria",
+  "at": [
+   "core.js:30",
+   "core.js:33",
+   "core.js:36",
+   "core.js:39"
+  ]
+ },
+ {
+  "s": "Decadimento",
+  "at": [
+   "core.js:31",
+   "core.js:34",
+   "core.js:40",
+   "core.js:42"
+  ]
+ },
+ {
+  "s": "Punch",
+  "at": [
+   "core.js:32"
+  ]
+ },
+ {
+  "s": "Click",
+  "at": [
+   "core.js:32",
+   "core.js:111"
+  ]
+ },
+ {
+  "s": "Saturazione",
+  "at": [
+   "core.js:32",
+   "core.js:52"
+  ]
+ },
+ {
+  "s": "Rullante",
+  "at": [
+   "core.js:33",
+   "core.js:340",
+   "tools.js:114"
+  ]
+ },
+ {
+  "s": "Corpo",
+  "at": [
+   "core.js:35"
+  ]
+ },
+ {
+  "s": "Cordiera",
+  "at": [
+   "core.js:35"
+  ]
+ },
+ {
+  "s": "Clap",
+  "at": [
+   "core.js:36",
+   "core.js:340",
+   "core.js:360",
+   "tools.js:115"
+  ]
+ },
+ {
+  "s": "Tono",
+  "at": [
+   "core.js:37",
+   "core.js:52",
+   "core.js:130",
+   "core.js:135"
+  ]
+ },
+ {
+  "s": "Coda",
+  "at": [
+   "core.js:37"
+  ]
+ },
+ {
+  "s": "Apertura",
+  "at": [
+   "core.js:38"
+  ]
+ },
+ {
+  "s": "Hi-hat chiuso",
+  "at": [
+   "core.js:39"
+  ]
+ },
+ {
+  "s": "Brillantezza",
+  "at": [
+   "core.js:40",
+   "core.js:42",
+   "core.js:49",
+   "core.js:64"
+  ]
+ },
+ {
+  "s": "Hi-hat aperto",
+  "at": [
+   "core.js:41",
+   "core.js:362",
+   "tools.js:116"
+  ]
+ },
+ {
+  "s": "Tom",
+  "at": [
+   "core.js:43"
+  ]
+ },
+ {
+  "s": "Glissato",
+  "at": [
+   "core.js:45",
+   "core.js:51"
+  ]
+ },
+ {
+  "s": "Campanaccio",
+  "at": [
+   "core.js:46"
+  ]
+ },
+ {
+  "s": "Piatto",
+  "at": [
+   "core.js:48"
+  ]
+ },
+ {
+  "s": "Basso 808",
+  "at": [
+   "core.js:50",
+   "core.js:363",
+   "tools.js:121"
+  ]
+ },
+ {
+  "s": "Synth",
+  "at": [
+   "core.js:50",
+   "core.js:53",
+   "core.js:59",
+   "core.js:63"
+  ]
+ },
+ {
+  "s": "Synth sottrattivo",
+  "at": [
+   "core.js:53"
+  ]
+ },
+ {
+  "s": "Onda 1",
+  "at": [
+   "core.js:54"
+  ]
+ },
+ {
+  "s": "Onda 2",
+  "at": [
+   "core.js:54"
+  ]
+ },
+ {
+  "s": "Miscela osc",
+  "at": [
+   "core.js:55"
+  ]
+ },
+ {
+  "s": "Detune",
+  "at": [
+   "core.js:55",
+   "core.js:60",
+   "core.js:92"
+  ]
+ },
+ {
+  "s": "Ottava osc 2",
+  "at": [
+   "core.js:55"
+  ]
+ },
+ {
+  "s": "Cutoff",
+  "at": [
+   "core.js:56",
+   "core.js:60",
+   "core.js:83",
+   "core.js:93"
+  ]
+ },
+ {
+  "s": "Risonanza",
+  "at": [
+   "core.js:56",
+   "core.js:60",
+   "core.js:83",
+   "core.js:93"
+  ]
+ },
+ {
+  "s": "Inv. filtro",
+  "at": [
+   "core.js:56",
+   "core.js:94",
+   "core.js:98"
+  ]
+ },
+ {
+  "s": "Attacco",
+  "at": [
+   "core.js:57",
+   "core.js:61",
+   "core.js:79",
+   "core.js:94"
+  ]
+ },
+ {
+  "s": "Sustain",
+  "at": [
+   "core.js:58",
+   "core.js:61",
+   "core.js:80",
+   "core.js:95"
+  ]
+ },
+ {
+  "s": "Rilascio",
+  "at": [
+   "core.js:58",
+   "core.js:61",
+   "core.js:67",
+   "core.js:81"
+  ]
+ },
+ {
+  "s": "Livello",
+  "at": [
+   "core.js:58",
+   "core.js:62",
+   "core.js:64",
+   "core.js:68"
+  ]
+ },
+ {
+  "s": "Pad",
+  "at": [
+   "core.js:59",
+   "tools.js:128"
+  ]
+ },
+ {
+  "s": "Pluck",
+  "at": [
+   "core.js:63",
+   "core.js:365"
+  ]
+ },
+ {
+  "s": "E-Piano FM",
+  "at": [
+   "core.js:65"
+  ]
+ },
+ {
+  "s": "Rapporto FM",
+  "at": [
+   "core.js:66"
+  ]
+ },
+ {
+  "s": "Indice FM",
+  "at": [
+   "core.js:66"
+  ]
+ },
+ {
+  "s": "Tremolo",
+  "at": [
+   "core.js:68",
+   "core.js:155"
+  ]
+ },
+ {
+  "s": "Sampler",
+  "at": [
+   "core.js:70"
+  ]
+ },
+ {
+  "s": "Campionatore",
+  "at": [
+   "core.js:70"
+  ]
+ },
+ {
+  "s": "Durata",
+  "at": [
+   "core.js:72",
+   "core.js:137"
+  ]
+ },
+ {
+  "s": "Intero campione",
+  "at": [
+   "core.js:72"
+  ]
+ },
+ {
+  "s": "Segue la nota",
+  "at": [
+   "core.js:72"
+  ]
+ },
+ {
+  "s": "Direzione",
+  "at": [
+   "core.js:73",
+   "app.js:884"
+  ]
+ },
+ {
+  "s": "Avanti",
+  "at": [
+   "core.js:73"
+  ]
+ },
+ {
+  "s": "Al contrario",
+  "at": [
+   "core.js:73",
+   "playlist.js:305"
+  ]
+ },
+ {
+  "s": "Inizio",
+  "at": [
+   "core.js:74"
+  ]
+ },
+ {
+  "s": "Fine",
+  "at": [
+   "core.js:74",
+   "pianoroll.js:17"
+  ]
+ },
+ {
+  "s": "Dissolvenza in entrata",
+  "at": [
+   "core.js:75"
+  ]
+ },
+ {
+  "s": "Dissolvenza in uscita",
+  "at": [
+   "core.js:75"
+  ]
+ },
+ {
+  "s": "Normalizza",
+  "at": [
+   "core.js:76"
+  ]
+ },
+ {
+  "s": "No",
+  "at": [
+   "core.js:76"
+  ]
+ },
+ {
+  "s": "Sì",
+  "at": [
+   "core.js:76"
+  ]
+ },
+ {
+  "s": "Loop",
+  "at": [
+   "core.js:77",
+   "app.js:820"
+  ]
+ },
+ {
+  "s": "Nessuno",
+  "at": [
+   "core.js:77",
+   "playlist.js:141",
+   "app.js:876"
+  ]
+ },
+ {
+  "s": "In avanti",
+  "at": [
+   "core.js:77"
+  ]
+ },
+ {
+  "s": "Ping-pong",
+  "at": [
+   "core.js:77",
+   "core.js:134"
+  ]
+ },
+ {
+  "s": "Inizio loop",
+  "at": [
+   "core.js:78"
+  ]
+ },
+ {
+  "s": "Fine loop",
+  "at": [
+   "core.js:78"
+  ]
+ },
+ {
+  "s": "Tenuta",
+  "at": [
+   "core.js:79"
+  ]
+ },
+ {
+  "s": "Filtro",
+  "at": [
+   "core.js:82",
+   "core.js:120",
+   "app.js:826"
+  ]
+ },
+ {
+  "s": "Spento",
+  "at": [
+   "core.js:82"
+  ]
+ },
+ {
+  "s": "Passa-basso",
+  "at": [
+   "core.js:82",
+   "core.js:121"
+  ]
+ },
+ {
+  "s": "Passa-basso 24 dB",
+  "at": [
+   "core.js:82"
+  ]
+ },
+ {
+  "s": "Passa-alto",
+  "at": [
+   "core.js:82",
+   "core.js:121"
+  ]
+ },
+ {
+  "s": "Passa-banda",
+  "at": [
+   "core.js:82",
+   "core.js:121"
+  ]
+ },
+ {
+  "s": "Elimina banda",
+  "at": [
+   "core.js:82"
+  ]
+ },
+ {
+  "s": "Inviluppo filtro",
+  "at": [
+   "core.js:84"
+  ]
+ },
+ {
+  "s": "Attacco filtro",
+  "at": [
+   "core.js:84"
+  ]
+ },
+ {
+  "s": "Decadimento filtro",
+  "at": [
+   "core.js:85"
+  ]
+ },
+ {
+  "s": "Sustain filtro",
+  "at": [
+   "core.js:85"
+  ]
+ },
+ {
+  "s": "Inviluppo intonazione",
+  "at": [
+   "core.js:86"
+  ]
+ },
+ {
+  "s": "Durata intonazione",
+  "at": [
+   "core.js:86"
+  ]
+ },
+ {
+  "s": "Forma LFO",
+  "at": [
+   "core.js:87"
+  ]
+ },
+ {
+  "s": "Velocità LFO",
+  "at": [
+   "core.js:88"
+  ]
+ },
+ {
+  "s": "LFO → volume",
+  "at": [
+   "core.js:88"
+  ]
+ },
+ {
+  "s": "LFO → pan",
+  "at": [
+   "core.js:89"
+  ]
+ },
+ {
+  "s": "LFO → filtro",
+  "at": [
+   "core.js:89"
+  ]
+ },
+ {
+  "s": "LFO → intonazione",
+  "at": [
+   "core.js:90"
+  ]
+ },
+ {
+  "s": "Supersaw",
+  "at": [
+   "core.js:91"
+  ]
+ },
+ {
+  "s": "Voci",
+  "at": [
+   "core.js:92",
+   "app.js:869"
+  ]
+ },
+ {
+  "s": "Voci laterali",
+  "at": [
+   "core.js:92"
+  ]
+ },
+ {
+  "s": "Ampiezza stereo",
+  "at": [
+   "core.js:93"
+  ]
+ },
+ {
+  "s": "Acid Bass (303)",
+  "at": [
+   "core.js:96"
+  ]
+ },
+ {
+  "s": "Onda",
+  "at": [
+   "core.js:97"
+  ]
+ },
+ {
+  "s": "Accento",
+  "at": [
+   "core.js:99"
+  ]
+ },
+ {
+  "s": "FM a 4 operatori",
+  "at": [
+   "core.js:100"
+  ]
+ },
+ {
+  "s": "Algoritmo",
+  "at": [
+   "core.js:101"
+  ]
+ },
+ {
+  "s": "4→3→2→1 (catena)",
+  "at": [
+   "core.js:101"
+  ]
+ },
+ {
+  "s": "4→3 e 2→1",
+  "at": [
+   "core.js:101"
+  ]
+ },
+ {
+  "s": "Additivo",
+  "at": [
+   "core.js:101"
+  ]
+ },
+ {
+  "s": "Rapporto 1",
+  "at": [
+   "core.js:102"
+  ]
+ },
+ {
+  "s": "Rapporto 2",
+  "at": [
+   "core.js:102"
+  ]
+ },
+ {
+  "s": "Rapporto 3",
+  "at": [
+   "core.js:103"
+  ]
+ },
+ {
+  "s": "Rapporto 4",
+  "at": [
+   "core.js:103"
+  ]
+ },
+ {
+  "s": "Indice 2",
+  "at": [
+   "core.js:104"
+  ]
+ },
+ {
+  "s": "Indice 3",
+  "at": [
+   "core.js:104"
+  ]
+ },
+ {
+  "s": "Indice 4",
+  "at": [
+   "core.js:104"
+  ]
+ },
+ {
+  "s": "Decad. modulatori",
+  "at": [
+   "core.js:105"
+  ]
+ },
+ {
+  "s": "Sustain modulatori",
+  "at": [
+   "core.js:105"
+  ]
+ },
+ {
+  "s": "Organo",
+  "at": [
+   "core.js:108"
+  ]
+ },
+ {
+  "s": "Percussione",
+  "at": [
+   "core.js:111"
+  ]
+ },
+ {
+  "s": "Vibrato",
+  "at": [
+   "core.js:111"
+  ]
+ },
+ {
+  "s": "Plugin",
+  "at": [
+   "core.js:113",
+   "core.js:113",
+   "core.js:161",
+   "mixer.js:288"
+  ]
+ },
+ {
+  "s": "EQ a 3 bande",
+  "at": [
+   "core.js:117"
+  ]
+ },
+ {
+  "s": "Bassi",
+  "at": [
+   "core.js:118",
+   "mixer.js:354"
+  ]
+ },
+ {
+  "s": "Medi",
+  "at": [
+   "core.js:118",
+   "mixer.js:354"
+  ]
+ },
+ {
+  "s": "Freq. medi",
+  "at": [
+   "core.js:119"
+  ]
+ },
+ {
+  "s": "Alti",
+  "at": [
+   "core.js:119",
+   "mixer.js:354"
+  ]
+ },
+ {
+  "s": "Tipo",
+  "at": [
+   "core.js:121"
+  ]
+ },
+ {
+  "s": "Frequenza",
+  "at": [
+   "core.js:122",
+   "core.js:143",
+   "io.js:121",
+   "io.js:142"
+  ]
+ },
+ {
+  "s": "Compressore",
+  "at": [
+   "core.js:123"
+  ]
+ },
+ {
+  "s": "Soglia",
+  "at": [
+   "core.js:124",
+   "core.js:128",
+   "core.js:158"
+  ]
+ },
+ {
+  "s": "Rapporto",
+  "at": [
+   "core.js:124"
+  ]
+ },
+ {
+  "s": "Guadagno",
+  "at": [
+   "core.js:126",
+   "core.js:128"
+  ]
+ },
+ {
+  "s": "Limiter",
+  "at": [
+   "core.js:127"
+  ]
+ },
+ {
+  "s": "Distorsione",
+  "at": [
+   "core.js:129"
+  ]
+ },
+ {
+  "s": "Drive",
+  "at": [
+   "core.js:130"
+  ]
+ },
+ {
+  "s": "Mix",
+  "at": [
+   "core.js:131",
+   "core.js:135",
+   "core.js:138",
+   "core.js:140"
+  ]
+ },
+ {
+  "s": "Uscita",
+  "at": [
+   "core.js:131",
+   "core.js:150",
+   "app.js:859",
+   "io.js:140"
+  ]
+ },
+ {
+  "s": "Delay",
+  "at": [
+   "core.js:132"
+  ]
+ },
+ {
+  "s": "Tempo",
+  "at": [
+   "core.js:133",
+   "pianoroll.js:831"
+  ]
+ },
+ {
+  "s": "1/8 terzina",
+  "at": [
+   "core.js:133",
+   "app.js:881"
+  ]
+ },
+ {
+  "s": "1/8 puntato",
+  "at": [
+   "core.js:133",
+   "app.js:881"
+  ]
+ },
+ {
+  "s": "1/4 puntato",
+  "at": [
+   "core.js:133"
+  ]
+ },
+ {
+  "s": "Stereo",
+  "at": [
+   "core.js:134"
+  ]
+ },
+ {
+  "s": "Normale",
+  "at": [
+   "core.js:134",
+   "playlist.js:137"
+  ]
+ },
+ {
+  "s": "Feedback",
+  "at": [
+   "core.js:135",
+   "core.js:144",
+   "core.js:147"
+  ]
+ },
+ {
+  "s": "Riverbero",
+  "at": [
+   "core.js:136"
+  ]
+ },
+ {
+  "s": "Smorzamento",
+  "at": [
+   "core.js:137"
+  ]
+ },
+ {
+  "s": "Pre-delay",
+  "at": [
+   "core.js:138"
+  ]
+ },
+ {
+  "s": "Chorus",
+  "at": [
+   "core.js:139"
+  ]
+ },
+ {
+  "s": "Profondità",
+  "at": [
+   "core.js:140",
+   "core.js:142",
+   "core.js:146",
+   "core.js:153"
+  ]
+ },
+ {
+  "s": "Phaser",
+  "at": [
+   "core.js:141"
+  ]
+ },
+ {
+  "s": "Stadi",
+  "at": [
+   "core.js:143"
+  ]
+ },
+ {
+  "s": "Flanger",
+  "at": [
+   "core.js:145"
+  ]
+ },
+ {
+  "s": "Ritardo",
+  "at": [
+   "core.js:147"
+  ]
+ },
+ {
+  "s": "Bitcrusher",
+  "at": [
+   "core.js:148"
+  ]
+ },
+ {
+  "s": "Bit",
+  "at": [
+   "core.js:149"
+  ]
+ },
+ {
+  "s": "Riduzione campioni",
+  "at": [
+   "core.js:149"
+  ]
+ },
+ {
+  "s": "Stereo (ampiezza)",
+  "at": [
+   "core.js:150"
+  ]
+ },
+ {
+  "s": "Ampiezza",
+  "at": [
+   "core.js:150"
+  ]
+ },
+ {
+  "s": "Gate ritmico",
+  "at": [
+   "core.js:151"
+  ]
+ },
+ {
+  "s": "Schema",
+  "at": [
+   "core.js:152"
+  ]
+ },
+ {
+  "s": "Ottavi",
+  "at": [
+   "core.js:152"
+  ]
+ },
+ {
+  "s": "Sedicesimi",
+  "at": [
+   "core.js:152"
+  ]
+ },
+ {
+  "s": "Puntato",
+  "at": [
+   "core.js:152"
+  ]
+ },
+ {
+  "s": "Trance A",
+  "at": [
+   "core.js:152"
+  ]
+ },
+ {
+  "s": "Trance B",
+  "at": [
+   "core.js:152"
+  ]
+ },
+ {
+  "s": "Stutter",
+  "at": [
+   "core.js:152"
+  ]
+ },
+ {
+  "s": "Morbidezza",
+  "at": [
+   "core.js:153"
+  ]
+ },
+ {
+  "s": "Tremolo / Auto-pan",
+  "at": [
+   "core.js:154"
+  ]
+ },
+ {
+  "s": "Modo",
+  "at": [
+   "core.js:155",
+   "tools.js:172"
+  ]
+ },
+ {
+  "s": "Auto-pan",
+  "at": [
+   "core.js:155"
+  ]
+ },
+ {
+  "s": "Forma",
+  "at": [
+   "core.js:155"
+  ]
+ },
+ {
+  "s": "Sidechain (ducking)",
+  "at": [
+   "core.js:157"
+  ]
+ },
+ {
+  "s": "Traccia sorgente",
+  "at": [
+   "core.js:158"
+  ]
+ },
+ {
+  "s": "Riduzione",
+  "at": [
+   "core.js:159"
+  ]
+ },
+ {
+  "s": "Master",
+  "at": [
+   "core.js:267",
+   "core.js:486",
+   "rack.js:414",
+   "mixer.js:11"
+  ]
+ },
+ {
+  "s": "Insert {0}",
+  "at": [
+   "core.js:267",
+   "core.js:601",
+   "mixer.js:11",
+   "mixer.js:11"
+  ]
+ },
+ {
+  "s": "Nessuna azione",
+  "at": [
+   "core.js:272"
+  ]
+ },
+ {
+  "s": "Inizio del brano",
+  "at": [
+   "core.js:272"
+  ]
+ },
+ {
+  "s": "Punto di ritorno del loop",
+  "at": [
+   "core.js:272"
+  ]
+ },
+ {
+  "s": "Ripeti fino al prossimo marcatore",
+  "at": [
+   "core.js:272"
+  ]
+ },
+ {
+  "s": "Salta al prossimo marcatore",
+  "at": [
+   "core.js:272"
+  ]
+ },
+ {
+  "s": "Pausa",
+  "at": [
+   "core.js:272"
+  ]
+ },
+ {
+  "s": "Cambio di metro",
+  "at": [
+   "core.js:272"
+  ]
+ },
+ {
+  "s": "Traccia {0}",
+  "at": [
+   "core.js:283",
+   "core.js:285",
+   "core.js:334",
+   "theory.js:327"
+  ]
+ },
+ {
+  "s": "Senza titolo",
+  "at": [
+   "core.js:332",
+   "core.js:412",
+   "app.js:1353"
+  ]
+ },
+ {
+  "s": "Pattern {0}",
+  "at": [
+   "core.js:333",
+   "core.js:426",
+   "app.js:705"
+  ]
+ },
+ {
+  "s": "Arrangiamento",
+  "at": [
+   "core.js:338",
+   "core.js:449",
+   "core.js:451",
+   "playlist.js:204"
+  ]
+ },
+ {
+  "s": "Hi-hat",
+  "at": [
+   "core.js:340",
+   "core.js:361",
+   "core.js:366",
+   "tools.js:107"
+  ]
+ },
+ {
+  "s": "Pad notturno",
+  "at": [
+   "core.js:364"
+  ]
+ },
+ {
+  "s": "Basso",
+  "at": [
+   "core.js:378",
+   "core.js:391",
+   "tools.js:58"
+  ]
+ },
+ {
+  "s": "Melodia",
+  "at": [
+   "core.js:380",
+   "core.js:391",
+   "tools.js:58",
+   "tools.js:141"
+  ]
+ },
+ {
+  "s": "il file non contiene un progetto Ritmo Studio",
+  "at": [
+   "core.js:409"
+  ]
+ },
+ {
+  "s": "Pan",
+  "at": [
+   "core.js:557",
+   "pianoroll.js:17"
+  ]
+ },
+ {
+  "s": "Intonazione fine",
+  "at": [
+   "core.js:558"
+  ]
+ },
+ {
+  "s": "Mod X (filtro)",
+  "at": [
+   "core.js:559"
+  ]
+ },
+ {
+  "s": "Mod Y (risonanza)",
+  "at": [
+   "core.js:560"
+  ]
+ },
+ {
+  "s": "Niente da annullare",
+  "at": [
+   "core.js:579"
+  ]
+ },
+ {
+  "s": "Annullato",
+  "at": [
+   "core.js:585"
+  ]
+ },
+ {
+  "s": "Niente da ripetere",
+  "at": [
+   "core.js:588"
+  ]
+ },
+ {
+  "s": "Ripetuto",
+  "at": [
+   "core.js:594"
+  ]
+ },
+ {
+  "s": "Nessuna",
+  "at": [
+   "theory.js:6",
+   "playlist.js:294"
+  ]
+ },
+ {
+  "s": "Maggiore",
+  "at": [
+   "theory.js:7",
+   "theory.js:22",
+   "tools.js:172"
+  ]
+ },
+ {
+  "s": "Minore naturale",
+  "at": [
+   "theory.js:8"
+  ]
+ },
+ {
+  "s": "Minore armonica",
+  "at": [
+   "theory.js:9"
+  ]
+ },
+ {
+  "s": "Minore melodica",
+  "at": [
+   "theory.js:10"
+  ]
+ },
+ {
+  "s": "Dorica",
+  "at": [
+   "theory.js:11"
+  ]
+ },
+ {
+  "s": "Frigia",
+  "at": [
+   "theory.js:12"
+  ]
+ },
+ {
+  "s": "Lidia",
+  "at": [
+   "theory.js:13"
+  ]
+ },
+ {
+  "s": "Misolidia",
+  "at": [
+   "theory.js:14"
+  ]
+ },
+ {
+  "s": "Locria",
+  "at": [
+   "theory.js:15"
+  ]
+ },
+ {
+  "s": "Pentatonica maggiore",
+  "at": [
+   "theory.js:16"
+  ]
+ },
+ {
+  "s": "Pentatonica minore",
+  "at": [
+   "theory.js:17"
+  ]
+ },
+ {
+  "s": "Blues",
+  "at": [
+   "theory.js:18"
+  ]
+ },
+ {
+  "s": "Minore",
+  "at": [
+   "theory.js:23",
+   "tools.js:172"
+  ]
+ },
+ {
+  "s": "Diminuito",
+  "at": [
+   "theory.js:24"
+  ]
+ },
+ {
+  "s": "Aumentato",
+  "at": [
+   "theory.js:25"
+  ]
+ },
+ {
+  "s": "Bicordo (5)",
+  "at": [
+   "theory.js:28"
+  ]
+ },
+ {
+  "s": "Sesta",
+  "at": [
+   "theory.js:29"
+  ]
+ },
+ {
+  "s": "Minore sesta",
+  "at": [
+   "theory.js:30"
+  ]
+ },
+ {
+  "s": "Settima",
+  "at": [
+   "theory.js:31"
+  ]
+ },
+ {
+  "s": "Settima maggiore",
+  "at": [
+   "theory.js:32"
+  ]
+ },
+ {
+  "s": "Minore settima",
+  "at": [
+   "theory.js:33"
+  ]
+ },
+ {
+  "s": "Minore settima maggiore",
+  "at": [
+   "theory.js:34"
+  ]
+ },
+ {
+  "s": "Semidiminuito",
+  "at": [
+   "theory.js:35"
+  ]
+ },
+ {
+  "s": "Settima diminuita",
+  "at": [
+   "theory.js:36"
+  ]
+ },
+ {
+  "s": "Minore add9",
+  "at": [
+   "theory.js:38"
+  ]
+ },
+ {
+  "s": "Nona",
+  "at": [
+   "theory.js:39"
+  ]
+ },
+ {
+  "s": "Nona maggiore",
+  "at": [
+   "theory.js:40"
+  ]
+ },
+ {
+  "s": "Minore nona",
+  "at": [
+   "theory.js:41"
+  ]
+ },
+ {
+  "s": "Undicesima",
+  "at": [
+   "theory.js:42"
+  ]
+ },
+ {
+  "s": "Minore undicesima",
+  "at": [
+   "theory.js:43"
+  ]
+ },
+ {
+  "s": "Tredicesima",
+  "at": [
+   "theory.js:44"
+  ]
+ },
+ {
+  "s": "(parziale)",
+  "at": [
+   "theory.js:108",
+   "theory.js:151"
+  ]
+ },
+ {
+  "s": "I – V – vi – IV (pop)",
+  "at": [
+   "theory.js:129"
+  ]
+ },
+ {
+  "s": "I – vi – IV – V (anni ’50)",
+  "at": [
+   "theory.js:131"
+  ]
+ },
+ {
+  "s": "ii – V – I (jazz)",
+  "at": [
+   "theory.js:132"
+  ]
+ },
+ {
+  "s": "I – V – vi – iii – IV – I – IV – V (Canone)",
+  "at": [
+   "theory.js:134"
+  ]
+ },
+ {
+  "s": "i – VI – III – VII (epico)",
+  "at": [
+   "theory.js:135"
+  ]
+ },
+ {
+  "s": "i – VI – VII – i (trap)",
+  "at": [
+   "theory.js:138"
+  ]
+ },
+ {
+  "s": "i – iv – VI – v (lo-fi)",
+  "at": [
+   "theory.js:139"
+  ]
+ },
+ {
+  "s": "ii – v – i (minore)",
+  "at": [
+   "theory.js:140"
+  ]
+ },
+ {
+  "s": "House",
+  "at": [
+   "theory.js:219"
+  ]
+ },
+ {
+  "s": "Techno",
+  "at": [
+   "theory.js:220"
+  ]
+ },
+ {
+  "s": "Trap",
+  "at": [
+   "theory.js:221"
+  ]
+ },
+ {
+  "s": "Hip Hop (boom bap)",
+  "at": [
+   "theory.js:222"
+  ]
+ },
+ {
+  "s": "Lo-fi",
+  "at": [
+   "theory.js:223"
+  ]
+ },
+ {
+  "s": "Reggaeton",
+  "at": [
+   "theory.js:224"
+  ]
+ },
+ {
+  "s": "Drum & Bass",
+  "at": [
+   "theory.js:225"
+  ]
+ },
+ {
+  "s": "non è un file MIDI",
+  "at": [
+   "theory.js:289"
+  ]
+ },
+ {
+  "s": "formato temporale SMPTE non supportato",
+  "at": [
+   "theory.js:291"
+  ]
+ },
+ {
+  "s": "Pausa al marcatore: premi Play per continuare",
+  "at": [
+   "audio.js:1431",
+   "native.js:363"
+  ]
+ },
+ {
+  "s": "La playlist è vuota: aggiungi un pattern alla playlist oppure passa alla modalità PAT.",
+  "at": [
+   "audio.js:1510"
+  ]
+ },
+ {
+  "s": "Salvato: {0}",
+  "at": [
+   "audio.js:1667"
+  ]
+ },
+ {
+  "s": "Salvataggio non riuscito: {0}",
+  "at": [
+   "audio.js:1668"
+  ]
+ },
+ {
+  "s": "Scaricato: {0}",
+  "at": [
+   "audio.js:1675"
+  ]
+ },
+ {
+  "s": "Centro",
+  "at": [
+   "widgets.js:46"
+  ]
+ },
+ {
+  "s": "{0}% sinistra",
+  "at": [
+   "widgets.js:46"
+  ]
+ },
+ {
+  "s": "{0}% destra",
+  "at": [
+   "widgets.js:46"
+  ]
+ },
+ {
+  "s": "{0}: {1} (doppio clic: valore iniziale)",
+  "at": [
+   "widgets.js:99",
+   "widgets.js:187"
+  ]
+ },
+ {
+  "s": "Valore iniziale",
+  "at": [
+   "widgets.js:156"
+  ]
+ },
+ {
+  "s": "Tutti i canali",
+  "at": [
+   "rack.js:89"
+  ]
+ },
+ {
+  "s": "Graph Editor: trascina sulle barre sotto il canale selezionato",
+  "at": [
+   "rack.js:96"
+  ]
+ },
+ {
+  "s": "Graph Editor chiuso",
+  "at": [
+   "rack.js:96"
+  ]
+ },
+ {
+  "s": "Nessun canale. Aggiungi uno strumento dal browser a sinistra o con il pulsante Canale.",
+  "at": [
+   "rack.js:110"
+  ]
+ },
+ {
+  "s": "Canale spento — clic: accendi/spegni, clic destro: solo",
+  "at": [
+   "rack.js:121"
+  ]
+ },
+ {
+  "s": "Canale attivo — clic: accendi/spegni, clic destro: solo",
+  "at": [
+   "rack.js:121"
+  ]
+ },
+ {
+  "s": "Attiva {0}",
+  "at": [
+   "rack.js:122",
+   "playlist.js:190",
+   "mixer.js:85"
+  ]
+ },
+ {
+  "s": "Panoramica {0}",
+  "at": [
+   "rack.js:125",
+   "mixer.js:89"
+  ]
+ },
+ {
+  "s": "Volume {0}",
+  "at": [
+   "rack.js:129",
+   "mixer.js:110"
+  ]
+ },
+ {
+  "s": "Traccia del mixer: {0} — trascina o usa la rotella per cambiarla, clic per l'elenco",
+  "at": [
+   "rack.js:135"
+  ]
+ },
+ {
+  "s": "{0} — clic: impostazioni, clic destro: menu",
+  "at": [
+   "rack.js:141"
+  ]
+ },
+ {
+  "s": "Seleziona il canale",
+  "at": [
+   "rack.js:145"
+  ]
+ },
+ {
+  "s": "Note nel Piano Roll — clic per aprire",
+  "at": [
+   "rack.js:163"
+  ]
+ },
+ {
+  "s": "VELOCITÀ",
+  "at": [
+   "rack.js:200"
+  ]
+ },
+ {
+  "s": "INTONAZIONE",
+  "at": [
+   "rack.js:200"
+  ]
+ },
+ {
+  "s": "Passo {0}: velocità {1}%",
+  "at": [
+   "rack.js:209"
+  ]
+ },
+ {
+  "s": "Passo {0}: {1}",
+  "at": [
+   "rack.js:210"
+  ]
+ },
+ {
+  "s": "{0}, passo {1}",
+  "at": [
+   "rack.js:225"
+  ]
+ },
+ {
+  "s": "Solo: {0}",
+  "at": [
+   "rack.js:289"
+  ]
+ },
+ {
+  "s": "Solo disattivato",
+  "at": [
+   "rack.js:289"
+  ]
+ },
+ {
+  "s": "Canale selezionato: {0} — la tastiera del computer suona questo strumento",
+  "at": [
+   "rack.js:303"
+  ]
+ },
+ {
+  "s": "Graph editor",
+  "at": [
+   "rack.js:331"
+  ]
+ },
+ {
+  "s": "Rinomina, colore e icona…",
+  "at": [
+   "rack.js:333"
+  ]
+ },
+ {
+  "s": "Cambia colore…",
+  "at": [
+   "rack.js:334"
+  ]
+ },
+ {
+  "s": "Colore {0}",
+  "at": [
+   "rack.js:334",
+   "pianoroll.js:821",
+   "app.js:903"
+  ]
+ },
+ {
+  "s": "Carica campione…",
+  "at": [
+   "rack.js:336"
+  ]
+ },
+ {
+  "s": "Taglia se stesso",
+  "at": [
+   "rack.js:337"
+  ]
+ },
+ {
+  "s": "{0}: ogni nota interrompe la precedente",
+  "at": [
+   "rack.js:337"
+  ]
+ },
+ {
+  "s": "{0}: le note si sovrappongono",
+  "at": [
+   "rack.js:337"
+  ]
+ },
+ {
+  "s": "Inserisci",
+  "at": [
+   "rack.js:339"
+  ]
+ },
+ {
+  "s": "Sostituisci",
+  "at": [
+   "rack.js:340",
+   "mixer.js:331"
+  ]
+ },
+ {
+  "s": "Clona",
+  "at": [
+   "rack.js:341",
+   "app.js:742",
+   "app.js:915"
+  ]
+ },
+ {
+  "s": "Elimina…",
+  "at": [
+   "rack.js:342"
+  ]
+ },
+ {
+  "s": "Assegna a un nuovo insert del mixer",
+  "at": [
+   "rack.js:344"
+  ]
+ },
+ {
+  "s": "Sposta su",
+  "at": [
+   "rack.js:345",
+   "mixer.js:338"
+  ]
+ },
+ {
+  "s": "Sposta giù",
+  "at": [
+   "rack.js:346",
+   "mixer.js:339"
+  ]
+ },
+ {
+  "s": "Copia",
+  "at": [
+   "rack.js:349",
+   "../../desktop/main.js:396"
+  ]
+ },
+ {
+  "s": "Copiate {0} note di {1}",
+  "at": [
+   "rack.js:349"
+  ]
+ },
+ {
+  "s": "Incolla",
+  "at": [
+   "rack.js:350",
+   "../../desktop/main.js:397"
+  ]
+ },
+ {
+  "s": "Riempi ogni passo",
+  "at": [
+   "rack.js:352"
+  ]
+ },
+ {
+  "s": "Riempi ogni 2 passi",
+  "at": [
+   "rack.js:353",
+   "app.js:545"
+  ]
+ },
+ {
+  "s": "Riempi ogni 4 passi",
+  "at": [
+   "rack.js:354",
+   "app.js:546"
+  ]
+ },
+ {
+  "s": "Riempi ogni 8 passi",
+  "at": [
+   "rack.js:355"
+  ]
+ },
+ {
+  "s": "Ruota a sinistra",
+  "at": [
+   "rack.js:358"
+  ]
+ },
+ {
+  "s": "Maiusc+Ctrl+←",
+  "at": [
+   "rack.js:358"
+  ]
+ },
+ {
+  "s": "Ruota a destra",
+  "at": [
+   "rack.js:359"
+  ]
+ },
+ {
+  "s": "Maiusc+Ctrl+→",
+  "at": [
+   "rack.js:359"
+  ]
+ },
+ {
+  "s": "Muto",
+  "at": [
+   "rack.js:361"
+  ]
+ },
+ {
+  "s": "Solo",
+  "at": [
+   "rack.js:362"
+  ]
+ },
+ {
+  "s": "Impostazioni strumento…",
+  "at": [
+   "rack.js:363"
+  ]
+ },
+ {
+  "s": "Crea clip di automazione",
+  "at": [
+   "rack.js:364",
+   "automation.js:46"
+  ]
+ },
+ {
+  "s": "Salva preset del canale",
+  "at": [
+   "rack.js:366"
+  ]
+ },
+ {
+  "s": "Carica preset",
+  "at": [
+   "rack.js:367",
+   "mixer.js:336"
+  ]
+ },
+ {
+  "s": "Tutti gli insert del mixer sono già usati",
+  "at": [
+   "rack.js:400"
+  ]
+ },
+ {
+  "s": "Traccia del mixer di {0}",
+  "at": [
+   "rack.js:414"
+  ]
+ },
+ {
+  "s": "Primo insert libero ({0})",
+  "at": [
+   "rack.js:416"
+  ]
+ },
+ {
+  "s": "Clic: aggiungi una nota (o un accordo) e trascinala; bordo destro: allunga",
+  "at": [
+   "pianoroll.js:6"
+  ]
+ },
+ {
+  "s": "Trascina per dipingere note in sequenza",
+  "at": [
+   "pianoroll.js:7"
+  ]
+ },
+ {
+  "s": "Clic o trascina sulle note per cancellarle",
+  "at": [
+   "pianoroll.js:8"
+  ]
+ },
+ {
+  "s": "Clic o trascina per mutare / riattivare le note",
+  "at": [
+   "pianoroll.js:9"
+  ]
+ },
+ {
+  "s": "Clic su una nota per tagliarla in due al punto della griglia",
+  "at": [
+   "pianoroll.js:10"
+  ]
+ },
+ {
+  "s": "Trascina per selezionare; trascina una nota selezionata per spostare",
+  "at": [
+   "pianoroll.js:11"
+  ]
+ },
+ {
+  "s": "Disegna a mano libera intorno alle note da selezionare (Maiusc aggiunge)",
+  "at": [
+   "pianoroll.js:12"
+  ]
+ },
+ {
+  "s": "Trascina sul tratto da ingrandire, clic ingrandisce, clic destro riduce",
+  "at": [
+   "pianoroll.js:13"
+  ]
+ },
+ {
+  "s": "Tieni premuto e scorri: suonano le note sotto il cursore",
+  "at": [
+   "pianoroll.js:14"
+  ]
+ },
+ {
+  "s": "Vel",
+  "at": [
+   "pianoroll.js:17"
+  ]
+ },
+ {
+  "s": "Mod X",
+  "at": [
+   "pianoroll.js:17"
+  ]
+ },
+ {
+  "s": "Mod Y",
+  "at": [
+   "pianoroll.js:17"
+  ]
+ },
+ {
+  "s": "Corsia: {0} — trascina per cambiare, clic destro riporta al valore normale",
+  "at": [
+   "pianoroll.js:61"
+  ]
+ },
+ {
+  "s": "Slide disattivato",
+  "at": [
+   "pianoroll.js:67"
+  ]
+ },
+ {
+  "s": "Porta disattivato",
+  "at": [
+   "pianoroll.js:68"
+  ]
+ },
+ {
+  "s": "Nessun accordo",
+  "at": [
+   "pianoroll.js:80"
+  ]
+ },
+ {
+  "s": "Triade nella scala",
+  "at": [
+   "pianoroll.js:81"
+  ]
+ },
+ {
+  "s": "Settima nella scala",
+  "at": [
+   "pianoroll.js:82"
+  ]
+ },
+ {
+  "s": "Chord Stamp: ogni clic inserisce un accordo",
+  "at": [
+   "pianoroll.js:84"
+  ]
+ },
+ {
+  "s": "Chord Stamp disattivato",
+  "at": [
+   "pianoroll.js:84"
+  ]
+ },
+ {
+  "s": "Chord Stamp dall’alto: la nota cliccata è la voce più acuta",
+  "at": [
+   "pianoroll.js:88"
+  ]
+ },
+ {
+  "s": "Chord Stamp dal basso: la nota cliccata è la fondamentale",
+  "at": [
+   "pianoroll.js:88"
+  ]
+ },
+ {
+  "s": "Colore delle nuove note: {0} (canale MIDI {0})",
+  "at": [
+   "pianoroll.js:116"
+  ]
+ },
+ {
+  "s": "Seleziona prima un canale nel Channel Rack",
+  "at": [
+   "pianoroll.js:195"
+  ]
+ },
+ {
+  "s": "Nota tagliata alla battuta {0}, battito {1}",
+  "at": [
+   "pianoroll.js:223"
+  ]
+ },
+ {
+  "s": "Nessuna nota da quantizzare",
+  "at": [
+   "pianoroll.js:367"
+  ]
+ },
+ {
+  "s": "{0} note allineate alla griglia",
+  "at": [
+   "pianoroll.js:373"
+  ]
+ },
+ {
+  "s": "{0} note copiate",
+  "at": [
+   "pianoroll.js:392"
+  ]
+ },
+ {
+  "s": "Aggiungi un canale nel Channel Rack per scrivere note.",
+  "at": [
+   "pianoroll.js:486"
+  ]
+ },
+ {
+  "s": "Nessuna nota da arpeggiare",
+  "at": [
+   "pianoroll.js:596"
+  ]
+ },
+ {
+  "s": "Arpeggio creato: {0} note",
+  "at": [
+   "pianoroll.js:610"
+  ]
+ },
+ {
+  "s": "Strum applicato",
+  "at": [
+   "pianoroll.js:615"
+  ]
+ },
+ {
+  "s": "Flam aggiunto a {0} note",
+  "at": [
+   "pianoroll.js:620"
+  ]
+ },
+ {
+  "s": "Note tagliate in {0} pezzi",
+  "at": [
+   "pianoroll.js:628"
+  ]
+ },
+ {
+  "s": "{0} note unite",
+  "at": [
+   "pianoroll.js:637"
+  ]
+ },
+ {
+  "s": "Legato applicato",
+  "at": [
+   "pianoroll.js:642"
+  ]
+ },
+ {
+  "s": "Note capovolte nel tempo",
+  "at": [
+   "pianoroll.js:654"
+  ]
+ },
+ {
+  "s": "Note capovolte nell’altezza",
+  "at": [
+   "pianoroll.js:654"
+  ]
+ },
+ {
+  "s": "Dinamica randomizzata",
+  "at": [
+   "pianoroll.js:662"
+  ]
+ },
+ {
+  "s": "Tempi umanizzati",
+  "at": [
+   "pianoroll.js:662"
+  ]
+ },
+ {
+  "s": "Crescendo",
+  "at": [
+   "pianoroll.js:667",
+   "pianoroll.js:879"
+  ]
+ },
+ {
+  "s": "Diminuendo",
+  "at": [
+   "pianoroll.js:667",
+   "pianoroll.js:880"
+  ]
+ },
+ {
+  "s": "Dinamica uniforme",
+  "at": [
+   "pianoroll.js:667"
+  ]
+ },
+ {
+  "s": "Scegli prima una scala nel Piano Roll",
+  "at": [
+   "pianoroll.js:671"
+  ]
+ },
+ {
+  "s": "Note limitate alla scala {0} {1}",
+  "at": [
+   "pianoroll.js:673"
+  ]
+ },
+ {
+  "s": "Un’ottava sopra",
+  "at": [
+   "pianoroll.js:675",
+   "pianoroll.js:874"
+  ]
+ },
+ {
+  "s": "Un’ottava sotto",
+  "at": [
+   "pianoroll.js:675",
+   "pianoroll.js:875"
+  ]
+ },
+ {
+  "s": "Seleziona un canale",
+  "at": [
+   "pianoroll.js:678"
+  ]
+ },
+ {
+  "s": "Riff Machine: {0} note in {1} {2}",
+  "at": [
+   "pianoroll.js:686"
+  ]
+ },
+ {
+  "s": "Nessuna nota",
+  "at": [
+   "pianoroll.js:694",
+   "pianoroll.js:705"
+  ]
+ },
+ {
+  "s": "Staccato",
+  "at": [
+   "pianoroll.js:700"
+  ]
+ },
+ {
+  "s": "Tenuto",
+  "at": [
+   "pianoroll.js:700"
+  ]
+ },
+ {
+  "s": "Accenti sui battiti",
+  "at": [
+   "pianoroll.js:700",
+   "pianoroll.js:842"
+  ]
+ },
+ {
+  "s": "LFO su {0}",
+  "at": [
+   "pianoroll.js:711"
+  ]
+ },
+ {
+  "s": "Servono almeno tre note (selezionale)",
+  "at": [
+   "pianoroll.js:716"
+  ]
+ },
+ {
+  "s": "{0} interpolata su {1} note",
+  "at": [
+   "pianoroll.js:719"
+  ]
+ },
+ {
+  "s": "Claw machine: {0} note tolte",
+  "at": [
+   "pianoroll.js:726"
+  ]
+ },
+ {
+  "s": "Taglio rapido: {0} note",
+  "at": [
+   "pianoroll.js:735"
+  ]
+ },
+ {
+  "s": "centro",
+  "at": [
+   "pianoroll.js:748"
+  ]
+ },
+ {
+  "s": "S {0}%",
+  "at": [
+   "pianoroll.js:748"
+  ]
+ },
+ {
+  "s": "D {0}%",
+  "at": [
+   "pianoroll.js:748"
+  ]
+ },
+ {
+  "s": "Proprietà della nota",
+  "at": [
+   "pianoroll.js:777"
+  ]
+ },
+ {
+  "s": "battuta {0}",
+  "at": [
+   "pianoroll.js:779",
+   "arrange.js:269"
+  ]
+ },
+ {
+  "s": "{0} note",
+  "at": [
+   "pianoroll.js:779"
+  ]
+ },
+ {
+  "s": "Colore {0} (canale MIDI {0})",
+  "at": [
+   "pianoroll.js:794"
+  ]
+ },
+ {
+  "s": "Valori normali",
+  "at": [
+   "pianoroll.js:807"
+  ]
+ },
+ {
+  "s": "Colore del canale",
+  "at": [
+   "pianoroll.js:821"
+  ]
+ },
+ {
+  "s": "Colora le note selezionate",
+  "at": [
+   "pianoroll.js:823"
+  ]
+ },
+ {
+  "s": "Colore applicato",
+  "at": [
+   "pianoroll.js:823"
+  ]
+ },
+ {
+  "s": "Seleziona le note di questo colore",
+  "at": [
+   "pianoroll.js:824"
+  ]
+ },
+ {
+  "s": "Quantizza inizi",
+  "at": [
+   "pianoroll.js:832"
+  ]
+ },
+ {
+  "s": "Quantizza inizi e durate",
+  "at": [
+   "pianoroll.js:833"
+  ]
+ },
+ {
+  "s": "Legato",
+  "at": [
+   "pianoroll.js:834"
+  ]
+ },
+ {
+  "s": "Taglia sulla griglia (Chop)",
+  "at": [
+   "pianoroll.js:835"
+  ]
+ },
+ {
+  "s": "Taglio rapido",
+  "at": [
+   "pianoroll.js:836"
+  ]
+ },
+ {
+  "s": "In {0} parti",
+  "at": [
+   "pianoroll.js:836"
+  ]
+ },
+ {
+  "s": "Unisci note (Glue)",
+  "at": [
+   "pianoroll.js:837"
+  ]
+ },
+ {
+  "s": "Umanizza i tempi",
+  "at": [
+   "pianoroll.js:838"
+  ]
+ },
+ {
+  "s": "Articolazione",
+  "at": [
+   "pianoroll.js:839"
+  ]
+ },
+ {
+  "s": "Staccato (metà durata)",
+  "at": [
+   "pianoroll.js:840"
+  ]
+ },
+ {
+  "s": "Tenuto (riempie la griglia)",
+  "at": [
+   "pianoroll.js:841"
+  ]
+ },
+ {
+  "s": "Claw machine",
+  "at": [
+   "pianoroll.js:844"
+  ]
+ },
+ {
+  "s": "Tieni 1 nota su 2",
+  "at": [
+   "pianoroll.js:845"
+  ]
+ },
+ {
+  "s": "Tieni 1 nota su 3",
+  "at": [
+   "pianoroll.js:846"
+  ]
+ },
+ {
+  "s": "Tieni 1 nota su 4",
+  "at": [
+   "pianoroll.js:847"
+  ]
+ },
+ {
+  "s": "Togli 1 nota su 2",
+  "at": [
+   "pianoroll.js:848"
+  ]
+ },
+ {
+  "s": "Togli 1 nota su 3",
+  "at": [
+   "pianoroll.js:849"
+  ]
+ },
+ {
+  "s": "Togli 1 nota su 4",
+  "at": [
+   "pianoroll.js:850"
+  ]
+ },
+ {
+  "s": "Corsia degli eventi: {0}",
+  "at": [
+   "pianoroll.js:852"
+  ]
+ },
+ {
+  "s": "Sinusoide su 1 battuta",
+  "at": [
+   "pianoroll.js:854"
+  ]
+ },
+ {
+  "s": "Sinusoide su 1 battito",
+  "at": [
+   "pianoroll.js:855"
+  ]
+ },
+ {
+  "s": "Triangolo su 2 battute",
+  "at": [
+   "pianoroll.js:856"
+  ]
+ },
+ {
+  "s": "Dente di sega su 1 battuta",
+  "at": [
+   "pianoroll.js:857"
+  ]
+ },
+ {
+  "s": "Quadra su 1 battito",
+  "at": [
+   "pianoroll.js:858"
+  ]
+ },
+ {
+  "s": "Interpola dalla prima all'ultima nota",
+  "at": [
+   "pianoroll.js:860"
+  ]
+ },
+ {
+  "s": "Proprietà delle note selezionate…",
+  "at": [
+   "pianoroll.js:861"
+  ]
+ },
+ {
+  "s": "Colore delle note",
+  "at": [
+   "pianoroll.js:862"
+  ]
+ },
+ {
+  "s": "Arpeggio su 1/16 in salita",
+  "at": [
+   "pianoroll.js:864"
+  ]
+ },
+ {
+  "s": "Arpeggio su 1/16 in discesa",
+  "at": [
+   "pianoroll.js:865"
+  ]
+ },
+ {
+  "s": "Arpeggio su 1/8 su e giù",
+  "at": [
+   "pianoroll.js:866"
+  ]
+ },
+ {
+  "s": "Arpeggio su 1/32 casuale",
+  "at": [
+   "pianoroll.js:867"
+  ]
+ },
+ {
+  "s": "Strum leggero",
+  "at": [
+   "pianoroll.js:868"
+  ]
+ },
+ {
+  "s": "Strum ampio",
+  "at": [
+   "pianoroll.js:869"
+  ]
+ },
+ {
+  "s": "Flam",
+  "at": [
+   "pianoroll.js:870"
+  ]
+ },
+ {
+  "s": "Chord Progression Tool…",
+  "at": [
+   "pianoroll.js:871",
+   "app.js:539"
+  ]
+ },
+ {
+  "s": "Altezza e dinamica",
+  "at": [
+   "pianoroll.js:872"
+  ]
+ },
+ {
+  "s": "Limita alla scala",
+  "at": [
+   "pianoroll.js:873"
+  ]
+ },
+ {
+  "s": "Capovolgi nel tempo",
+  "at": [
+   "pianoroll.js:876"
+  ]
+ },
+ {
+  "s": "Capovolgi nell’altezza",
+  "at": [
+   "pianoroll.js:877"
+  ]
+ },
+ {
+  "s": "Randomizza la dinamica",
+  "at": [
+   "pianoroll.js:878"
+  ]
+ },
+ {
+  "s": "Genera",
+  "at": [
+   "pianoroll.js:881"
+  ]
+ },
+ {
+  "s": "Riff Machine: melodia",
+  "at": [
+   "pianoroll.js:882"
+  ]
+ },
+ {
+  "s": "Riff Machine: linea di basso",
+  "at": [
+   "pianoroll.js:883"
+  ]
+ },
+ {
+  "s": "Metro del progetto: {0}",
+  "at": [
+   "pianoroll.js:885",
+   "playlist.js:655",
+   "arrange.js:283"
+  ]
+ },
+ {
+  "s": "Allinea alla scala le note suonate dal vivo",
+  "at": [
+   "pianoroll.js:886"
+  ]
+ },
+ {
+  "s": "Tastiera e MIDI suonano solo note della scala del Piano Roll",
+  "at": [
+   "pianoroll.js:886"
+  ]
+ },
+ {
+  "s": "Tastiera e MIDI suonano tutte le note",
+  "at": [
+   "pianoroll.js:886"
+  ]
+ },
+ {
+  "s": "Nomi di tutte le note sui tasti",
+  "at": [
+   "pianoroll.js:887"
+  ]
+ },
+ {
+  "s": "Disegna: clic per inserire, trascina per spostare, Ctrl+trascina duplica, bordo sinistro o destro per accorciare",
+  "at": [
+   "playlist.js:5"
+  ]
+ },
+ {
+  "s": "Pennello: trascina sulla traccia per dipingere clip una dopo l'altra",
+  "at": [
+   "playlist.js:6"
+  ]
+ },
+ {
+  "s": "Cancella: clic o trascina sulle clip",
+  "at": [
+   "playlist.js:7"
+  ]
+ },
+ {
+  "s": "Muta: clic sulle clip per silenziarle",
+  "at": [
+   "playlist.js:8"
+  ]
+ },
+ {
+  "s": "Slip: trascina dentro una clip per far scorrere il contenuto senza spostarla",
+  "at": [
+   "playlist.js:9"
+  ]
+ },
+ {
+  "s": "Taglia: clic su una clip per dividerla sulla griglia",
+  "at": [
+   "playlist.js:10"
+  ]
+ },
+ {
+  "s": "Seleziona: trascina un riquadro, Maiusc aggiunge; poi trascina le clip selezionate o usa Canc",
+  "at": [
+   "playlist.js:11"
+  ]
+ },
+ {
+  "s": "Zoom: trascina sul tratto da ingrandire, clic ingrandisce, clic destro riduce",
+  "at": [
+   "playlist.js:12"
+  ]
+ },
+ {
+  "s": "Ascolta: tieni premuto sulla griglia per suonare da quel punto",
+  "at": [
+   "playlist.js:13"
+  ]
+ },
+ {
+  "s": "Clic sulla griglia per inserire {0}",
+  "at": [
+   "playlist.js:52"
+  ]
+ },
+ {
+  "s": "Modifica la curva",
+  "at": [
+   "playlist.js:65",
+   "playlist.js:276"
+  ]
+ },
+ {
+  "s": "Piccola",
+  "at": [
+   "playlist.js:137"
+  ]
+ },
+ {
+  "s": "Grande",
+  "at": [
+   "playlist.js:137"
+  ]
+ },
+ {
+  "s": "Molto grande",
+  "at": [
+   "playlist.js:137"
+  ]
+ },
+ {
+  "s": "Rinomina",
+  "at": [
+   "playlist.js:140",
+   "app.js:741"
+  ]
+ },
+ {
+  "s": "Colore",
+  "at": [
+   "playlist.js:141",
+   "app.js:897"
+  ]
+ },
+ {
+  "s": "Altezza",
+  "at": [
+   "playlist.js:143"
+  ]
+ },
+ {
+  "s": "Riattiva la traccia",
+  "at": [
+   "playlist.js:144"
+  ]
+ },
+ {
+  "s": "Muta la traccia",
+  "at": [
+   "playlist.js:144"
+  ]
+ },
+ {
+  "s": "Togli dal gruppo",
+  "at": [
+   "playlist.js:146"
+  ]
+ },
+ {
+  "s": "Raggruppa con la traccia sopra",
+  "at": [
+   "playlist.js:146"
+  ]
+ },
+ {
+  "s": "Espandi il gruppo",
+  "at": [
+   "playlist.js:147",
+   "playlist.js:181"
+  ]
+ },
+ {
+  "s": "Comprimi il gruppo",
+  "at": [
+   "playlist.js:147",
+   "playlist.js:181"
+  ]
+ },
+ {
+  "s": "Seleziona le clip della traccia",
+  "at": [
+   "playlist.js:148"
+  ]
+ },
+ {
+  "s": "Inserisci una traccia sopra",
+  "at": [
+   "playlist.js:150"
+  ]
+ },
+ {
+  "s": "Elimina la traccia e le sue clip",
+  "at": [
+   "playlist.js:151"
+  ]
+ },
+ {
+  "s": "Doppio clic per rinominare, clic destro per il menu della traccia",
+  "at": [
+   "playlist.js:185"
+  ]
+ },
+ {
+  "s": "Traccia muta",
+  "at": [
+   "playlist.js:189"
+  ]
+ },
+ {
+  "s": "Traccia attiva",
+  "at": [
+   "playlist.js:189"
+  ]
+ },
+ {
+  "s": "Trascina per cambiare l'altezza",
+  "at": [
+   "playlist.js:193"
+  ]
+ },
+ {
+  "s": "clic: seleziona, doppio clic: rinomina, clic destro: menu",
+  "at": [
+   "playlist.js:229"
+  ]
+ },
+ {
+  "s": "clip audio: clic e poi clic sulla griglia",
+  "at": [
+   "playlist.js:231"
+  ]
+ },
+ {
+  "s": "clip di automazione: doppio clic per la curva",
+  "at": [
+   "playlist.js:232"
+  ]
+ },
+ {
+  "s": "Impossibile leggere {0}: formato audio non supportato",
+  "at": [
+   "playlist.js:246",
+   "app.js:1070"
+  ]
+ },
+ {
+  "s": "Clip audio “{0}” → {1}",
+  "at": [
+   "playlist.js:261"
+  ]
+ },
+ {
+  "s": "Riattiva",
+  "at": [
+   "playlist.js:270"
+  ]
+ },
+ {
+  "s": "Consolida le {0} clip in audio",
+  "at": [
+   "playlist.js:271"
+  ]
+ },
+ {
+  "s": "Renderizza e sostituisci con audio",
+  "at": [
+   "playlist.js:271"
+  ]
+ },
+ {
+  "s": "Apri nel Piano Roll",
+  "at": [
+   "playlist.js:283",
+   "app.js:744"
+  ]
+ },
+ {
+  "s": "Rinomina il pattern",
+  "at": [
+   "playlist.js:284"
+  ]
+ },
+ {
+  "s": "Rendi unico",
+  "at": [
+   "playlist.js:285"
+  ]
+ },
+ {
+  "s": "Unisci le clip selezionate",
+  "at": [
+   "playlist.js:286"
+  ]
+ },
+ {
+  "s": "Seleziona tutte le clip di questo pattern",
+  "at": [
+   "playlist.js:287"
+  ]
+ },
+ {
+  "s": "Renderizza il pattern in una nuova clip audio",
+  "at": [
+   "playlist.js:288"
+  ]
+ },
+ {
+  "s": "{0} passo",
+  "at": [
+   "playlist.js:294"
+  ]
+ },
+ {
+  "s": "{0} passi",
+  "at": [
+   "playlist.js:294"
+  ]
+ },
+ {
+  "s": "Clip audio",
+  "at": [
+   "playlist.js:297"
+  ]
+ },
+ {
+  "s": "Traccia del mixer: {0}",
+  "at": [
+   "playlist.js:298"
+  ]
+ },
+ {
+  "s": "Volume della clip",
+  "at": [
+   "playlist.js:299"
+  ]
+ },
+ {
+  "s": "Dissolvenza in entrata: {0}",
+  "at": [
+   "playlist.js:300"
+  ]
+ },
+ {
+  "s": "Dissolvenza in uscita: {0}",
+  "at": [
+   "playlist.js:301"
+  ]
+ },
+ {
+  "s": "Dissolvenza incrociata con la clip successiva",
+  "at": [
+   "playlist.js:302"
+  ]
+ },
+ {
+  "s": "Intonazione: {0} st",
+  "at": [
+   "playlist.js:304"
+  ]
+ },
+ {
+  "s": "{0} semitoni",
+  "at": [
+   "playlist.js:304"
+  ]
+ },
+ {
+  "s": "Intonazione della clip: {0} semitoni (la durata resta uguale)",
+  "at": [
+   "playlist.js:304"
+  ]
+ },
+ {
+  "s": "Time-stretch: {0}",
+  "at": [
+   "playlist.js:306"
+  ]
+ },
+ {
+  "s": "Adatta al tempo del progetto",
+  "at": [
+   "playlist.js:307"
+  ]
+ },
+ {
+  "s": "Spento (durata originale)",
+  "at": [
+   "playlist.js:309"
+  ]
+ },
+ {
+  "s": "×{0} della durata",
+  "at": [
+   "playlist.js:309"
+  ]
+ },
+ {
+  "s": "Adatta la lunghezza al file",
+  "at": [
+   "playlist.js:311"
+  ]
+ },
+ {
+  "s": "{0} clip duplicate",
+  "at": [
+   "playlist.js:448"
+  ]
+ },
+ {
+  "s": "Clip duplicata",
+  "at": [
+   "playlist.js:448"
+  ]
+ },
+ {
+  "s": "{0} clip selezionate",
+  "at": [
+   "playlist.js:560"
+  ]
+ },
+ {
+  "s": "Loop: battuta {0} – {1} (clic destro sul righello per toglierlo)",
+  "at": [
+   "playlist.js:614"
+  ]
+ },
+ {
+  "s": "Marcatore",
+  "at": [
+   "playlist.js:648",
+   "arrange.js:269"
+  ]
+ },
+ {
+  "s": "inizio",
+  "at": [
+   "playlist.js:648"
+  ]
+ },
+ {
+  "s": "loop",
+  "at": [
+   "playlist.js:648"
+  ]
+ },
+ {
+  "s": "ripeti",
+  "at": [
+   "playlist.js:648"
+  ]
+ },
+ {
+  "s": "salta",
+  "at": [
+   "playlist.js:648"
+  ]
+ },
+ {
+  "s": "pausa",
+  "at": [
+   "playlist.js:648"
+  ]
+ },
+ {
+  "s": "1 battito",
+  "at": [
+   "playlist.js:650"
+  ]
+ },
+ {
+  "s": "Battuta {0}",
+  "at": [
+   "playlist.js:652"
+  ]
+ },
+ {
+  "s": "Aggiungi un marcatore qui",
+  "at": [
+   "playlist.js:653"
+  ]
+ },
+ {
+  "s": "Aggiungi un cambio di metro qui",
+  "at": [
+   "playlist.js:654"
+  ]
+ },
+ {
+  "s": "Inserisci spazio dalla battuta {0}",
+  "at": [
+   "playlist.js:657"
+  ]
+ },
+ {
+  "s": "Elimina spazio dalla battuta {0}",
+  "at": [
+   "playlist.js:658"
+  ]
+ },
+ {
+  "s": "Loop su questa battuta",
+  "at": [
+   "playlist.js:660"
+  ]
+ },
+ {
+  "s": "Togli il loop",
+  "at": [
+   "playlist.js:661"
+  ]
+ },
+ {
+  "s": "Loop rimosso",
+  "at": [
+   "playlist.js:661"
+  ]
+ },
+ {
+  "s": "Clicca sulla griglia per inserire il pattern “{0}”. Clic destro per cancellare.",
+  "at": [
+   "playlist.js:723"
+  ]
+ },
+ {
+  "s": "Audio mancante",
+  "at": [
+   "playlist.js:771"
+  ]
+ },
+ {
+  "s": "il motore audio non ha risposto",
+  "at": [
+   "arrange.js:89"
+  ]
+ },
+ {
+  "s": "Un rendering è già in corso",
+  "at": [
+   "arrange.js:103"
+  ]
+ },
+ {
+  "s": "Rendering non riuscito: {0}",
+  "at": [
+   "arrange.js:106"
+  ]
+ },
+ {
+  "s": "Seleziona clip di pattern o audio da consolidare",
+  "at": [
+   "arrange.js:111"
+  ]
+ },
+ {
+  "s": "Consolidato",
+  "at": [
+   "arrange.js:113"
+  ]
+ },
+ {
+  "s": "Rendering in audio",
+  "at": [
+   "arrange.js:114"
+  ]
+ },
+ {
+  "s": "Clip sostituite da una clip audio",
+  "at": [
+   "arrange.js:123"
+  ]
+ },
+ {
+  "s": "Clip audio creata",
+  "at": [
+   "arrange.js:123"
+  ]
+ },
+ {
+  "s": "Rendering del pattern “{0}”",
+  "at": [
+   "arrange.js:128"
+  ]
+ },
+ {
+  "s": "Pattern renderizzato in una clip audio sulla {0}",
+  "at": [
+   "arrange.js:139"
+  ]
+ },
+ {
+  "s": "“{0}”: pattern unico per questa clip",
+  "at": [
+   "arrange.js:170"
+  ]
+ },
+ {
+  "s": "Seleziona almeno due clip di pattern",
+  "at": [
+   "arrange.js:175"
+  ]
+ },
+ {
+  "s": "Le clip coprono più di 512 passi: troppo per un pattern solo",
+  "at": [
+   "arrange.js:177"
+  ]
+ },
+ {
+  "s": "{0} unito",
+  "at": [
+   "arrange.js:178"
+  ]
+ },
+ {
+  "s": "{0} clip unite nel pattern “{1}”",
+  "at": [
+   "arrange.js:203"
+  ]
+ },
+ {
+  "s": "Dissolvenza incrociata di {0} passi",
+  "at": [
+   "arrange.js:213"
+  ]
+ },
+ {
+  "s": "Clip adattata al tempo: {0} quarti a {1} BPM",
+  "at": [
+   "arrange.js:226"
+  ]
+ },
+ {
+  "s": "Inserito spazio: {0} passi alla posizione {1}",
+  "at": [
+   "arrange.js:237"
+  ]
+ },
+ {
+  "s": "Eliminato spazio: {0} passi",
+  "at": [
+   "arrange.js:251"
+  ]
+ },
+ {
+  "s": "Marcatore {0}",
+  "at": [
+   "arrange.js:255"
+  ]
+ },
+ {
+  "s": "Vai al marcatore",
+  "at": [
+   "arrange.js:270"
+  ]
+ },
+ {
+  "s": "Rinomina…",
+  "at": [
+   "arrange.js:271",
+   "arrange.js:333",
+   "mixer.js:177"
+  ]
+ },
+ {
+  "s": "Metro: {0}",
+  "at": [
+   "arrange.js:273"
+  ]
+ },
+ {
+  "s": "Azione: {0}",
+  "at": [
+   "arrange.js:274"
+  ]
+ },
+ {
+  "s": "Elimina il marcatore",
+  "at": [
+   "arrange.js:276"
+  ]
+ },
+ {
+  "s": "Arrangiamento: {0}",
+  "at": [
+   "arrange.js:306"
+  ]
+ },
+ {
+  "s": "Arrangiamento {0}",
+  "at": [
+   "arrange.js:312"
+  ]
+ },
+ {
+  "s": "Arrangiamento “{0}” eliminato (Ctrl+Z per annullare)",
+  "at": [
+   "arrange.js:323"
+  ]
+ },
+ {
+  "s": "Arrangiamenti",
+  "at": [
+   "arrange.js:328",
+   "app.js:518"
+  ]
+ },
+ {
+  "s": "Nuovo arrangiamento",
+  "at": [
+   "arrange.js:331",
+   "app.js:521"
+  ]
+ },
+ {
+  "s": "Clona questo arrangiamento",
+  "at": [
+   "arrange.js:332"
+  ]
+ },
+ {
+  "s": "Elimina questo arrangiamento",
+  "at": [
+   "arrange.js:334"
+  ]
+ },
+ {
+  "s": "{0} — doppio clic per rinominare, clic destro per il menu",
+  "at": [
+   "mixer.js:81"
+  ]
+ },
+ {
+  "s": "Traccia muta — clic per attivare",
+  "at": [
+   "mixer.js:84"
+  ]
+ },
+ {
+  "s": "Traccia attiva — clic per silenziare",
+  "at": [
+   "mixer.js:84"
+  ]
+ },
+ {
+  "s": "Inverti la fase",
+  "at": [
+   "mixer.js:104"
+  ]
+ },
+ {
+  "s": "Scambia sinistra e destra",
+  "at": [
+   "mixer.js:105"
+  ]
+ },
+ {
+  "s": "Mandata da {0} a {1}",
+  "at": [
+   "mixer.js:127"
+  ]
+ },
+ {
+  "s": "Il Master va all'uscita audio",
+  "at": [
+   "mixer.js:136"
+  ]
+ },
+ {
+  "s": "{0} esce qui (uscita principale). Clic: torna al Master",
+  "at": [
+   "mixer.js:137"
+  ]
+ },
+ {
+  "s": "Mandata da {0} — clic: rimuovi",
+  "at": [
+   "mixer.js:138"
+  ]
+ },
+ {
+  "s": "Clic: manda {0} anche qui · clic destro: instrada solo qui",
+  "at": [
+   "mixer.js:139"
+  ]
+ },
+ {
+  "s": "Instradamento impossibile: creerebbe un anello",
+  "at": [
+   "mixer.js:139"
+  ]
+ },
+ {
+  "s": "Instrada solo qui (uscita principale)",
+  "at": [
+   "mixer.js:146"
+  ]
+ },
+ {
+  "s": "Rimuovi la mandata",
+  "at": [
+   "mixer.js:147",
+   "mixer.js:240"
+  ]
+ },
+ {
+  "s": "Aggiungi una mandata",
+  "at": [
+   "mixer.js:147"
+  ]
+ },
+ {
+  "s": "Attiva",
+  "at": [
+   "mixer.js:178",
+   "mixer.js:333"
+  ]
+ },
+ {
+  "s": "Silenzia",
+  "at": [
+   "mixer.js:178"
+  ]
+ },
+ {
+  "s": "Solo (silenzia le altre tracce)",
+  "at": [
+   "mixer.js:179"
+  ]
+ },
+ {
+  "s": "Instrada al Master",
+  "at": [
+   "mixer.js:181"
+  ]
+ },
+ {
+  "s": "Rimuovi tutte le mandate",
+  "at": [
+   "mixer.js:182"
+  ]
+ },
+ {
+  "s": "Rimuovi tutti gli effetti",
+  "at": [
+   "mixer.js:184"
+  ]
+ },
+ {
+  "s": "Salva lo stato della traccia",
+  "at": [
+   "mixer.js:185"
+  ]
+ },
+ {
+  "s": "Carica uno stato",
+  "at": [
+   "mixer.js:186"
+  ]
+ },
+ {
+  "s": "Reimposta la traccia",
+  "at": [
+   "mixer.js:187"
+  ]
+ },
+ {
+  "s": "Canali in ingresso",
+  "at": [
+   "mixer.js:192"
+  ]
+ },
+ {
+  "s": "Separazione",
+  "at": [
+   "mixer.js:221"
+  ]
+ },
+ {
+  "s": "Separazione stereo {0}",
+  "at": [
+   "mixer.js:222"
+  ]
+ },
+ {
+  "s": "Mandata a {0}",
+  "at": [
+   "mixer.js:234"
+  ]
+ },
+ {
+  "s": "Ingresso {0}",
+  "at": [
+   "mixer.js:252",
+   "native.js:215"
+  ]
+ },
+ {
+  "s": "(nessuno)",
+  "at": [
+   "mixer.js:252",
+   "mixer.js:257",
+   "io.js:141"
+  ]
+ },
+ {
+  "s": "Ingresso audio da registrare su questa traccia",
+  "at": [
+   "mixer.js:254"
+  ]
+ },
+ {
+  "s": "Ingresso di {0}",
+  "at": [
+   "mixer.js:257"
+  ]
+ },
+ {
+  "s": "Nessun ingresso: scegli la scheda audio in Opzioni",
+  "at": [
+   "mixer.js:258"
+  ]
+ },
+ {
+  "s": "Registrazione dal microfono del browser",
+  "at": [
+   "mixer.js:258"
+  ]
+ },
+ {
+  "s": "Uscita 1 - Uscita 2",
+  "at": [
+   "mixer.js:268"
+  ]
+ },
+ {
+  "s": "Uscita: {0}",
+  "at": [
+   "mixer.js:268"
+  ]
+ },
+ {
+  "s": "Il Master suona sulla scheda audio (Opzioni › Impostazioni audio)",
+  "at": [
+   "mixer.js:269"
+  ]
+ },
+ {
+  "s": "Traccia su cui esce questa traccia",
+  "at": [
+   "mixer.js:270"
+  ]
+ },
+ {
+  "s": "Uscita di {0}",
+  "at": [
+   "mixer.js:272"
+  ]
+ },
+ {
+  "s": "Menu dello slot",
+  "at": [
+   "mixer.js:286"
+  ]
+ },
+ {
+  "s": "Slot {0}",
+  "at": [
+   "mixer.js:288",
+   "mixer.js:330",
+   "automation.js:19"
+  ]
+ },
+ {
+  "s": "Clic: apri {0}",
+  "at": [
+   "mixer.js:291"
+  ]
+ },
+ {
+  "s": "Clic: scegli un effetto",
+  "at": [
+   "mixer.js:291"
+  ]
+ },
+ {
+  "s": "Mix dello slot {0}",
+  "at": [
+   "mixer.js:297"
+  ]
+ },
+ {
+  "s": "Attivo — clic per escluderlo",
+  "at": [
+   "mixer.js:302"
+  ]
+ },
+ {
+  "s": "Escluso — clic per attivarlo",
+  "at": [
+   "mixer.js:302"
+  ]
+ },
+ {
+  "s": "Effetti inclusi",
+  "at": [
+   "mixer.js:311"
+  ]
+ },
+ {
+  "s": "Altri",
+  "at": [
+   "mixer.js:315",
+   "plugins-ui.js:25"
+  ]
+ },
+ {
+  "s": "Scegli un effetto",
+  "at": [
+   "mixer.js:331"
+  ]
+ },
+ {
+  "s": "Escludi",
+  "at": [
+   "mixer.js:333"
+  ]
+ },
+ {
+  "s": "Salva preset",
+  "at": [
+   "mixer.js:335",
+   "app.js:914"
+  ]
+ },
+ {
+  "s": "Rimuovi",
+  "at": [
+   "mixer.js:341"
+  ]
+ },
+ {
+  "s": "Equalizzatore",
+  "at": [
+   "mixer.js:362"
+  ]
+ },
+ {
+  "s": "Frequenza dei medi {0}",
+  "at": [
+   "mixer.js:363"
+  ]
+ },
+ {
+  "s": "{0} ({1} – Slot {2})",
+  "at": [
+   "mixer.js:386"
+  ]
+ },
+ {
+  "s": "Attivo",
+  "at": [
+   "mixer.js:388",
+   "app.js:883",
+   "app.js:891"
+  ]
+ },
+ {
+  "s": "Escluso",
+  "at": [
+   "mixer.js:388"
+  ]
+ },
+ {
+  "s": "Sidechain impossibile: {0} arriva già a {1}",
+  "at": [
+   "mixer.js:410"
+  ]
+ },
+ {
+  "s": "Microfono del browser",
+  "at": [
+   "mixer.js:460"
+  ]
+ },
+ {
+  "s": "Volume",
+  "at": [
+   "automation.js:12",
+   "automation.js:15",
+   "automation.js:54"
+  ]
+ },
+ {
+  "s": "Panoramica",
+  "at": [
+   "automation.js:12",
+   "automation.js:16",
+   "automation.js:55"
+  ]
+ },
+ {
+  "s": "parametro {0}",
+  "at": [
+   "automation.js:21"
+  ]
+ },
+ {
+  "s": "Modifica “{0}”",
+  "at": [
+   "automation.js:47"
+  ]
+ },
+ {
+  "s": "Parametri del plugin…",
+  "at": [
+   "automation.js:60"
+  ]
+ },
+ {
+  "s": "Clip di automazione aggiunta alla Playlist (traccia {0})",
+  "at": [
+   "automation.js:79"
+  ]
+ },
+ {
+  "s": "Rampa in salita",
+  "at": [
+   "automation.js:124"
+  ]
+ },
+ {
+  "s": "Rampa in discesa",
+  "at": [
+   "automation.js:125"
+  ]
+ },
+ {
+  "s": "Sinusoide (una per battuta)",
+  "at": [
+   "automation.js:126"
+  ]
+ },
+ {
+  "s": "Onda quadra (quarti)",
+  "at": [
+   "automation.js:127"
+  ]
+ },
+ {
+  "s": "Piatta",
+  "at": [
+   "automation.js:128"
+  ]
+ },
+ {
+  "s": "{0} battute",
+  "at": [
+   "automation.js:150"
+  ]
+ },
+ {
+  "s": "Controlla: {0}",
+  "at": [
+   "automation.js:152"
+  ]
+ },
+ {
+  "s": "{0}: {1} · passo {2}",
+  "at": [
+   "automation.js:197"
+  ]
+ },
+ {
+  "s": "{0} (sessione)",
+  "at": [
+   "browser.js:46"
+  ]
+ },
+ {
+  "s": "Cartella non aggiunta: {0}",
+  "at": [
+   "browser.js:56"
+  ]
+ },
+ {
+  "s": "permesso negato",
+  "at": [
+   "browser.js:91"
+  ]
+ },
+ {
+  "s": "Cartella non leggibile: {0}",
+  "at": [
+   "browser.js:104"
+  ]
+ },
+ {
+  "s": "Impossibile leggere {0}",
+  "at": [
+   "browser.js:184",
+   "browser.js:195",
+   "browser.js:199"
+  ]
+ },
+ {
+  "s": "Anteprima non disponibile: {0}",
+  "at": [
+   "browser.js:224"
+  ]
+ },
+ {
+  "s": "Spazio del browser esaurito: preset non salvato",
+  "at": [
+   "browser.js:270"
+  ]
+ },
+ {
+  "s": "Preset salvato: {0}",
+  "at": [
+   "browser.js:275"
+  ]
+ },
+ {
+  "s": "Preset caricato: {0}",
+  "at": [
+   "browser.js:317"
+  ]
+ },
+ {
+  "s": "Gli slot di {0} sono tutti occupati",
+  "at": [
+   "browser.js:387",
+   "app.js:267",
+   "app.js:679",
+   "native.js:240"
+  ]
+ },
+ {
+  "s": "Clic su un suono per ascoltarlo",
+  "at": [
+   "browser.js:427"
+  ]
+ },
+ {
+  "s": "Ferma l'anteprima",
+  "at": [
+   "browser.js:430"
+  ]
+ },
+ {
+  "s": "Apri in un nuovo canale",
+  "at": [
+   "browser.js:446"
+  ]
+ },
+ {
+  "s": "Carica nel canale selezionato ({0})",
+  "at": [
+   "browser.js:447"
+  ]
+ },
+ {
+  "s": "Carica nel canale selezionato",
+  "at": [
+   "browser.js:447"
+  ]
+ },
+ {
+  "s": "Aggiungi alla Playlist come clip audio",
+  "at": [
+   "browser.js:448"
+  ]
+ },
+ {
+  "s": "Importa MIDI",
+  "at": [
+   "browser.js:450"
+  ]
+ },
+ {
+  "s": "Apri progetto",
+  "at": [
+   "browser.js:451"
+  ]
+ },
+ {
+  "s": "Togli dai preferiti",
+  "at": [
+   "browser.js:452",
+   "app.js:304"
+  ]
+ },
+ {
+  "s": "Aggiungi ai preferiti",
+  "at": [
+   "browser.js:452",
+   "app.js:304"
+  ]
+ },
+ {
+  "s": "Mostra nel Finder",
+  "at": [
+   "browser.js:453"
+  ]
+ },
+ {
+  "s": "Porta la Playlist in primo piano",
+  "at": [
+   "app.js:98"
+  ]
+ },
+ {
+  "s": "Ripristina la disposizione delle finestre",
+  "at": [
+   "app.js:99"
+  ]
+ },
+ {
+  "s": "Ripristina dimensione",
+  "at": [
+   "app.js:101"
+  ]
+ },
+ {
+  "s": "Posizione iniziale",
+  "at": [
+   "app.js:102"
+  ]
+ },
+ {
+  "s": "Chiudi",
+  "at": [
+   "app.js:104",
+   "app.js:144"
+  ]
+ },
+ {
+  "s": "Disposizione delle finestre ripristinata",
+  "at": [
+   "app.js:122"
+  ]
+ },
+ {
+  "s": "Menu della finestra",
+  "at": [
+   "app.js:135",
+   "app.js:136"
+  ]
+ },
+ {
+  "s": "Nessun dispositivo collegato.",
+  "at": [
+   "app.js:257"
+  ]
+ },
+ {
+  "s": "Clic: nuovo canale da questo preset · trascina su un canale per sostituirlo",
+  "at": [
+   "app.js:262"
+  ]
+ },
+ {
+  "s": "Clic: nello slot libero della traccia selezionata",
+  "at": [
+   "app.js:262"
+  ]
+ },
+ {
+  "s": "Clic: applica alla traccia selezionata del mixer",
+  "at": [
+   "app.js:262"
+  ]
+ },
+ {
+  "s": "Applica al canale selezionato",
+  "at": [
+   "app.js:272"
+  ]
+ },
+ {
+  "s": "Elimina il preset",
+  "at": [
+   "app.js:273"
+  ]
+ },
+ {
+  "s": "Clic: ascolta · doppio clic: nel canale selezionato · trascina sul rack, sulla Playlist o su un canale",
+  "at": [
+   "app.js:330"
+  ]
+ },
+ {
+  "s": "Lettura della cartella…",
+  "at": [
+   "app.js:340"
+  ]
+ },
+ {
+  "s": "Cartella vuota",
+  "at": [
+   "app.js:341"
+  ]
+ },
+ {
+  "s": "Mostrati i primi 3000 elementi: usa la ricerca per gli altri.",
+  "at": [
+   "app.js:346"
+  ]
+ },
+ {
+  "s": "Nessun risultato per “{0}”.",
+  "at": [
+   "app.js:353"
+  ]
+ },
+ {
+  "s": "Progetto corrente",
+  "at": [
+   "app.js:354",
+   "app.js:367"
+  ]
+ },
+ {
+  "s": "Generatori",
+  "at": [
+   "app.js:357",
+   "app.js:412"
+  ]
+ },
+ {
+  "s": "Effetti",
+  "at": [
+   "app.js:358",
+   "app.js:420",
+   "plugins-ui.js:18"
+  ]
+ },
+ {
+  "s": "Preset",
+  "at": [
+   "app.js:360",
+   "app.js:400"
+  ]
+ },
+ {
+  "s": "{0} bt",
+  "at": [
+   "app.js:369"
+  ]
+ },
+ {
+  "s": "Clic: seleziona — doppio clic: rinomina",
+  "at": [
+   "app.js:369"
+  ]
+ },
+ {
+  "s": "Canali",
+  "at": [
+   "app.js:372"
+  ]
+ },
+ {
+  "s": "Automazioni",
+  "at": [
+   "app.js:376"
+  ]
+ },
+ {
+  "s": "Clic destro su una manopola › Crea clip di automazione.",
+  "at": [
+   "app.js:377"
+  ]
+ },
+ {
+  "s": "Clic: apri l'editor della curva — trascinala nella Playlist",
+  "at": [
+   "app.js:379"
+  ]
+ },
+ {
+  "s": "Preferiti",
+  "at": [
+   "app.js:385"
+  ]
+ },
+ {
+  "s": "Cartelle",
+  "at": [
+   "app.js:386"
+  ]
+ },
+ {
+  "s": "Aggiorna il contenuto",
+  "at": [
+   "app.js:393"
+  ]
+ },
+ {
+  "s": "Togli dal browser",
+  "at": [
+   "app.js:393"
+  ]
+ },
+ {
+  "s": "Aggiungi una cartella…",
+  "at": [
+   "app.js:397"
+  ]
+ },
+ {
+  "s": "Una cartella di campioni, loop o kit: resta nel browser anche alla prossima apertura",
+  "at": [
+   "app.js:397"
+  ]
+ },
+ {
+  "s": "In questo browser la cartella resta disponibile solo fino alla chiusura della pagina.",
+  "at": [
+   "app.js:398"
+  ]
+ },
+ {
+  "s": "Aggiungi le cartelle dove tieni campioni e loop.",
+  "at": [
+   "app.js:398"
+  ]
+ },
+ {
+  "s": "Preset dei canali",
+  "at": [
+   "app.js:401"
+  ]
+ },
+ {
+  "s": "Preset degli effetti",
+  "at": [
+   "app.js:401"
+  ]
+ },
+ {
+  "s": "Stati delle tracce del mixer",
+  "at": [
+   "app.js:401"
+  ]
+ },
+ {
+  "s": "Clic destro su un canale › Salva preset del canale.",
+  "at": [
+   "app.js:403"
+  ]
+ },
+ {
+  "s": "Menu dello slot › Salva preset.",
+  "at": [
+   "app.js:403"
+  ]
+ },
+ {
+  "s": "Clic destro su una traccia del mixer › Salva lo stato.",
+  "at": [
+   "app.js:403"
+  ]
+ },
+ {
+  "s": "Progetti demo",
+  "at": [
+   "app.js:407"
+  ]
+ },
+ {
+  "s": "Mezzanotte (demo)",
+  "at": [
+   "app.js:408"
+  ]
+ },
+ {
+  "s": "Progetto vuoto",
+  "at": [
+   "app.js:409",
+   "app.js:1355"
+  ]
+ },
+ {
+  "s": "Apri un progetto…",
+  "at": [
+   "app.js:410"
+  ]
+ },
+ {
+  "s": "Carica un file audio in un nuovo canale",
+  "at": [
+   "app.js:416"
+  ]
+ },
+ {
+  "s": "Aggiungi {0} al Channel Rack (o trascinalo su un canale per sostituirlo)",
+  "at": [
+   "app.js:416"
+  ]
+ },
+ {
+  "s": "Clic: aggiunge l'effetto alla traccia selezionata del mixer ({0}).",
+  "at": [
+   "app.js:421"
+  ]
+ },
+ {
+  "s": "Partiture",
+  "at": [
+   "app.js:424"
+  ]
+ },
+ {
+  "s": "Score Logger: recupera ciò che hai suonato",
+  "at": [
+   "app.js:425"
+  ]
+ },
+ {
+  "s": "Importa MIDI…",
+  "at": [
+   "app.js:426",
+   "app.js:463",
+   "tools.js:379"
+  ]
+ },
+ {
+  "s": "Campioni",
+  "at": [
+   "app.js:428"
+  ]
+ },
+ {
+  "s": "Carica file audio…",
+  "at": [
+   "app.js:429"
+  ]
+ },
+ {
+  "s": "Clic: nuovo canale Sampler con questo campione",
+  "at": [
+   "app.js:431"
+  ]
+ },
+ {
+  "s": "Dispositivi MIDI",
+  "at": [
+   "app.js:435"
+  ]
+ },
+ {
+  "s": "Collega tastiera MIDI",
+  "at": [
+   "app.js:436",
+   "app.js:533"
+  ]
+ },
+ {
+  "s": "Scorciatoie e aiuto",
+  "at": [
+   "app.js:440",
+   "app.js:554"
+  ]
+ },
+ {
+  "s": "Seleziona prima delle note nel Piano Roll",
+  "at": [
+   "app.js:449"
+  ]
+ },
+ {
+  "s": "Apri progetto demo",
+  "at": [
+   "app.js:454"
+  ]
+ },
+ {
+  "s": "Apri…",
+  "at": [
+   "app.js:455"
+  ]
+ },
+ {
+  "s": "Progetti precedenti",
+  "at": [
+   "app.js:457"
+  ]
+ },
+ {
+  "s": "{0} · {1} canali · {2}",
+  "at": [
+   "app.js:458"
+  ]
+ },
+ {
+  "s": "Importa file audio…",
+  "at": [
+   "app.js:462"
+  ]
+ },
+ {
+  "s": "Esporta audio (WAV, FLAC, OGG, tracce)…",
+  "at": [
+   "app.js:465"
+  ]
+ },
+ {
+  "s": "Esporta MIDI…",
+  "at": [
+   "app.js:466"
+  ]
+ },
+ {
+  "s": "Seleziona tutte le note",
+  "at": [
+   "app.js:472"
+  ]
+ },
+ {
+  "s": "Copia note",
+  "at": [
+   "app.js:473"
+  ]
+ },
+ {
+  "s": "Incolla note",
+  "at": [
+   "app.js:474"
+  ]
+ },
+ {
+  "s": "Duplica note",
+  "at": [
+   "app.js:475"
+  ]
+ },
+ {
+  "s": "Elimina note selezionate",
+  "at": [
+   "app.js:476"
+  ]
+ },
+ {
+  "s": "Canc",
+  "at": [
+   "app.js:476"
+  ]
+ },
+ {
+  "s": "Sampler da file audio…",
+  "at": [
+   "app.js:484"
+  ]
+ },
+ {
+  "s": "Plugin VST3 / AU / CLAP… (dal browser)",
+  "at": [
+   "app.js:486"
+  ]
+ },
+ {
+  "s": "Scegli un plugin nella cartella Plugin del browser",
+  "at": [
+   "app.js:486"
+  ]
+ },
+ {
+  "s": "Clona pattern",
+  "at": [
+   "app.js:493"
+  ]
+ },
+ {
+  "s": "Rinomina pattern",
+  "at": [
+   "app.js:494"
+  ]
+ },
+ {
+  "s": "Colore successivo",
+  "at": [
+   "app.js:495",
+   "app.js:743"
+  ]
+ },
+ {
+  "s": "Elimina pattern",
+  "at": [
+   "app.js:500",
+   "app.js:746"
+  ]
+ },
+ {
+  "s": "Playlist in primo piano",
+  "at": [
+   "app.js:504"
+  ]
+ },
+ {
+  "s": "Impostazioni del canale",
+  "at": [
+   "app.js:509"
+  ]
+ },
+ {
+  "s": "Ripristina disposizione finestre",
+  "at": [
+   "app.js:511"
+  ]
+ },
+ {
+  "s": "Lingua",
+  "at": [
+   "app.js:514"
+  ]
+ },
+ {
+  "s": "Cambio lingua…",
+  "at": [
+   "app.js:514"
+  ]
+ },
+ {
+  "s": "Metro del progetto: {0}/{1}",
+  "at": [
+   "app.js:517"
+  ]
+ },
+ {
+  "s": "Clona l'arrangiamento",
+  "at": [
+   "app.js:522"
+  ]
+ },
+ {
+  "s": "Tastiera del computer come pianoforte",
+  "at": [
+   "app.js:524"
+  ]
+ },
+ {
+  "s": "Ottava della tastiera più bassa",
+  "at": [
+   "app.js:525"
+  ]
+ },
+ {
+  "s": "Ottava della tastiera più alta",
+  "at": [
+   "app.js:526"
+  ]
+ },
+ {
+  "s": "Registrazione armata",
+  "at": [
+   "app.js:528"
+  ]
+ },
+ {
+  "s": "Registra note (tastiera e MIDI nel pattern)",
+  "at": [
+   "app.js:529"
+  ]
+ },
+ {
+  "s": "Registra audio (ingresso nella Playlist)",
+  "at": [
+   "app.js:530"
+  ]
+ },
+ {
+  "s": "Impostazioni audio…",
+  "at": [
+   "app.js:532",
+   "app.js:1376"
+  ]
+ },
+ {
+  "s": "Loop Starter…",
+  "at": [
+   "app.js:538"
+  ]
+ },
+ {
+  "s": "Score Logger: recupera le note suonate",
+  "at": [
+   "app.js:541"
+  ]
+ },
+ {
+  "s": "Audio Logger: salva gli ultimi 60 secondi",
+  "at": [
+   "app.js:542"
+  ]
+ },
+ {
+  "s": "Quantizza note",
+  "at": [
+   "app.js:544"
+  ]
+ },
+ {
+  "s": "Svuota il canale nel pattern",
+  "at": [
+   "app.js:547"
+  ]
+ },
+ {
+  "s": "Torna all'inizio del brano",
+  "at": [
+   "app.js:549"
+  ]
+ },
+ {
+  "s": "Finestra di benvenuto",
+  "at": [
+   "app.js:553"
+  ]
+ },
+ {
+  "s": "Informazioni su Ritmo Studio",
+  "at": [
+   "app.js:555",
+   "../../desktop/main.js:352",
+   "../../desktop/main.js:370",
+   "../../desktop/main.js:441"
+  ]
+ },
+ {
+  "s": "Ritmo Studio {0} · DAW gratuita e open source · nessuna affiliazione con Image-Line",
+  "at": [
+   "app.js:555"
+  ]
+ },
+ {
+  "s": "SONG: suona la playlist",
+  "at": [
+   "app.js:571"
+  ]
+ },
+ {
+  "s": "PAT: suona il pattern “{0}”",
+  "at": [
+   "app.js:571"
+  ]
+ },
+ {
+  "s": "Tastiera del computer: suona il canale selezionato",
+  "at": [
+   "app.js:598"
+  ]
+ },
+ {
+  "s": "Tastiera del computer: disattivata come pianoforte",
+  "at": [
+   "app.js:598"
+  ]
+ },
+ {
+  "s": "Registrazione disattivata",
+  "at": [
+   "app.js:602"
+  ]
+ },
+ {
+  "s": "Registrazione audio armata: premi Play, registra l'ingresso sulla traccia del mixer selezionata",
+  "at": [
+   "app.js:603"
+  ]
+ },
+ {
+  "s": "Registrazione armata: avvia in PAT e suona con la tastiera o il MIDI",
+  "at": [
+   "app.js:604"
+  ]
+ },
+ {
+  "s": "Il tasto Rec registra l'ingresso audio in una clip della Playlist",
+  "at": [
+   "app.js:610"
+  ]
+ },
+ {
+  "s": "Il tasto Rec registra le note nel pattern",
+  "at": [
+   "app.js:610"
+  ]
+ },
+ {
+  "s": "Tastiera del computer: da {0} a {1}",
+  "at": [
+   "app.js:612"
+  ]
+ },
+ {
+  "s": "Aggiunto {0} → mixer {1}",
+  "at": [
+   "app.js:632"
+  ]
+ },
+ {
+  "s": "{0} eliminato. Ctrl+Z per annullare.",
+  "at": [
+   "app.js:653"
+  ]
+ },
+ {
+  "s": "{0} aggiunto a {1}",
+  "at": [
+   "app.js:684"
+  ]
+ },
+ {
+  "s": "Pattern corrente: {0}",
+  "at": [
+   "app.js:698"
+  ]
+ },
+ {
+  "s": "{0} (copia)",
+  "at": [
+   "app.js:713"
+  ]
+ },
+ {
+  "s": "Il progetto deve avere almeno un pattern",
+  "at": [
+   "app.js:720"
+  ]
+ },
+ {
+  "s": "Pattern “{0}” eliminato. Ctrl+Z per annullare.",
+  "at": [
+   "app.js:727"
+  ]
+ },
+ {
+  "s": "Strumento",
+  "at": [
+   "app.js:760"
+  ]
+ },
+ {
+  "s": "Campione",
+  "at": [
+   "app.js:760"
+  ]
+ },
+ {
+  "s": "Inviluppo",
+  "at": [
+   "app.js:760"
+  ]
+ },
+ {
+  "s": "Varie",
+  "at": [
+   "app.js:760"
+  ]
+ },
+ {
+  "s": "Prova lo strumento",
+  "at": [
+   "app.js:814"
+  ]
+ },
+ {
+  "s": "Regione e dissolvenze",
+  "at": [
+   "app.js:819"
+  ]
+ },
+ {
+  "s": "Trascina i segni sulla forma d'onda: verde inizio, rosso fine, arancio il loop. Con il loop attivo il suono dura quanto la nota.",
+  "at": [
+   "app.js:821"
+  ]
+ },
+ {
+  "s": "Volume (attacco, tenuta, decadimento, sustain, rilascio)",
+  "at": [
+   "app.js:824"
+  ]
+ },
+ {
+  "s": "LFO (riparte a ogni nota)",
+  "at": [
+   "app.js:829"
+  ]
+ },
+ {
+  "s": "Volume: tremolo · Pan: movimento stereo · Filtro: richiede un filtro attivo nella scheda Inviluppo · Intonazione: vibrato in semitoni.",
+  "at": [
+   "app.js:830"
+  ]
+ },
+ {
+  "s": "Traccia del mixer",
+  "at": [
+   "app.js:860"
+  ]
+ },
+ {
+  "s": "Nota dei passi",
+  "at": [
+   "app.js:861"
+  ]
+ },
+ {
+  "s": "Monofonico",
+  "at": [
+   "app.js:870"
+  ]
+ },
+ {
+  "s": "Portamento",
+  "at": [
+   "app.js:872"
+  ]
+ },
+ {
+  "s": "Gruppo {0}",
+  "at": [
+   "app.js:876"
+  ]
+ },
+ {
+  "s": "Gruppo di taglio",
+  "at": [
+   "app.js:877"
+  ]
+ },
+ {
+  "s": "Tagliato dal gruppo",
+  "at": [
+   "app.js:878"
+  ]
+ },
+ {
+  "s": "Esempio: hi-hat chiuso nel gruppo 1, hi-hat aperto “tagliato dal gruppo 1”: il chiuso zittisce l'aperto.",
+  "at": [
+   "app.js:879"
+  ]
+ },
+ {
+  "s": "1/16 terzina",
+  "at": [
+   "app.js:881"
+  ]
+ },
+ {
+  "s": "Arpeggiatore",
+  "at": [
+   "app.js:882"
+  ]
+ },
+ {
+  "s": "Su",
+  "at": [
+   "app.js:884"
+  ]
+ },
+ {
+  "s": "Giù",
+  "at": [
+   "app.js:884"
+  ]
+ },
+ {
+  "s": "Su e giù",
+  "at": [
+   "app.js:884"
+  ]
+ },
+ {
+  "s": "Giù e su",
+  "at": [
+   "app.js:884"
+  ]
+ },
+ {
+  "s": "Casuale",
+  "at": [
+   "app.js:884"
+  ]
+ },
+ {
+  "s": "Ottave",
+  "at": [
+   "app.js:885"
+  ]
+ },
+ {
+  "s": "Ripeti ogni nota",
+  "at": [
+   "app.js:887"
+  ]
+ },
+ {
+  "s": "Durata note",
+  "at": [
+   "app.js:888"
+  ]
+ },
+ {
+  "s": "Eco delle note",
+  "at": [
+   "app.js:890"
+  ]
+ },
+ {
+  "s": "Ripetizioni",
+  "at": [
+   "app.js:892"
+  ]
+ },
+ {
+  "s": "Distanza",
+  "at": [
+   "app.js:893"
+  ]
+ },
+ {
+  "s": "Intonazione per eco",
+  "at": [
+   "app.js:894"
+  ]
+ },
+ {
+  "s": "Ritorno",
+  "at": [
+   "app.js:895"
+  ]
+ },
+ {
+  "s": "Elimina canale",
+  "at": [
+   "app.js:916"
+  ]
+ },
+ {
+  "s": "Nessun campione: trascina qui un suono dal browser o usa Carica",
+  "at": [
+   "app.js:948"
+  ]
+ },
+ {
+  "s": "Sostituisci campione",
+  "at": [
+   "app.js:970"
+  ]
+ },
+ {
+  "s": "Carica campione",
+  "at": [
+   "app.js:970"
+  ]
+ },
+ {
+  "s": "Apri interfaccia del plugin",
+  "at": [
+   "app.js:1004"
+  ]
+ },
+ {
+  "s": "Automatizza un parametro…",
+  "at": [
+   "app.js:1007"
+  ]
+ },
+ {
+  "s": "Crea una clip di automazione per un parametro del plugin",
+  "at": [
+   "app.js:1009"
+  ]
+ },
+ {
+  "s": "I plugin VST3, AU e CLAP suonano solo nell'app desktop di Ritmo Studio.",
+  "at": [
+   "app.js:1015"
+  ]
+ },
+ {
+  "s": "Nuovo progetto. Il precedente è in File › Progetti precedenti.",
+  "at": [
+   "app.js:1086"
+  ]
+ },
+ {
+  "s": "Progetto demo caricato. Premi Spazio per ascoltarlo.",
+  "at": [
+   "app.js:1096"
+  ]
+ },
+ {
+  "s": "Progetto aperto: {0}",
+  "at": [
+   "app.js:1109"
+  ]
+ },
+ {
+  "s": "Impossibile aprire il file: {0}",
+  "at": [
+   "app.js:1111"
+  ]
+ },
+ {
+  "s": "Ripristinato: {0} ({1} canali)",
+  "at": [
+   "app.js:1124"
+  ]
+ },
+ {
+  "s": "Copia non leggibile",
+  "at": [
+   "app.js:1125"
+  ]
+ },
+ {
+  "s": "Trascina file audio (WAV, MP3, OGG…) oppure un progetto .json",
+  "at": [
+   "app.js:1142"
+  ]
+ },
+ {
+  "s": "Aggiungi o seleziona un canale per suonare",
+  "at": [
+   "app.js:1181"
+  ]
+ },
+ {
+  "s": "Questo ambiente non supporta il MIDI: usa l'app desktop, Chrome o Edge.",
+  "at": [
+   "app.js:1213"
+  ]
+ },
+ {
+  "s": "Collegato: {0}. Suona il canale selezionato.",
+  "at": [
+   "app.js:1219"
+  ]
+ },
+ {
+  "s": "Nessun dispositivo MIDI trovato. Collegalo e riprova.",
+  "at": [
+   "app.js:1219"
+  ]
+ },
+ {
+  "s": "Accesso al MIDI non consentito qui.",
+  "at": [
+   "app.js:1224"
+  ]
+ },
+ {
+  "s": "OSCILLOSCOPIO",
+  "at": [
+   "app.js:1322"
+  ]
+ },
+ {
+  "s": "Progetto demo",
+  "at": [
+   "app.js:1356",
+   "tools.js:377"
+  ]
+ },
+ {
+  "s": "Il tasto Rec registra",
+  "at": [
+   "app.js:1372"
+  ]
+ },
+ {
+  "s": "Note nel pattern (tastiera e MIDI)",
+  "at": [
+   "app.js:1373"
+  ]
+ },
+ {
+  "s": "Audio dall'ingresso nella Playlist",
+  "at": [
+   "app.js:1374"
+  ]
+ },
+ {
+  "s": "B:B:S",
+  "at": [
+   "app.js:1382",
+   "app.js:1386"
+  ]
+ },
+ {
+  "s": "Tempo: {0} BPM",
+  "at": [
+   "app.js:1395"
+  ]
+ },
+ {
+  "s": "Rilascia file audio o un progetto",
+  "at": [
+   "app.js:1425"
+  ]
+ },
+ {
+  "s": "{0} minore",
+  "at": [
+   "tools.js:22"
+  ]
+ },
+ {
+  "s": "{0} maggiore",
+  "at": [
+   "tools.js:22"
+  ]
+ },
+ {
+  "s": "Genera un loop di 4 battute con gli strumenti interni: batteria, basso, accordi e melodia nella tonalità scelta. I dadi rigenerano una parte alla volta.",
+  "at": [
+   "tools.js:31"
+  ]
+ },
+ {
+  "s": "Genere",
+  "at": [
+   "tools.js:33"
+  ]
+ },
+ {
+  "s": "Tonalità",
+  "at": [
+   "tools.js:38"
+  ]
+ },
+ {
+  "s": "minore",
+  "at": [
+   "tools.js:40",
+   "tools.js:175"
+  ]
+ },
+ {
+  "s": "maggiore",
+  "at": [
+   "tools.js:41",
+   "tools.js:175"
+  ]
+ },
+ {
+  "s": "Tempo automatico (BPM e swing del genere)",
+  "at": [
+   "tools.js:55"
+  ]
+ },
+ {
+  "s": "Nuova variazione di batteria",
+  "at": [
+   "tools.js:58"
+  ]
+ },
+ {
+  "s": "Nuova variazione di basso",
+  "at": [
+   "tools.js:58"
+  ]
+ },
+ {
+  "s": "Nuova variazione di accordi",
+  "at": [
+   "tools.js:58"
+  ]
+ },
+ {
+  "s": "Nuova variazione di melodia",
+  "at": [
+   "tools.js:58"
+  ]
+ },
+ {
+  "s": "Rigenera",
+  "at": [
+   "tools.js:61"
+  ]
+ },
+ {
+  "s": "Crea loop",
+  "at": [
+   "tools.js:71"
+  ]
+ },
+ {
+  "s": "Loop {0} {1}",
+  "at": [
+   "tools.js:84"
+  ]
+ },
+ {
+  "s": "Loop creato: {0}",
+  "at": [
+   "tools.js:93"
+  ]
+ },
+ {
+  "s": "Crea prima un loop",
+  "at": [
+   "tools.js:97"
+  ]
+ },
+ {
+  "s": "Basso synth",
+  "at": [
+   "tools.js:122"
+  ]
+ },
+ {
+  "s": "Piano elettrico",
+  "at": [
+   "tools.js:128"
+  ]
+ },
+ {
+  "s": "Pluck accordi",
+  "at": [
+   "tools.js:128"
+  ]
+ },
+ {
+  "s": "Stab",
+  "at": [
+   "tools.js:128"
+  ]
+ },
+ {
+  "s": "Nuova variazione: {0}",
+  "at": [
+   "tools.js:146"
+  ]
+ },
+ {
+  "s": "batteria",
+  "at": [
+   "tools.js:146"
+  ]
+ },
+ {
+  "s": "basso",
+  "at": [
+   "tools.js:146"
+  ]
+ },
+ {
+  "s": "accordi ({0})",
+  "at": [
+   "tools.js:146"
+  ]
+ },
+ {
+  "s": "melodia",
+  "at": [
+   "tools.js:146"
+  ]
+ },
+ {
+  "s": "Tonica",
+  "at": [
+   "tools.js:171"
+  ]
+ },
+ {
+  "s": "Progressione",
+  "at": [
+   "tools.js:175"
+  ]
+ },
+ {
+  "s": "Triadi",
+  "at": [
+   "tools.js:178"
+  ]
+ },
+ {
+  "s": "Settime",
+  "at": [
+   "tools.js:178"
+  ]
+ },
+ {
+  "s": "None",
+  "at": [
+   "tools.js:178"
+  ]
+ },
+ {
+  "s": "Ritmo",
+  "at": [
+   "tools.js:179"
+  ]
+ },
+ {
+  "s": "1 accordo per battuta",
+  "at": [
+   "tools.js:179"
+  ]
+ },
+ {
+  "s": "2 accordi per battuta",
+  "at": [
+   "tools.js:179"
+  ]
+ },
+ {
+  "s": "1 accordo ogni 2 battute",
+  "at": [
+   "tools.js:179"
+  ]
+ },
+ {
+  "s": "Ottava",
+  "at": [
+   "tools.js:184"
+  ]
+ },
+ {
+  "s": "Voicing",
+  "at": [
+   "tools.js:185"
+  ]
+ },
+ {
+  "s": "Voice leading",
+  "at": [
+   "tools.js:185"
+  ]
+ },
+ {
+  "s": "Posizione fondamentale",
+  "at": [
+   "tools.js:185"
+  ]
+ },
+ {
+  "s": "Canale accordi",
+  "at": [
+   "tools.js:192"
+  ]
+ },
+ {
+  "s": "Canale basso",
+  "at": [
+   "tools.js:193"
+  ]
+ },
+ {
+  "s": "— nessun basso —",
+  "at": [
+   "tools.js:193"
+  ]
+ },
+ {
+  "s": "Ascolta {0}",
+  "at": [
+   "tools.js:200"
+  ]
+ },
+ {
+  "s": "Inserisci nel pattern “{0}”",
+  "at": [
+   "tools.js:211"
+  ]
+ },
+ {
+  "s": "Scegli il canale per gli accordi",
+  "at": [
+   "tools.js:220"
+  ]
+ },
+ {
+  "s": "Progressione inserita: {0} + basso",
+  "at": [
+   "tools.js:235"
+  ]
+ },
+ {
+  "s": "Progressione inserita: {0}",
+  "at": [
+   "tools.js:235"
+  ]
+ },
+ {
+  "s": "Tastiera / MIDI",
+  "at": [
+   "tools.js:244"
+  ]
+ },
+ {
+  "s": "Note selezionate nel Piano Roll",
+  "at": [
+   "tools.js:245"
+  ]
+ },
+ {
+  "s": "Suona un accordo con la tastiera o il MIDI, oppure seleziona delle note nel Piano Roll.",
+  "at": [
+   "tools.js:247"
+  ]
+ },
+ {
+  "s": "Seleziona il canale in cui recuperare le note",
+  "at": [
+   "tools.js:267"
+  ]
+ },
+ {
+  "s": "Nessuna nota suonata negli ultimi 10 minuti",
+  "at": [
+   "tools.js:268"
+  ]
+ },
+ {
+  "s": "Score Logger: {0} note recuperate in {1}",
+  "at": [
+   "tools.js:280"
+  ]
+ },
+ {
+  "s": "Audio Logger vuoto: suona qualcosa e riprova",
+  "at": [
+   "tools.js:288",
+   "native.js:225"
+  ]
+ },
+ {
+  "s": "ultimi {0} s",
+  "at": [
+   "tools.js:289"
+  ]
+ },
+ {
+  "s": "Nessuna nota da esportare",
+  "at": [
+   "tools.js:318"
+  ]
+ },
+ {
+  "s": "Il file MIDI non contiene note",
+  "at": [
+   "tools.js:325"
+  ]
+ },
+ {
+  "s": "MIDI importato: {0} tracce, {1} BPM",
+  "at": [
+   "tools.js:354"
+  ]
+ },
+ {
+  "s": "Impossibile leggere il MIDI: {0}",
+  "at": [
+   "tools.js:356"
+  ]
+ },
+ {
+  "s": "Riprendi",
+  "at": [
+   "tools.js:374"
+  ]
+ },
+ {
+  "s": "{0} · {1} canali",
+  "at": [
+   "tools.js:374"
+  ]
+ },
+ {
+  "s": "Kit base: cassa, clap, hi-hat, rullante",
+  "at": [
+   "tools.js:375"
+  ]
+ },
+ {
+  "s": "Un’idea pronta per genere e tonalità",
+  "at": [
+   "tools.js:376"
+  ]
+ },
+ {
+  "s": "“Mezzanotte”, 16 battute",
+  "at": [
+   "tools.js:377"
+  ]
+ },
+ {
+  "s": "Apri progetto…",
+  "at": [
+   "tools.js:378"
+  ]
+ },
+ {
+  "s": "File {0}",
+  "at": [
+   "tools.js:378"
+  ]
+ },
+ {
+  "s": "File {0} o {1}",
+  "at": [
+   "tools.js:379"
+  ]
+ },
+ {
+  "s": "Spazio avvia e ferma; F6, F7 e F9 aprono Channel Rack, Piano Roll e Mixer.",
+  "at": [
+   "tools.js:383"
+  ]
+ },
+ {
+  "s": "Nel Piano Roll: strumenti Disegna, Pennello, Cancella, Muta, Taglia e Seleziona; Chord Stamp e scale.",
+  "at": [
+   "tools.js:384"
+  ]
+ },
+ {
+  "s": "Strumenti › Score Logger recupera le note che hai suonato anche senza registrare.",
+  "at": [
+   "tools.js:385"
+  ]
+ },
+ {
+  "s": "Strumenti › Audio Logger salva gli ultimi 60 secondi del master.",
+  "at": [
+   "tools.js:386"
+  ]
+ },
+ {
+  "s": "Non mostrare all’avvio",
+  "at": [
+   "tools.js:393"
+  ]
+ },
+ {
+  "s": "Cosa",
+  "at": [
+   "io.js:35"
+  ]
+ },
+ {
+  "s": "Il brano (Playlist)",
+  "at": [
+   "io.js:35"
+  ]
+ },
+ {
+  "s": "Il pattern “{0}”",
+  "at": [
+   "io.js:35"
+  ]
+ },
+ {
+  "s": "Formato",
+  "at": [
+   "io.js:36"
+  ]
+ },
+ {
+  "s": "FLAC (senza perdita)",
+  "at": [
+   "io.js:36"
+  ]
+ },
+ {
+  "s": "OGG Vorbis (compresso)",
+  "at": [
+   "io.js:36"
+  ]
+ },
+ {
+  "s": "Qualità",
+  "at": [
+   "io.js:37"
+  ]
+ },
+ {
+  "s": "{0} (consigliata) · circa {1} kbps",
+  "at": [
+   "io.js:37"
+  ]
+ },
+ {
+  "s": "{0} · circa {1} kbps",
+  "at": [
+   "io.js:37"
+  ]
+ },
+ {
+  "s": "Risoluzione",
+  "at": [
+   "io.js:38"
+  ]
+ },
+ {
+  "s": "32 bit in virgola mobile",
+  "at": [
+   "io.js:38"
+  ]
+ },
+ {
+  "s": "Tracce separate: un file per ogni traccia del mixer usata (dopo il fader)",
+  "at": [
+   "io.js:45"
+  ]
+ },
+ {
+  "s": "Includi anche il mix completo (Master)",
+  "at": [
+   "io.js:52"
+  ]
+ },
+ {
+  "s": "Tracce: {0}",
+  "at": [
+   "io.js:55"
+  ]
+ },
+ {
+  "s": "Nessuna traccia del mixer riceve suono.",
+  "at": [
+   "io.js:55"
+  ]
+ },
+ {
+  "s": "FLAC e OGG sono disponibili nell'app desktop. Nel browser le tracce separate arrivano in un unico archivio ZIP.",
+  "at": [
+   "io.js:57"
+  ]
+ },
+ {
+  "s": "Esporta…",
+  "at": [
+   "io.js:58"
+  ]
+ },
+ {
+  "s": "Nessuna traccia del mixer da esportare",
+  "at": [
+   "io.js:68"
+  ]
+ },
+ {
+  "s": "Rendering della playlist in corso…",
+  "at": [
+   "io.js:77",
+   "native.js:182"
+  ]
+ },
+ {
+  "s": "Rendering del pattern “{0}” in corso…",
+  "at": [
+   "io.js:77",
+   "native.js:182"
+  ]
+ },
+ {
+  "s": "Esportati {0} s di audio",
+  "at": [
+   "io.js:84"
+  ]
+ },
+ {
+  "s": "Tracce pronte: {0} di {1}",
+  "at": [
+   "io.js:96"
+  ]
+ },
+ {
+  "s": "tracce",
+  "at": [
+   "io.js:98"
+  ]
+ },
+ {
+  "s": "Nel browser l'audio esce dal dispositivo predefinito del sistema. Per scegliere la scheda audio, la frequenza e il buffer usa l'app desktop.",
+  "at": [
+   "io.js:119"
+  ]
+ },
+ {
+  "s": "audio spento",
+  "at": [
+   "io.js:121"
+  ]
+ },
+ {
+  "s": "Latenza",
+  "at": [
+   "io.js:122"
+  ]
+ },
+ {
+  "s": "Ingresso",
+  "at": [
+   "io.js:123",
+   "io.js:141"
+  ]
+ },
+ {
+  "s": "microfono del browser (chiede il permesso alla prima registrazione)",
+  "at": [
+   "io.js:123"
+  ]
+ },
+ {
+  "s": "Leggo le schede audio…",
+  "at": [
+   "io.js:128"
+  ]
+ },
+ {
+  "s": "Scheda audio: {0}",
+  "at": [
+   "io.js:137",
+   "native.js:276"
+  ]
+ },
+ {
+  "s": "Driver",
+  "at": [
+   "io.js:139"
+  ]
+ },
+ {
+  "s": "Buffer",
+  "at": [
+   "io.js:143"
+  ]
+ },
+ {
+  "s": "{0} campioni · {1} ms",
+  "at": [
+   "io.js:143"
+  ]
+ },
+ {
+  "s": "Latenza complessiva: {0} ms.",
+  "at": [
+   "io.js:145"
+  ]
+ },
+ {
+  "s": "Ingressi attivi: {0}",
+  "at": [
+   "io.js:145"
+  ]
+ },
+ {
+  "s": "Ingressi spenti: scegli un ingresso per registrare.",
+  "at": [
+   "io.js:145"
+  ]
+ },
+ {
+  "s": "Registrazione",
+  "at": [
+   "io.js:156"
+  ]
+ },
+ {
+  "s": "Registrazione aggiunta alla Playlist: {0} s su {1}",
+  "at": [
+   "io.js:171"
+  ]
+ },
+ {
+  "s": "Microfono non disponibile: {0}",
+  "at": [
+   "io.js:181"
+  ]
+ },
+ {
+  "s": "Registrazione {0}",
+  "at": [
+   "io.js:204",
+   "native.js:292"
+  ]
+ },
+ {
+  "s": "Registrazione audio in corso… premi Stop per finire",
+  "at": [
+   "io.js:214"
+  ]
+ },
+ {
+  "s": "Registrazione audio su {0}… premi Stop per finire",
+  "at": [
+   "native.js:131"
+  ]
+ },
+ {
+  "s": "Audio WAV",
+  "at": [
+   "native.js:172",
+   "native.js:221"
+  ]
+ },
+ {
+  "s": "Audio FLAC",
+  "at": [
+   "native.js:172"
+  ]
+ },
+ {
+  "s": "Audio OGG Vorbis",
+  "at": [
+   "native.js:172"
+  ]
+ },
+ {
+  "s": "Esporta le tracce separate (nome di base dei file)",
+  "at": [
+   "native.js:177"
+  ]
+ },
+ {
+  "s": "Esporta il brano",
+  "at": [
+   "native.js:177"
+  ]
+ },
+ {
+  "s": "Esportato: {0} s · {1} file in {2}",
+  "at": [
+   "native.js:191"
+  ]
+ },
+ {
+  "s": "{0} file esportati",
+  "at": [
+   "native.js:191"
+  ]
+ },
+ {
+  "s": "Brano esportato",
+  "at": [
+   "native.js:191"
+  ]
+ },
+ {
+  "s": "Esportazione non riuscita: {0}",
+  "at": [
+   "native.js:192"
+  ]
+ },
+ {
+  "s": "Esportazione non riuscita",
+  "at": [
+   "native.js:192"
+  ]
+ },
+ {
+  "s": "nessun audio ricevuto",
+  "at": [
+   "native.js:202"
+  ]
+ },
+ {
+  "s": "Uscita audio",
+  "at": [
+   "native.js:216"
+  ]
+ },
+ {
+  "s": "Audio Logger: ultimi 60 secondi",
+  "at": [
+   "native.js:221"
+  ]
+ },
+ {
+  "s": "Audio Logger: salvati {0} secondi",
+  "at": [
+   "native.js:224"
+  ]
+ },
+ {
+  "s": "Carico {0}…",
+  "at": [
+   "native.js:235"
+  ]
+ },
+ {
+  "s": "Carico {0} su {1}…",
+  "at": [
+   "native.js:245"
+  ]
+ },
+ {
+  "s": "Il plugin non è caricato o non ha parametri automatizzabili",
+  "at": [
+   "native.js:250"
+  ]
+ },
+ {
+  "s": "{0} · {1} parametri",
+  "at": [
+   "native.js:251"
+  ]
+ },
+ {
+  "s": "Parametro {0}",
+  "at": [
+   "native.js:252"
+  ]
+ },
+ {
+  "s": "avvio…",
+  "at": [
+   "native.js:262"
+  ]
+ },
+ {
+  "s": "Registrazione non riuscita",
+  "at": [
+   "native.js:290"
+  ]
+ },
+ {
+  "s": "La registrazione non si può leggere",
+  "at": [
+   "native.js:293"
+  ]
+ },
+ {
+  "s": "Scansione plugin: {0}/{1} — {2}",
+  "at": [
+   "native.js:329"
+  ]
+ },
+ {
+  "s": "Plugin trovati: {0}",
+  "at": [
+   "native.js:335"
+  ]
+ },
+ {
+  "s": "Caricato: {0}",
+  "at": [
+   "native.js:340"
+  ]
+ },
+ {
+  "s": "Questo file non si può ascoltare",
+  "at": [
+   "native.js:351"
+  ]
+ },
+ {
+  "s": "Il motore non riesce a leggere un campione audio",
+  "at": [
+   "native.js:354"
+  ]
+ },
+ {
+  "s": "Rendering: {0}%",
+  "at": [
+   "native.js:357"
+  ]
+ },
+ {
+  "s": "Il motore audio si è riavviato",
+  "at": [
+   "native.js:368"
+  ]
+ },
+ {
+  "s": "Il motore audio non parte: {0}",
+  "at": [
+   "native.js:372"
+  ]
+ },
+ {
+  "s": "errore sconosciuto",
+  "at": [
+   "native.js:372"
+  ]
+ },
+ {
+  "s": "Database plugin ({0})",
+  "at": [
+   "plugins-ui.js:14"
+  ]
+ },
+ {
+  "s": "Database plugin",
+  "at": [
+   "plugins-ui.js:14"
+  ]
+ },
+ {
+  "s": "Scansione in corso: {0} di {1}",
+  "at": [
+   "plugins-ui.js:15"
+  ]
+ },
+ {
+  "s": "Avvio del motore audio…",
+  "at": [
+   "plugins-ui.js:16"
+  ]
+ },
+ {
+  "s": "Nessun plugin trovato. Usa “Cerca plugin nuovi”.",
+  "at": [
+   "plugins-ui.js:17"
+  ]
+ },
+ {
+  "s": "Clic: nuovo canale con {0}",
+  "at": [
+   "plugins-ui.js:31"
+  ]
+ },
+ {
+  "s": "Clic: aggiungi {0} alla traccia selezionata del mixer ({1})",
+  "at": [
+   "plugins-ui.js:31"
+  ]
+ },
+ {
+  "s": "Cerca plugin nuovi",
+  "at": [
+   "plugins-ui.js:37"
+  ]
+ },
+ {
+  "s": "Cerco plugin nuovi o aggiornati…",
+  "at": [
+   "plugins-ui.js:37"
+  ]
+ },
+ {
+  "s": "Ripeti la scansione completa",
+  "at": [
+   "plugins-ui.js:38"
+  ]
+ },
+ {
+  "s": "Scansione completa dei plugin avviata",
+  "at": [
+   "plugins-ui.js:38"
+  ]
+ },
+ {
+  "s": "Guida alla Web Audio API (MDN)",
+  "at": [
+   "../../desktop/main.js:25"
+  ]
+ },
+ {
+  "s": "Guida alla Web MIDI API (MDN)",
+  "at": [
+   "../../desktop/main.js:26"
+  ]
+ },
+ {
+  "s": "Tutti i file",
+  "at": [
+   "../../desktop/main.js:319"
+  ]
+ },
+ {
+  "s": "Salva file",
+  "at": [
+   "../../desktop/main.js:323"
+  ]
+ },
+ {
+  "s": "Salvataggio non riuscito",
+  "at": [
+   "../../desktop/main.js:337"
+  ]
+ },
+ {
+  "s": "Impossibile salvare il file: {0}",
+  "at": [
+   "../../desktop/main.js:337"
+  ]
+ },
+ {
+  "s": "DAW gratuita: Channel Rack, Piano Roll, Playlist e Mixer.",
+  "at": [
+   "../../desktop/main.js:355"
+  ]
+ },
+ {
+  "s": "Licenza MIT",
+  "at": [
+   "../../desktop/main.js:356",
+   "../../desktop/main.js:464"
+  ]
+ },
+ {
+  "s": "Servizi",
+  "at": [
+   "../../desktop/main.js:372"
+  ]
+ },
+ {
+  "s": "Nascondi Ritmo Studio",
+  "at": [
+   "../../desktop/main.js:374"
+  ]
+ },
+ {
+  "s": "Nascondi altre",
+  "at": [
+   "../../desktop/main.js:375"
+  ]
+ },
+ {
+  "s": "Mostra tutte",
+  "at": [
+   "../../desktop/main.js:376"
+  ]
+ },
+ {
+  "s": "Esci da Ritmo Studio",
+  "at": [
+   "../../desktop/main.js:378"
+  ]
+ },
+ {
+  "s": "Esci",
+  "at": [
+   "../../desktop/main.js:384"
+  ]
+ },
+ {
+  "s": "Seleziona tutto",
+  "at": [
+   "../../desktop/main.js:399"
+  ]
+ },
+ {
+  "s": "Ricarica",
+  "at": [
+   "../../desktop/main.js:407"
+  ]
+ },
+ {
+  "s": "Strumenti per sviluppatori",
+  "at": [
+   "../../desktop/main.js:408"
+  ]
+ },
+ {
+  "s": "Dimensioni reali",
+  "at": [
+   "../../desktop/main.js:410"
+  ]
+ },
+ {
+  "s": "Schermo intero",
+  "at": [
+   "../../desktop/main.js:414"
+  ]
+ },
+ {
+  "s": "Finestra",
+  "at": [
+   "../../desktop/main.js:419"
+  ]
+ },
+ {
+  "s": "Contrai",
+  "at": [
+   "../../desktop/main.js:423"
+  ]
+ },
+ {
+  "s": "Ridimensiona",
+  "at": [
+   "../../desktop/main.js:424"
+  ]
+ },
+ {
+  "s": "Porta tutto in primo piano",
+  "at": [
+   "../../desktop/main.js:426"
+  ]
+ },
+ {
+  "s": "Chiudi finestra",
+  "at": [
+   "../../desktop/main.js:428",
+   "../../desktop/main.js:432"
+  ]
+ },
+ {
+  "s": "Riduci a icona",
+  "at": [
+   "../../desktop/main.js:431"
+  ]
+ },
+ {
+  "s": "DAW gratuita: Channel Rack, Piano Roll, Playlist e Mixer",
+  "at": [
+   "../../desktop/main.js:465"
+  ]
+ },
+ {
+  "s": "Aggiungi una cartella al browser",
+  "at": [
+   "../../desktop/files.js:66"
+  ]
+ }
+]

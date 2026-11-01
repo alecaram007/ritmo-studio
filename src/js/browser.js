@@ -43,7 +43,7 @@ const Files = {
           const id = 'mem:' + uid(), map = new Map();
           files.forEach(f => map.set(f.webkitRelativePath.split('/').slice(1).join('/'), f));
           this.handles.set(id, map);
-          this.roots.push({ id, name: files[0].webkitRelativePath.split('/')[0] + ' (sessione)' });
+          this.roots.push({ id, name: T('{0} (sessione)', files[0].webkitRelativePath.split('/')[0]) });
           ui.treeOpen = ui.treeOpen.concat('disk', 'disk:' + id);
           Tree.render();
         });
@@ -53,7 +53,7 @@ const Files = {
     } catch (e) {
       // embedded pages may not open the folder picker: fall back to a folder chosen for this session
       if (e && e.name === 'SecurityError' && this.mode === 'fsa') { this.mode = 'input'; return this.add(); }
-      if (e && e.name !== 'AbortError') toast('Cartella non aggiunta: ' + (e.message || e));
+      if (e && e.name !== 'AbortError') toast(T('Cartella non aggiunta: {0}', e.message || e));
       return;
     }
     ui.treeOpen = ui.treeOpen.concat('disk');
@@ -88,7 +88,7 @@ const Files = {
       out = [...seen].map(([name, dir]) => ({ name, dir, root: rootId, rel: this.join(rel, name) }));
     } else {
       let dir = this.handles.get(rootId);
-      if ((await dir.queryPermission({ mode: 'read' })) !== 'granted' && (await dir.requestPermission({ mode: 'read' })) !== 'granted') throw new Error('permesso negato');
+      if ((await dir.queryPermission({ mode: 'read' })) !== 'granted' && (await dir.requestPermission({ mode: 'read' })) !== 'granted') throw new Error(T('permesso negato'));
       for (const part of rel ? rel.split('/') : []) dir = await dir.getDirectoryHandle(part);
       for await (const [name, hd] of dir.entries()) if (!name.startsWith('.')) out.push({ name, dir: hd.kind === 'directory', root: rootId, rel: this.join(rel, name) });
     }
@@ -101,7 +101,7 @@ const Files = {
     const k = this.key(rootId, rel);
     if (this.cache.has(k) || this.loading.has(k)) return;
     this.loading.add(k);
-    this.list(rootId, rel, dirPath).catch(e => { this.cache.set(k, []); toast('Cartella non leggibile: ' + (e.message || e)); })
+    this.list(rootId, rel, dirPath).catch(e => { this.cache.set(k, []); toast(T('Cartella non leggibile: {0}', e.message || e)); })
       .finally(() => { this.loading.delete(k); Tree.render(); });
   },
   async read(e) {
@@ -181,7 +181,7 @@ async function sampleFromEntry(e) {
 const baseName = n => n.replace(/\.[^.]+$/, '').slice(0, 30);
 async function entryToNewChannel(e) {
   try { const id = await sampleFromEntry(e); addChannel('sampler', { name: baseName(e.name), sample: id }, true).sampleNamed = true; }
-  catch (err) { toast('Impossibile leggere ' + e.name); }
+  catch (err) { toast(T('Impossibile leggere {0}', e.name)); }
 }
 async function entryToChannel(e, ch) {
   try {
@@ -192,11 +192,11 @@ async function entryToChannel(e, ch) {
     commit();
     renderAll();
     hint(ch.name + ': ' + e.name);
-  } catch (err) { toast('Impossibile leggere ' + e.name); }
+  } catch (err) { toast(T('Impossibile leggere {0}', e.name)); }
 }
 async function entryToPlaylist(e, t, s) {
   try { const id = await sampleFromEntry(e); PL.addAudioClip(id, t, s); commit(); PL.renderPatterns(); PL.draw(); }
-  catch (err) { toast('Impossibile leggere ' + e.name); }
+  catch (err) { toast(T('Impossibile leggere {0}', e.name)); }
 }
 
 /* ---------- Preview ---------- */
@@ -221,7 +221,7 @@ const Preview = {
       src.start();
       this.src = src;
       this.gain = g;
-    } catch (err) { this.playing = false; Browser.renderBar(); toast('Anteprima non disponibile: ' + e.name); }
+    } catch (err) { this.playing = false; Browser.renderBar(); toast(T('Anteprima non disponibile: {0}', e.name)); }
   },
   stop() {
     if (this.src) { try { this.src.stop(); } catch (e) { /* ended */ } this.src = null; }
@@ -267,12 +267,12 @@ const Presets = {
     else {
       const all = this.localAll();
       all[kind + ':' + name] = data;
-      try { storeSet(PRESET_KEY, JSON.stringify(all)); } catch (e) { toast('Spazio del browser esaurito: preset non salvato'); return; }
+      try { storeSet(PRESET_KEY, JSON.stringify(all)); } catch (e) { toast(T('Spazio del browser esaurito: preset non salvato')); return; }
     }
     this.list = await this.backendList();
     ui.treeOpen = ui.treeOpen.concat('presets', 'presets/' + kind);
     Tree.render();
-    toast('Preset salvato: ' + name);
+    toast(T('Preset salvato: {0}', name));
   },
   async read(kind, name) {
     if (window.ritmoFiles) return JSON.parse(await ritmoFiles.presets.read(kind, name));
@@ -314,7 +314,7 @@ const Presets = {
     commit();
     renderAll();
     if (ui.editCh === ch.id) renderEditor();
-    hint('Preset caricato: ' + name);
+    hint(T('Preset caricato: {0}', name));
   },
   slotData(slot) { return JSON.parse(JSON.stringify({ type: slot.type, params: slot.params, mix: slot.mix, plugin: slot.plugin, state: slot.state })); },
   trackData(t) { return JSON.parse(JSON.stringify({ fx: t.fx, eq: t.eq, width: t.width, phase: t.phase, swap: t.swap, vol: t.vol, pan: t.pan })); },
@@ -384,7 +384,7 @@ const Browser = {
       const st = e.target.closest('.strip');
       if (!st) return;
       const i = +st.dataset.i, k = proj.mixer[i].fx.findIndex(s => !s);
-      if (k < 0) { toast('Gli slot di ' + mixerName(i) + ' sono tutti occupati'); return; }
+      if (k < 0) { toast(T('Gli slot di {0} sono tutti occupati', mixerName(i))); return; }
       ui.selMix = i;
       if (d.kind === 'fx') Mixer.setSlot(i, k, fxSlot(d.type));
       else if (d.kind === 'plugin' && window.NativePlugins) NativePlugins.addEffect(d.plugin, i, k);
@@ -424,10 +424,10 @@ const Browser = {
     const bar = $('#pv-bar');
     if (!bar) return;
     const e = Preview.current;
-    $('#pv-name').textContent = e ? e.name : 'Clic su un suono per ascoltarlo';
+    $('#pv-name').textContent = e ? e.name : T('Clic su un suono per ascoltarlo');
     $('#pv-play').textContent = Preview.playing ? '■' : '▶';
     $('#pv-play').disabled = !e;
-    $('#pv-play').setAttribute('aria-label', Preview.playing ? 'Ferma l\'anteprima' : 'Ascolta');
+    $('#pv-play').setAttribute('aria-label', Preview.playing ? T('Ferma l\'anteprima') : T('Ascolta'));
   },
   isStarred(key) { return (ui.starred || []).some(s => s.key === key); },
   toggleStar(item) {
@@ -442,15 +442,15 @@ const Browser = {
     const items = [{ title: e.name }];
     if (kind === 'audio') {
       items.push(
-        { label: 'Ascolta', action: () => Preview.play(e) },
-        { label: 'Apri in un nuovo canale', action: () => entryToNewChannel(e) },
-        { label: 'Carica nel canale selezionato' + (ch ? ' (' + ch.name + ')' : ''), disabled: !ch, action: () => entryToChannel(e, ch) },
-        { label: 'Aggiungi alla Playlist come clip audio', action: () => entryToPlaylist(e, 0, ui.songPos || 0) },
+        { label: T('Ascolta'), action: () => Preview.play(e) },
+        { label: T('Apri in un nuovo canale'), action: () => entryToNewChannel(e) },
+        { label: ch ? T('Carica nel canale selezionato ({0})', ch.name) : T('Carica nel canale selezionato'), disabled: !ch, action: () => entryToChannel(e, ch) },
+        { label: T('Aggiungi alla Playlist come clip audio'), action: () => entryToPlaylist(e, 0, ui.songPos || 0) },
       );
-    } else if (kind === 'midi') items.push({ label: 'Importa MIDI', action: async () => importMidiFile(new File([await Files.read(e)], e.name)) });
-    else if (kind === 'project') items.push({ label: 'Apri progetto', action: async () => openProjectFile(new File([await Files.read(e)], e.name)) });
-    items.push('-', { label: this.isStarred(key) ? 'Togli dai preferiti' : 'Aggiungi ai preferiti', action: () => this.toggleStar({ key, name: e.name, entry: e }) });
-    if (Files.mode === 'desktop' && e.path) items.push({ label: 'Mostra nel Finder', action: () => ritmoFiles.reveal(e.path) });
+    } else if (kind === 'midi') items.push({ label: T('Importa MIDI'), action: async () => importMidiFile(new File([await Files.read(e)], e.name)) });
+    else if (kind === 'project') items.push({ label: T('Apri progetto'), action: async () => openProjectFile(new File([await Files.read(e)], e.name)) });
+    items.push('-', { label: this.isStarred(key) ? T('Togli dai preferiti') : T('Aggiungi ai preferiti'), action: () => this.toggleStar({ key, name: e.name, entry: e }) });
+    if (Files.mode === 'desktop' && e.path) items.push({ label: T('Mostra nel Finder'), action: () => ritmoFiles.reveal(e.path) });
     openMenu(x, y, items);
   },
 };

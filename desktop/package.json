@@ -33,6 +33,7 @@
       "main.js",
       "preload.js",
       "files.js",
+      "i18n.js",
       "app/**/*"
     ],
     "extraResources": [

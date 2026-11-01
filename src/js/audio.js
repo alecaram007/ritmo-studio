@@ -1428,7 +1428,7 @@ const Transport = {
       this.stop();
       ui.songPos = s;
       onTransportChange();
-      hint('Pausa al marcatore: premi Play per continuare');
+      hint(T('Pausa al marcatore: premi Play per continuare'));
     }, Math.max(0, (t - actx.currentTime) * 1000));
   },
   tick() {
@@ -1507,7 +1507,7 @@ async function renderOffline(tracks = null, o = {}) {
   try {
     const seq = seqInfo();
     const steps = mode === 'song' ? (o.project ? seq.end : songLen()) : patLen(p);
-    if (!steps) throw new Error('La playlist è vuota: aggiungi un pattern alla playlist oppure passa alla modalità PAT.');
+    if (!steps) throw new Error(T('La playlist è vuota: aggiungi un pattern alla playlist oppure passa alla modalità PAT.'));
     order = [];
     for (let s = 0, prev = null; s < steps;) {
       if (mode === 'song' && prev === s - 1) { const j = seq.jumps.find(k => k.at === s && !k.loop); if (j) s = j.to; }
@@ -1664,13 +1664,13 @@ async function saveFile(filename, blob) {
       data = zipOne(name, new Uint8Array(await blob.arrayBuffer()));
       name = name.replace(/\.[^.]+$/, '') + '.zip';
     }
-    try { await dl.save({ filename: name, data }); toast('Salvato: ' + name); }
-    catch (e) { if (!e || e.code !== 'declined') toast('Salvataggio non riuscito: ' + ((e && (e.message || e.code)) || e)); }
+    try { await dl.save({ filename: name, data }); toast(T('Salvato: {0}', name)); }
+    catch (e) { if (!e || e.code !== 'declined') toast(T('Salvataggio non riuscito: {0}', (e && (e.message || e.code)) || e)); }
     return;
   }
   const url = URL.createObjectURL(blob), a = document.createElement('a');
   a.href = url; a.download = filename;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 5000);
-  toast('Scaricato: ' + filename);
+  toast(T('Scaricato: {0}', filename));
 }

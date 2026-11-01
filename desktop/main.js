@@ -6,6 +6,8 @@
  * Web MIDI permissions and remembered window bounds.
  */
 const { app, BrowserWindow, Menu, dialog, ipcMain, screen, session, shell } = require('electron');
+const { T, setLang, getLang, systemLang } = require('./i18n');
+const TM = s => s; // marks a text for translation; shown later with T()
 const { spawn } = require('node:child_process');
 const crypto = require('node:crypto');
 const fs = require('node:fs');
@@ -20,8 +22,8 @@ const DEFAULT_BOUNDS = { width: 1440, height: 900 };
 const MIN_SIZE = { width: 1100, height: 700 };
 const BG_COLOR = '#1f262c';
 const HELP_LINKS = [
-  { label: 'Guida alla Web Audio API (MDN)', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API' },
-  { label: 'Guida alla Web MIDI API (MDN)', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API' },
+  { label: TM('Guida alla Web Audio API (MDN)'), url: 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API' },
+  { label: TM('Guida alla Web MIDI API (MDN)'), url: 'https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API' },
 ];
 // Permissions the page may use: Web MIDI (incl. SysEx), microphone, fullscreen, pointer lock, clipboard write.
 const ALLOWED_PERMISSIONS = new Set(['midi', 'midiSysex', 'media', 'fullscreen', 'pointerLock', 'clipboard-sanitized-write']);
@@ -152,7 +154,7 @@ ipcMain.handle('dialog:save', async (event, options) => {
   const parent = BrowserWindow.fromWebContents(event.sender) || mainWindow || undefined;
   const dir = lastSaveDir || app.getPath('music');
   const res = await dialog.showSaveDialog(parent, {
-    title: options.title || 'Salva',
+    title: options.title || T('Salva'),
     defaultPath: path.join(dir, path.basename(options.defaultPath || 'ritmo-studio')),
     filters: options.filters || [],
     properties: ['createDirectory', 'showOverwriteConfirmation'],
@@ -314,11 +316,11 @@ function setupSession() {
     const suggested = item.getFilename() || 'ritmo-studio';
     const ext = path.extname(suggested).replace(/^\./, '');
     const filters = ext
-      ? [{ name: ext.toUpperCase(), extensions: [ext] }, { name: 'Tutti i file', extensions: ['*'] }]
+      ? [{ name: ext.toUpperCase(), extensions: [ext] }, { name: T('Tutti i file'), extensions: ['*'] }]
       : [];
     const dir = lastSaveDir || app.getPath('downloads');
     const target = dialog.showSaveDialogSync(parent, {
-      title: 'Salva file',
+      title: T('Salva file'),
       buttonLabel: 'Salva',
       defaultPath: path.join(dir, suggested),
       filters,
@@ -332,13 +334,13 @@ function setupSession() {
     item.setSavePath(target);
     item.once('done', (_e, state) => {
       if (state === 'interrupted') {
-        dialog.showErrorBox('Salvataggio non riuscito', `Impossibile salvare il file:\n${target}`);
+        dialog.showErrorBox(T('Salvataggio non riuscito'), T('Impossibile salvare il file:\n{0}', target));
       }
     });
   });
 }
 
-/* ---------- Menu (Italian) ---------- */
+/* ---------- Menu (in the page's language, see i18n.js) ---------- */
 
 function showAbout() {
   if (isMac) {
@@ -347,11 +349,11 @@ function showAbout() {
   }
   dialog.showMessageBox(mainWindow || undefined, {
     type: 'info',
-    title: 'Informazioni su Ritmo Studio',
+    title: T('Informazioni su Ritmo Studio'),
     message: `${APP_NAME} ${app.getVersion()}`,
     detail:
-      'DAW gratuita: Channel Rack, Piano Roll, Playlist e Mixer.\n\n' +
-      `Electron ${process.versions.electron} · Chromium ${process.versions.chrome}\nLicenza MIT`,
+      T('DAW gratuita: Channel Rack, Piano Roll, Playlist e Mixer.') + '\n\n' +
+      `Electron ${process.versions.electron} · Chromium ${process.versions.chrome}\n` + T('Licenza MIT'),
     buttons: ['OK'],
     noLink: true,
   });
@@ -365,78 +367,78 @@ function buildMenu() {
     template.push({
       label: APP_NAME,
       submenu: [
-        { role: 'about', label: 'Informazioni su Ritmo Studio' },
+        { role: 'about', label: T('Informazioni su Ritmo Studio') },
         sep,
-        { role: 'services', label: 'Servizi' },
+        { role: 'services', label: T('Servizi') },
         sep,
-        { role: 'hide', label: 'Nascondi Ritmo Studio' },
-        { role: 'hideOthers', label: 'Nascondi altre' },
-        { role: 'unhide', label: 'Mostra tutte' },
+        { role: 'hide', label: T('Nascondi Ritmo Studio') },
+        { role: 'hideOthers', label: T('Nascondi altre') },
+        { role: 'unhide', label: T('Mostra tutte') },
         sep,
-        { role: 'quit', label: 'Esci da Ritmo Studio' },
+        { role: 'quit', label: T('Esci da Ritmo Studio') },
       ],
     });
   } else {
     template.push({
-      label: 'File',
-      submenu: [{ role: 'quit', label: 'Esci', accelerator: 'Ctrl+Q' }],
+      label: T('File'),
+      submenu: [{ role: 'quit', label: T('Esci'), accelerator: 'Ctrl+Q' }],
     });
   }
 
   // Edit roles are kept for text fields; the page handles its own undo/redo shortcuts first.
   template.push({
-    label: 'Modifica',
+    label: T('Modifica'),
     submenu: [
-      { role: 'undo', label: 'Annulla' },
-      { role: 'redo', label: 'Ripeti' },
+      { role: 'undo', label: T('Annulla') },
+      { role: 'redo', label: T('Ripeti') },
       sep,
-      { role: 'cut', label: 'Taglia' },
-      { role: 'copy', label: 'Copia' },
-      { role: 'paste', label: 'Incolla' },
+      { role: 'cut', label: T('Taglia') },
+      { role: 'copy', label: T('Copia') },
+      { role: 'paste', label: T('Incolla') },
       sep,
-      { role: 'selectAll', label: 'Seleziona tutto' },
+      { role: 'selectAll', label: T('Seleziona tutto') },
     ],
   });
 
   // The web app uses Ctrl/Cmd+R (export WAV) and F5-F9, so reload lives on Ctrl/Cmd+Shift+R and no F-keys are bound.
   template.push({
-    label: 'Vista',
+    label: T('Vista'),
     submenu: [
-      { role: 'reload', label: 'Ricarica', accelerator: 'CmdOrCtrl+Shift+R' },
-      { role: 'toggleDevTools', label: 'Strumenti per sviluppatori', accelerator: 'Alt+CmdOrCtrl+I' },
+      { role: 'reload', label: T('Ricarica'), accelerator: 'CmdOrCtrl+Shift+R' },
+      { role: 'toggleDevTools', label: T('Strumenti per sviluppatori'), accelerator: 'Alt+CmdOrCtrl+I' },
       sep,
-      { role: 'resetZoom', label: 'Dimensioni reali' },
-      { role: 'zoomIn', label: 'Ingrandisci' },
-      { role: 'zoomOut', label: 'Riduci' },
+      { role: 'resetZoom', label: T('Dimensioni reali') },
+      { role: 'zoomIn', label: T('Ingrandisci') },
+      { role: 'zoomOut', label: T('Riduci') },
       sep,
-      { role: 'togglefullscreen', label: 'Schermo intero', accelerator: isMac ? 'Ctrl+Cmd+F' : 'Ctrl+Shift+F' },
+      { role: 'togglefullscreen', label: T('Schermo intero'), accelerator: isMac ? 'Ctrl+Cmd+F' : 'Ctrl+Shift+F' },
     ],
   });
 
   template.push({
-    label: 'Finestra',
+    label: T('Finestra'),
     ...(isMac ? { role: 'window' } : {}),
     submenu: isMac
       ? [
-          { role: 'minimize', label: 'Contrai' },
-          { role: 'zoom', label: 'Ridimensiona' },
+          { role: 'minimize', label: T('Contrai') },
+          { role: 'zoom', label: T('Ridimensiona') },
           sep,
-          { role: 'front', label: 'Porta tutto in primo piano' },
+          { role: 'front', label: T('Porta tutto in primo piano') },
           sep,
-          { role: 'close', label: 'Chiudi finestra' },
+          { role: 'close', label: T('Chiudi finestra') },
         ]
       : [
-          { role: 'minimize', label: 'Riduci a icona' },
-          { role: 'close', label: 'Chiudi finestra' },
+          { role: 'minimize', label: T('Riduci a icona') },
+          { role: 'close', label: T('Chiudi finestra') },
         ],
   });
 
   template.push({
-    label: 'Aiuto',
+    label: T('Aiuto'),
     ...(isMac ? { role: 'help' } : {}),
     submenu: [
-      ...HELP_LINKS.map(l => ({ label: l.label, click: () => shell.openExternal(l.url) })),
-      ...(isMac ? [] : [sep, { label: 'Informazioni su Ritmo Studio', click: showAbout }]),
+      ...HELP_LINKS.map(l => ({ label: T(l.label), click: () => shell.openExternal(l.url) })),
+      ...(isMac ? [] : [sep, { label: T('Informazioni su Ritmo Studio'), click: showAbout }]),
     ],
   });
 
@@ -455,14 +457,24 @@ if (!app.requestSingleInstanceLock()) {
     mainWindow.focus();
   });
 
+  const aboutPanel = () => app.setAboutPanelOptions({
+    applicationName: APP_NAME,
+    applicationVersion: app.getVersion(),
+    version: '',
+    copyright: 'Copyright © 2026 Ritmo Studio — ' + T('Licenza MIT'),
+    credits: T('DAW gratuita: Channel Rack, Piano Roll, Playlist e Mixer'),
+  });
+  // The page reports the interface language it uses; menus and dialogs follow it.
+  ipcMain.on('i18n:lang', (_event, code) => {
+    if (typeof code !== 'string' || code === getLang()) return;
+    setLang(code);
+    aboutPanel();
+    buildMenu();
+  });
+
   app.whenReady().then(() => {
-    app.setAboutPanelOptions({
-      applicationName: APP_NAME,
-      applicationVersion: app.getVersion(),
-      version: '',
-      copyright: 'Copyright © 2026 Ritmo Studio — Licenza MIT',
-      credits: 'DAW gratuita: Channel Rack, Piano Roll, Playlist e Mixer',
-    });
+    setLang(systemLang(app.getPreferredSystemLanguages()));
+    aboutPanel();
     setupSession();
     buildMenu();
     createWindow();

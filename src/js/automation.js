@@ -9,18 +9,18 @@ function sameTarget(a, b) { return a.kind === b.kind && a.ch === b.ch && a.ins =
 function autoTargetLabel(tg) {
   switch (tg.kind) {
     case 'chVol': case 'chPan': case 'chParam': {
-      const ch = chById(tg.ch), what = tg.kind === 'chVol' ? 'Volume' : tg.kind === 'chPan' ? 'Panoramica' : (Automation.spec(tg) || {}).label || tg.key;
-      return (ch ? ch.name : 'Canale') + ' - ' + what;
+      const ch = chById(tg.ch), what = tg.kind === 'chVol' ? T('Volume') : tg.kind === 'chPan' ? T('Panoramica') : (Automation.spec(tg) || {}).label || tg.key;
+      return (ch ? ch.name : T('Canale')) + ' - ' + what;
     }
-    case 'mixVol': return insName(tg.ins) + ' - Volume';
-    case 'mixPan': return insName(tg.ins) + ' - Panoramica';
+    case 'mixVol': return insName(tg.ins) + ' - ' + T('Volume');
+    case 'mixPan': return insName(tg.ins) + ' - ' + T('Panoramica');
     case 'fxParam': {
       const sl = proj.mixer[tg.ins] && proj.mixer[tg.ins].fx[tg.slot], spec = Automation.spec(tg);
-      return insName(tg.ins) + ' - ' + (sl ? FXDEFS[sl.type].label : 'Slot ' + (tg.slot + 1)) + ' - ' + (spec ? spec.label : tg.key);
+      return insName(tg.ins) + ' - ' + (sl ? FXDEFS[sl.type].label : T('Slot {0}', tg.slot + 1)) + ' - ' + (spec ? spec.label : tg.key);
     }
-    case 'plugin': return (tg.name || 'Plugin') + ' - ' + (tg.pname || 'parametro ' + tg.pid);
+    case 'plugin': return (tg.name || T('Plugin')) + ' - ' + (tg.pname || T('parametro {0}', tg.pid));
   }
-  return 'Automazione';
+  return T('Automazione');
 }
 
 // Current value of the target, as 0..1 on its knob.
@@ -43,21 +43,21 @@ function autoMenuItems(tg) {
   if (!tg) return [];
   const existing = proj.automation.find(a => sameTarget(a.target, tg));
   return [
-    { label: 'Crea clip di automazione', action: () => createAutomation(tg) },
-    ...(existing ? [{ label: 'Modifica “' + existing.name + '”', action: () => AutoEditor.open(existing.id) }] : []),
+    { label: T('Crea clip di automazione'), action: () => createAutomation(tg) },
+    ...(existing ? [{ label: T('Modifica “{0}”', existing.name), action: () => AutoEditor.open(existing.id) }] : []),
   ];
 }
 
 // Submenu of the channel menu: every automatable control of the channel.
 function automationTargetsFor(ch) {
   const items = [
-    { label: 'Volume', action: () => createAutomation({ kind: 'chVol', ch: ch.id }) },
-    { label: 'Panoramica', action: () => createAutomation({ kind: 'chPan', ch: ch.id }) },
+    { label: T('Volume'), action: () => createAutomation({ kind: 'chVol', ch: ch.id }) },
+    { label: T('Panoramica'), action: () => createAutomation({ kind: 'chPan', ch: ch.id }) },
   ];
   const params = Object.entries(INSTRUMENTS[ch.type].params).filter(([, s]) => !s.select);
   if (params.length) items.push('-');
   params.forEach(([key, s]) => items.push({ label: s.label, action: () => createAutomation({ kind: 'chParam', ch: ch.id, key }) }));
-  if (ch.type === 'plugin' && window.NativePlugins && NativePlugins.paramMenu) items.push('-', { label: 'Parametri del plugin…', action: () => NativePlugins.paramMenu('ch:' + ch.id, ch.name) });
+  if (ch.type === 'plugin' && window.NativePlugins && NativePlugins.paramMenu) items.push('-', { label: T('Parametri del plugin…'), action: () => NativePlugins.paramMenu('ch:' + ch.id, ch.name) });
   return items;
 }
 
@@ -68,7 +68,7 @@ function createAutomation(tg) {
   // a free playlist track at the song position (or after the last track's clips)
   const s = barAt(ui.songPos || 0).barStart, tracks = proj.playlist.tracks;
   let t = tracks.findIndex((_, i) => !proj.playlist.clips.some(c => c.t === i));
-  if (t < 0) { tracks.push({ name: 'Traccia ' + (tracks.length + 1), mute: false }); t = tracks.length - 1; }
+  if (t < 0) { tracks.push({ name: T('Traccia {0}', tracks.length + 1), mute: false }); t = tracks.length - 1; }
   proj.playlist.clips.push({ id: uid(), a: a.id, t, s, l: len });
   ui.plPick = { kind: 'auto', id: a.id };
   commit();
@@ -76,7 +76,7 @@ function createAutomation(tg) {
   PL.draw();
   Tree.render();
   AutoEditor.open(a.id);
-  toast('Clip di automazione aggiunta alla Playlist (traccia ' + (t + 1) + ')');
+  toast(T('Clip di automazione aggiunta alla Playlist (traccia {0})', t + 1));
 }
 
 function deleteAutomation(a) {
@@ -121,11 +121,11 @@ const AutoEditor = {
       this.draw();
     });
     $('#auto-shape').addEventListener('click', e => menuAt(e.currentTarget, [
-      { label: 'Rampa in salita', action: () => this.shape(x => x) },
-      { label: 'Rampa in discesa', action: () => this.shape(x => 1 - x) },
-      { label: 'Sinusoide (una per battuta)', action: () => this.shape((x, s) => 0.5 + 0.5 * Math.sin(s / spb() * 2 * Math.PI), 1) },
-      { label: 'Onda quadra (quarti)', action: () => this.shape((x, s) => (Math.floor(s / 4) % 2 ? 0.15 : 0.85), 2) },
-      { label: 'Piatta', action: () => this.shape(() => currentNorm(this.a.target)) },
+      { label: T('Rampa in salita'), action: () => this.shape(x => x) },
+      { label: T('Rampa in discesa'), action: () => this.shape(x => 1 - x) },
+      { label: T('Sinusoide (una per battuta)'), action: () => this.shape((x, s) => 0.5 + 0.5 * Math.sin(s / spb() * 2 * Math.PI), 1) },
+      { label: T('Onda quadra (quarti)'), action: () => this.shape((x, s) => (Math.floor(s / 4) % 2 ? 0.15 : 0.85), 2) },
+      { label: T('Piatta'), action: () => this.shape(() => currentNorm(this.a.target)) },
     ]));
     $('#auto-del').addEventListener('click', () => { const a = this.a; if (a) deleteAutomation(a); });
   },
@@ -147,9 +147,9 @@ const AutoEditor = {
     $('#auto-title').textContent = a.name;
     $('#auto-name').value = a.name;
     const len = $('#auto-len');
-    if (!Array.from(len.options).some(o => +o.value === a.len)) len.appendChild(new Option((a.len / spb()) + ' battute', a.len));
+    if (!Array.from(len.options).some(o => +o.value === a.len)) len.appendChild(new Option(T('{0} battute', a.len / spb()), a.len));
     len.value = String(a.len);
-    $('#auto-target').textContent = 'Controlla: ' + autoTargetLabel(a.target);
+    $('#auto-target').textContent = T('Controlla: {0}', autoTargetLabel(a.target));
     this.draw();
   },
   geo() {
@@ -194,7 +194,7 @@ const AutoEditor = {
     else p.s = clamp(e.shiftKey ? q.s : Math.round(q.s), a.points[d.i - 1].s, a.points[d.i + 1].s);
     p.v = q.v;
     const spec = Automation.spec(a.target);
-    hint(a.name + ': ' + (spec && !spec.select ? fmtParam(spec, Automation.fromNorm(spec, p.v)) : Math.round(p.v * 100) + '%') + ' · passo ' + (p.s + 1).toFixed(0));
+    hint(T('{0}: {1} · passo {2}', a.name, spec && !spec.select ? fmtParam(spec, Automation.fromNorm(spec, p.v)) : Math.round(p.v * 100) + '%', (p.s + 1).toFixed(0)));
     this.draw();
     PL.draw();
   },

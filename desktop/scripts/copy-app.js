@@ -20,5 +20,11 @@ fs.rmSync(destDir, { recursive: true, force: true });
 fs.mkdirSync(destDir, { recursive: true });
 fs.copyFileSync(src, dest);
 
+// Translations for the main process (menus, dialogs): the page's own, from ../src/js/i18n-data.js (build.py).
+const i18nSrc = path.resolve(root, '..', 'src', 'js', 'i18n-data.js');
+let i18n = '{"src":[]}';
+if (fs.existsSync(i18nSrc)) i18n = fs.readFileSync(i18nSrc, 'utf8').replace(/^window\.RITMO_I18N = /, '').replace(/;\s*$/, '').replace(/<\\\//g, '</');
+fs.writeFileSync(path.join(destDir, 'i18n.json'), i18n);
+
 const kb = (fs.statSync(dest).size / 1024).toFixed(0);
 console.log(`[copy-app] ${path.relative(root, src)} -> ${path.relative(root, dest)} (${kb} KB)`);

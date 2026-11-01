@@ -2,15 +2,15 @@
 /* Ritmo Studio — Playlist: arrange pattern, audio and automation clips on tracks along the song timeline */
 
 const PL_TOOLS = {
-  draw: 'Disegna: clic per inserire, trascina per spostare, Ctrl+trascina duplica, bordo sinistro o destro per accorciare',
-  paint: 'Pennello: trascina sulla traccia per dipingere clip una dopo l\'altra',
-  delete: 'Cancella: clic o trascina sulle clip',
-  mute: 'Muta: clic sulle clip per silenziarle',
-  slip: 'Slip: trascina dentro una clip per far scorrere il contenuto senza spostarla',
-  slice: 'Taglia: clic su una clip per dividerla sulla griglia',
-  select: 'Seleziona: trascina un riquadro, Maiusc aggiunge; poi trascina le clip selezionate o usa Canc',
-  zoom: 'Zoom: trascina sul tratto da ingrandire, clic ingrandisce, clic destro riduce',
-  play: 'Ascolta: tieni premuto sulla griglia per suonare da quel punto',
+  draw: T('Disegna: clic per inserire, trascina per spostare, Ctrl+trascina duplica, bordo sinistro o destro per accorciare'),
+  paint: T('Pennello: trascina sulla traccia per dipingere clip una dopo l\'altra'),
+  delete: T('Cancella: clic o trascina sulle clip'),
+  mute: T('Muta: clic sulle clip per silenziarle'),
+  slip: T('Slip: trascina dentro una clip per far scorrere il contenuto senza spostarla'),
+  slice: T('Taglia: clic su una clip per dividerla sulla griglia'),
+  select: T('Seleziona: trascina un riquadro, Maiusc aggiunge; poi trascina le clip selezionate o usa Canc'),
+  zoom: T('Zoom: trascina sul tratto da ingrandire, clic ingrandisce, clic destro riduce'),
+  play: T('Ascolta: tieni premuto sulla griglia per suonare da quel punto'),
 };
 const RULER_H = 32, MARK_H = 13;
 
@@ -49,7 +49,7 @@ const PL = {
       const b = e.target.closest('.pl-pat');
       if (!b) return;
       if (b.dataset.kind === 'pat') { ui.plPick = null; selectPattern(b.dataset.id); }
-      else { ui.plPick = { kind: b.dataset.kind, id: b.dataset.id }; this.renderPatterns(); hint('Clic sulla griglia per inserire ' + b.title.split(' —')[0]); }
+      else { ui.plPick = { kind: b.dataset.kind, id: b.dataset.id }; this.renderPatterns(); hint(T('Clic sulla griglia per inserire {0}', b.title.split(' —')[0])); }
     });
     pats.addEventListener('dblclick', e => {
       const b = e.target.closest('.pl-pat');
@@ -62,7 +62,7 @@ const PL = {
       if (!b) return;
       e.preventDefault();
       if (b.dataset.kind === 'pat') patternMenu(patById(b.dataset.id), e.clientX, e.clientY);
-      else if (b.dataset.kind === 'auto') { const a = Automation.byId(b.dataset.id); openMenu(e.clientX, e.clientY, [{ title: a.name }, { label: 'Modifica la curva', action: () => AutoEditor.open(a.id) }, { label: 'Elimina', danger: true, action: () => deleteAutomation(a) }]); }
+      else if (b.dataset.kind === 'auto') { const a = Automation.byId(b.dataset.id); openMenu(e.clientX, e.clientY, [{ title: a.name }, { label: T('Modifica la curva'), action: () => AutoEditor.open(a.id) }, { label: T('Elimina'), danger: true, action: () => deleteAutomation(a) }]); }
     });
     $('#pl-zoom-in').addEventListener('click', () => this.zoom(1.25));
     $('#pl-zoom-out').addEventListener('click', () => this.zoom(0.8));
@@ -134,25 +134,25 @@ const PL = {
   },
   trackMenu(i, x, y) {
     const tracks = proj.playlist.tracks, t = tracks[i], hdr = this.isHeader(i);
-    const heights = [[32, 'Piccola'], [48, 'Normale'], [72, 'Grande'], [110, 'Molto grande']];
+    const heights = [[32, T('Piccola')], [48, T('Normale')], [72, T('Grande')], [110, T('Molto grande')]];
     openMenu(x, y, [
       { title: t.name },
-      { label: 'Rinomina', action: () => { const nm = $(`.pl-head[data-t="${i}"] .nm`); if (nm) inlineEdit(nm, t.name, v => { t.name = v; commit(); this.renderHeads(); }); } },
-      { label: 'Colore', sub: [{ label: 'Nessuno', checked: !t.color, action: () => { delete t.color; commit(); this.renderHeads(); this.draw(); } },
+      { label: T('Rinomina'), action: () => { const nm = $(`.pl-head[data-t="${i}"] .nm`); if (nm) inlineEdit(nm, t.name, v => { t.name = v; commit(); this.renderHeads(); }); } },
+      { label: T('Colore'), sub: [{ label: T('Nessuno'), checked: !t.color, action: () => { delete t.color; commit(); this.renderHeads(); this.draw(); } },
         ...[...COLORS, ...NOTE_COLORS.slice(0, 8)].map(c => ({ label: c, color: c, checked: t.color === c, action: () => { t.color = c; commit(); this.renderHeads(); this.draw(); } }))] },
-      { label: 'Altezza', sub: heights.map(([hh, l]) => ({ label: l, checked: (t.h || this.th) === hh, action: () => { t.h = hh; commit(); this.renderHeads(); this.draw(); } })) },
-      { label: t.mute ? 'Riattiva la traccia' : 'Muta la traccia', action: () => { t.mute = !t.mute; commit(); this.renderHeads(); this.draw(); } },
+      { label: T('Altezza'), sub: heights.map(([hh, l]) => ({ label: l, checked: (t.h || this.th) === hh, action: () => { t.h = hh; commit(); this.renderHeads(); this.draw(); } })) },
+      { label: t.mute ? T('Riattiva la traccia') : T('Muta la traccia'), action: () => { t.mute = !t.mute; commit(); this.renderHeads(); this.draw(); } },
       '-',
-      { label: t.sub ? 'Togli dal gruppo' : 'Raggruppa con la traccia sopra', disabled: i === 0, action: () => { t.sub = !t.sub; commit(); this.renderHeads(); this.draw(); } },
-      hdr ? { label: t.collapsed ? 'Espandi il gruppo' : 'Comprimi il gruppo', action: () => { t.collapsed = !t.collapsed; commit(); this.renderHeads(); this.draw(); } } : null,
-      { label: 'Seleziona le clip della traccia', action: () => { this.select(proj.playlist.clips.filter(c => c.t === i)); this.draw(); } },
+      { label: t.sub ? T('Togli dal gruppo') : T('Raggruppa con la traccia sopra'), disabled: i === 0, action: () => { t.sub = !t.sub; commit(); this.renderHeads(); this.draw(); } },
+      hdr ? { label: t.collapsed ? T('Espandi il gruppo') : T('Comprimi il gruppo'), action: () => { t.collapsed = !t.collapsed; commit(); this.renderHeads(); this.draw(); } } : null,
+      { label: T('Seleziona le clip della traccia'), action: () => { this.select(proj.playlist.clips.filter(c => c.t === i)); this.draw(); } },
       '-',
-      { label: 'Inserisci una traccia sopra', action: () => this.insertTrack(i) },
-      { label: 'Elimina la traccia e le sue clip', danger: true, disabled: tracks.length <= 1, action: () => this.deleteTrack(i) },
+      { label: T('Inserisci una traccia sopra'), action: () => this.insertTrack(i) },
+      { label: T('Elimina la traccia e le sue clip'), danger: true, disabled: tracks.length <= 1, action: () => this.deleteTrack(i) },
     ].filter(Boolean));
   },
   insertTrack(i) {
-    proj.playlist.tracks.splice(i, 0, { name: 'Traccia ' + (proj.playlist.tracks.length + 1), mute: false });
+    proj.playlist.tracks.splice(i, 0, { name: T('Traccia {0}', proj.playlist.tracks.length + 1), mute: false });
     proj.playlist.clips.forEach(c => { if (c.t >= i) c.t++; });
     commit(); this.renderHeads(); this.draw();
   },
@@ -178,19 +178,19 @@ const PL = {
       if (this.isHeader(i)) {
         const fold = h('button', 'pl-fold', t.collapsed ? '▸' : '▾');
         fold.type = 'button';
-        fold.title = t.collapsed ? 'Espandi il gruppo' : 'Comprimi il gruppo';
+        fold.title = t.collapsed ? T('Espandi il gruppo') : T('Comprimi il gruppo');
         top.appendChild(fold);
       }
       const nm = h('span', 'nm', t.name);
-      nm.title = 'Doppio clic per rinominare, clic destro per il menu della traccia';
+      nm.title = T('Doppio clic per rinominare, clic destro per il menu della traccia');
       top.appendChild(nm);
       const led = h('button', 'ch-led' + (t.mute ? '' : ' on'));
       led.type = 'button';
-      led.title = t.mute ? 'Traccia muta' : 'Traccia attiva';
-      led.setAttribute('aria-label', 'Attiva ' + t.name);
+      led.title = t.mute ? T('Traccia muta') : T('Traccia attiva');
+      led.setAttribute('aria-label', T('Attiva {0}', t.name));
       led.setAttribute('aria-pressed', String(!t.mute));
       const grip = h('div', 'pl-grip');
-      grip.title = 'Trascina per cambiare l\'altezza';
+      grip.title = T('Trascina per cambiare l\'altezza');
       row.append(top, led, grip);
       this.heads.appendChild(row);
     });
@@ -201,7 +201,7 @@ const PL = {
   },
   renderTitle() {
     const a = curArrangement();
-    $('#pl-arr').textContent = (a ? a.name : 'Arrangiamento') + ' ▾';
+    $('#pl-arr').textContent = (a ? a.name : T('Arrangiamento')) + ' ▾';
   },
 
   /* ---------- picker column: patterns, audio clips and automation clips ---------- */
@@ -226,10 +226,10 @@ const PL = {
       b.title = title;
       box.appendChild(b);
     };
-    proj.patterns.forEach(p => item('pat', p.id, p.color, p.name, p.name + ' — clic: seleziona, doppio clic: rinomina, clic destro: menu'));
+    proj.patterns.forEach(p => item('pat', p.id, p.color, p.name, p.name + ' — ' + T('clic: seleziona, doppio clic: rinomina, clic destro: menu')));
     const audio = [...new Set(proj.playlist.clips.filter(c => c.smp).map(c => c.smp))].filter(id => SAMPLES[id]);
-    audio.forEach(id => item('smp', id, '#7fb9d9', SAMPLES[id].name, SAMPLES[id].name + ' — clip audio: clic e poi clic sulla griglia'));
-    proj.automation.forEach(a => item('auto', a.id, a.color, a.name, a.name + ' — clip di automazione: doppio clic per la curva'));
+    audio.forEach(id => item('smp', id, '#7fb9d9', SAMPLES[id].name, SAMPLES[id].name + ' — ' + T('clip audio: clic e poi clic sulla griglia')));
+    proj.automation.forEach(a => item('auto', a.id, a.color, a.name, a.name + ' — ' + T('clip di automazione: doppio clic per la curva')));
   },
   stepSec() { return 60 / proj.bpm / 4; },
 
@@ -243,7 +243,7 @@ const PL = {
         const id = await addSampleFromFile(f);
         this.addAudioClip(id, t, s);
         t = Math.min(t + 1, proj.playlist.tracks.length - 1);
-      } catch (err) { toast('Impossibile leggere ' + f.name + ': formato audio non supportato'); }
+      } catch (err) { toast(T('Impossibile leggere {0}: formato audio non supportato', f.name)); }
     }
     commit();
     this.renderPatterns();
@@ -258,7 +258,7 @@ const PL = {
     proj.playlist.clips.push(c);
     ui.plPick = { kind: 'smp', id };
     if (ui.mode !== 'song') setMode('song');
-    hint('Clip audio “' + smp.name + '” → ' + mixerName(mx));
+    hint(T('Clip audio “{0}” → {1}', smp.name, mixerName(mx)));
     return c;
   },
   // Menu of a clip, opened from the icon at its top-left corner or by double clicking an audio clip.
@@ -267,48 +267,48 @@ const PL = {
     const many = [...this.sel], set = (fn, msg) => () => { fn(); commit(); this.draw(); if (msg) hint(msg); };
     const common = [
       '-',
-      { label: c.mu ? 'Riattiva' : 'Muta', action: set(() => { many.forEach(k => { if (c.mu) delete k.mu; else k.mu = true; }); }) },
-      { label: many.length > 1 ? 'Consolida le ' + many.length + ' clip in audio' : 'Renderizza e sostituisci con audio', disabled: !!c.a, action: () => consolidateClips(many) },
-      { label: 'Elimina', danger: true, action: () => { many.forEach(k => this.removeClip(k)); commit(); this.draw(); } },
+      { label: c.mu ? T('Riattiva') : T('Muta'), action: set(() => { many.forEach(k => { if (c.mu) delete k.mu; else k.mu = true; }); }) },
+      { label: many.length > 1 ? T('Consolida le {0} clip in audio', many.length) : T('Renderizza e sostituisci con audio'), disabled: !!c.a, action: () => consolidateClips(many) },
+      { label: T('Elimina'), danger: true, action: () => { many.forEach(k => this.removeClip(k)); commit(); this.draw(); } },
     ];
     if (c.a) {
       const a = Automation.byId(c.a);
-      openMenu(x, y, [{ title: a ? a.name : 'Automazione' }, { label: 'Modifica la curva', action: () => AutoEditor.open(c.a) }, ...common]);
+      openMenu(x, y, [{ title: a ? a.name : T('Automazione') }, { label: T('Modifica la curva'), action: () => AutoEditor.open(c.a) }, ...common]);
       return;
     }
     if (c.p) {
       const p = patById(c.p);
       openMenu(x, y, [
         { title: p.name },
-        { label: 'Apri nel Piano Roll', action: () => { selectPattern(p.id); WM.open('piano'); } },
-        { label: 'Rinomina il pattern', action: () => renamePattern(p) },
-        { label: 'Rendi unico', action: () => makeUnique(c) },
-        { label: 'Unisci le clip selezionate', disabled: many.filter(k => k.p).length < 2, action: () => mergePatternClips(many) },
-        { label: 'Seleziona tutte le clip di questo pattern', action: () => { this.select(proj.playlist.clips.filter(k => k.p === c.p)); this.draw(); } },
-        { label: 'Renderizza il pattern in una nuova clip audio', action: () => renderPatternToClip(p) },
+        { label: T('Apri nel Piano Roll'), action: () => { selectPattern(p.id); WM.open('piano'); } },
+        { label: T('Rinomina il pattern'), action: () => renamePattern(p) },
+        { label: T('Rendi unico'), action: () => makeUnique(c) },
+        { label: T('Unisci le clip selezionate'), disabled: many.filter(k => k.p).length < 2, action: () => mergePatternClips(many) },
+        { label: T('Seleziona tutte le clip di questo pattern'), action: () => { this.select(proj.playlist.clips.filter(k => k.p === c.p)); this.draw(); } },
+        { label: T('Renderizza il pattern in una nuova clip audio'), action: () => renderPatternToClip(p) },
         ...common,
       ]);
       return;
     }
     const smp = SAMPLES[c.smp], fades = [0, 0.5, 1, 2, 4, 8, 16];
-    const fadeLabel = v => (v ? v + (v === 1 ? ' passo' : ' passi') : 'Nessuna');
+    const fadeLabel = v => (v ? (v === 1 ? T('{0} passo', v) : T('{0} passi', v)) : T('Nessuna'));
     const ov = nextOverlap(c);
     openMenu(x, y, [
-      { title: smp ? smp.name : 'Clip audio' },
-      { label: 'Traccia del mixer: ' + mixerName(c.mx | 0), sub: [0, ...Array.from({ length: Math.min(numInserts(), 40) }, (_, i) => i + 1)].map(i => ({ label: mixerName(i), checked: (c.mx | 0) === i, action: set(() => { c.mx = i; }) })) },
-      { label: 'Volume della clip', sub: [2, 1.5, 1.25, 1, 0.75, 0.5, 0.25].map(g => ({ label: (g >= 1 ? '+' : '') + Math.round(20 * Math.log10(g) * 10) / 10 + ' dB', checked: Math.abs((c.gain ?? 1) - g) < 0.01, action: set(() => { c.gain = g; }) })) },
-      { label: 'Dissolvenza in entrata: ' + fadeLabel(c.fin || 0), sub: fades.map(v => ({ label: fadeLabel(v), checked: (c.fin || 0) === v, action: set(() => { c.fin = Math.min(v, c.l); }) })) },
-      { label: 'Dissolvenza in uscita: ' + fadeLabel(c.fout || 0), sub: fades.map(v => ({ label: fadeLabel(v), checked: (c.fout || 0) === v, action: set(() => { c.fout = Math.min(v, c.l); }) })) },
-      { label: 'Dissolvenza incrociata con la clip successiva', disabled: !ov, action: () => crossfadeNext(c) },
+      { title: smp ? smp.name : T('Clip audio') },
+      { label: T('Traccia del mixer: {0}', mixerName(c.mx | 0)), sub: [0, ...Array.from({ length: Math.min(numInserts(), 40) }, (_, i) => i + 1)].map(i => ({ label: mixerName(i), checked: (c.mx | 0) === i, action: set(() => { c.mx = i; }) })) },
+      { label: T('Volume della clip'), sub: [2, 1.5, 1.25, 1, 0.75, 0.5, 0.25].map(g => ({ label: (g >= 1 ? '+' : '') + Math.round(20 * Math.log10(g) * 10) / 10 + ' dB', checked: Math.abs((c.gain ?? 1) - g) < 0.01, action: set(() => { c.gain = g; }) })) },
+      { label: T('Dissolvenza in entrata: {0}', fadeLabel(c.fin || 0)), sub: fades.map(v => ({ label: fadeLabel(v), checked: (c.fin || 0) === v, action: set(() => { c.fin = Math.min(v, c.l); }) })) },
+      { label: T('Dissolvenza in uscita: {0}', fadeLabel(c.fout || 0)), sub: fades.map(v => ({ label: fadeLabel(v), checked: (c.fout || 0) === v, action: set(() => { c.fout = Math.min(v, c.l); }) })) },
+      { label: T('Dissolvenza incrociata con la clip successiva'), disabled: !ov, action: () => crossfadeNext(c) },
       '-',
-      { label: 'Intonazione: ' + (c.pitch > 0 ? '+' : '') + (c.pitch || 0) + ' st', sub: [12, 7, 5, 3, 2, 1, 0, -1, -2, -3, -5, -7, -12].map(v => ({ label: (v > 0 ? '+' : '') + v + ' semitoni', checked: (c.pitch || 0) === v, action: set(() => { c.pitch = v; }, 'Intonazione della clip: ' + v + ' semitoni (la durata resta uguale)') })) },
-      { label: 'Al contrario', checked: !!c.rev, action: set(() => { c.rev = !c.rev; }) },
-      { label: 'Time-stretch: ' + (c.stretch && c.stretch !== 1 ? '×' + (+c.stretch).toFixed(2) : 'spento'), sub: [
-        { label: 'Adatta al tempo del progetto', action: () => fitToTempo(c) },
+      { label: T('Intonazione: {0} st', (c.pitch > 0 ? '+' : '') + (c.pitch || 0)), sub: [12, 7, 5, 3, 2, 1, 0, -1, -2, -3, -5, -7, -12].map(v => ({ label: T('{0} semitoni', (v > 0 ? '+' : '') + v), checked: (c.pitch || 0) === v, action: set(() => { c.pitch = v; }, T('Intonazione della clip: {0} semitoni (la durata resta uguale)', v)) })) },
+      { label: T('Al contrario'), checked: !!c.rev, action: set(() => { c.rev = !c.rev; }) },
+      { label: T('Time-stretch: {0}', c.stretch && c.stretch !== 1 ? '×' + (+c.stretch).toFixed(2) : T('spento')), sub: [
+        { label: T('Adatta al tempo del progetto'), action: () => fitToTempo(c) },
         '-',
-        ...[0.5, 0.75, 1, 1.25, 1.5, 2].map(v => ({ label: v === 1 ? 'Spento (durata originale)' : '×' + v + ' della durata', checked: (c.stretch || 1) === v, action: set(() => { c.stretch = v === 1 ? 0 : v; c.l = clipSteps(c) - (c.o || 0); }) })),
+        ...[0.5, 0.75, 1, 1.25, 1.5, 2].map(v => ({ label: v === 1 ? T('Spento (durata originale)') : T('×{0} della durata', v), checked: (c.stretch || 1) === v, action: set(() => { c.stretch = v === 1 ? 0 : v; c.l = clipSteps(c) - (c.o || 0); }) })),
       ] },
-      { label: 'Adatta la lunghezza al file', action: set(() => { c.l = Math.max(1, clipSteps(c) - (c.o || 0)); }) },
+      { label: T('Adatta la lunghezza al file'), action: set(() => { c.l = Math.max(1, clipSteps(c) - (c.o || 0)); }) },
       ...common,
     ]);
   },
@@ -445,7 +445,7 @@ const PL = {
       proj.playlist.clips.push(...copies);
       this.select(copies);
       this.startMove(copies[list.indexOf(hit.c)], x, y, true);
-      hint(copies.length > 1 ? copies.length + ' clip duplicate' : 'Clip duplicata');
+      hint(copies.length > 1 ? T('{0} clip duplicate', copies.length) : T('Clip duplicata'));
     } else if (hit) {
       if (!this.sel.has(hit.c)) this.select([hit.c]);
       this.focusClip(hit.c);
@@ -557,7 +557,7 @@ const PL = {
       this.draw();
       return true;
     }
-    if (mod && e.code === 'KeyA' && !WM.focused) { this.select(proj.playlist.clips); this.draw(); hint(this.sel.size + ' clip selezionate'); return true; }
+    if (mod && e.code === 'KeyA' && !WM.focused) { this.select(proj.playlist.clips); this.draw(); hint(T('{0} clip selezionate', this.sel.size)); return true; }
     if (mod && e.code === 'KeyB' && this.sel.size) {
       // duplicate the selection right after itself
       const list = [...this.sel], a = Math.min(...list.map(c => c.s)), b = Math.max(...list.map(c => c.s + c.l));
@@ -611,7 +611,7 @@ const PL = {
         proj.loop = { s: a, e: b };
         ui.songPos = a;
         commit();
-        hint('Loop: battuta ' + barAt(a).bar + ' – ' + barAt(b).bar + ' (clic destro sul righello per toglierlo)');
+        hint(T('Loop: battuta {0} – {1} (clic destro sul righello per toglierlo)', barAt(a).bar, barAt(b).bar));
       } else {
         ui.songPos = this.snap(d.x0 / this.sw);
       }
@@ -645,20 +645,20 @@ const PL = {
     g.font = '600 10px ' + TH.label;
     return 12 + g.measureText(this.markerLabel(m)).width;
   },
-  markerLabel: m => (m.act === 'ts' ? m.num + '/' + m.den : (m.name || 'Marcatore') + (m.act ? ' · ' + { start: 'inizio', loop: 'loop', mloop: 'ripeti', skip: 'salta', pause: 'pausa' }[m.act] : '')),
+  markerLabel: m => (m.act === 'ts' ? m.num + '/' + m.den : (m.name || T('Marcatore')) + (m.act ? ' · ' + { start: T('inizio'), loop: T('loop'), mloop: T('ripeti'), skip: T('salta'), pause: T('pausa') }[m.act] : '')),
   rulerMenu(s, x, y) {
-    const bar = barAt(s), at = bar.barStart, spans = [[bar.beatLen, '1 battito'], [bar.barLen, '1 battuta'], [bar.barLen * 2, '2 battute'], [bar.barLen * 4, '4 battute'], [bar.barLen * 8, '8 battute']];
+    const bar = barAt(s), at = bar.barStart, spans = [[bar.beatLen, T('1 battito')], [bar.barLen, T('1 battuta')], [bar.barLen * 2, T('2 battute')], [bar.barLen * 4, T('4 battute')], [bar.barLen * 8, T('8 battute')]];
     openMenu(x, y, [
-      { title: 'Battuta ' + bar.bar + ' · ' + bar.ts.num + '/' + bar.ts.den },
-      { label: 'Aggiungi un marcatore qui', action: () => addMarker(s) },
-      { label: 'Aggiungi un cambio di metro qui', sub: METRES.map(([n, d]) => ({ label: n + '/' + d, action: () => addMarker(at, 'ts', { num: n, den: d }) })) },
-      { label: 'Metro del progetto: ' + proj.ts.num + '/' + proj.ts.den, sub: metreMenuItems() },
+      { title: T('Battuta {0}', bar.bar) + ' · ' + bar.ts.num + '/' + bar.ts.den },
+      { label: T('Aggiungi un marcatore qui'), action: () => addMarker(s) },
+      { label: T('Aggiungi un cambio di metro qui'), sub: METRES.map(([n, d]) => ({ label: n + '/' + d, action: () => addMarker(at, 'ts', { num: n, den: d }) })) },
+      { label: T('Metro del progetto: {0}', proj.ts.num + '/' + proj.ts.den), sub: metreMenuItems() },
       '-',
-      { label: 'Inserisci spazio dalla battuta ' + bar.bar, sub: spans.map(([n, l]) => ({ label: l, action: () => insertSpace(at, n) })) },
-      { label: 'Elimina spazio dalla battuta ' + bar.bar, sub: spans.map(([n, l]) => ({ label: l, action: () => deleteSpace(at, n) })) },
+      { label: T('Inserisci spazio dalla battuta {0}', bar.bar), sub: spans.map(([n, l]) => ({ label: l, action: () => insertSpace(at, n) })) },
+      { label: T('Elimina spazio dalla battuta {0}', bar.bar), sub: spans.map(([n, l]) => ({ label: l, action: () => deleteSpace(at, n) })) },
       '-',
-      { label: 'Loop su questa battuta', action: () => { proj.loop = { s: at, e: at + bar.barLen }; commit(); this.draw(); } },
-      { label: 'Togli il loop', disabled: !proj.loop, action: () => { delete proj.loop; commit(); hint('Loop rimosso'); this.draw(); } },
+      { label: T('Loop su questa battuta'), action: () => { proj.loop = { s: at, e: at + bar.barLen }; commit(); this.draw(); } },
+      { label: T('Togli il loop'), disabled: !proj.loop, action: () => { delete proj.loop; commit(); hint(T('Loop rimosso')); this.draw(); } },
     ]);
   },
 
@@ -720,7 +720,7 @@ const PL = {
     if (!proj.playlist.clips.length) {
       g.fillStyle = TH.dim;
       g.font = '500 14px ' + TH.label;
-      g.fillText('Clicca sulla griglia per inserire il pattern “' + curPat().name + '”. Clic destro per cancellare.', 16 - sx, 28 - sy);
+      g.fillText(T('Clicca sulla griglia per inserire il pattern “{0}”. Clic destro per cancellare.', curPat().name), 16 - sx, 28 - sy);
     }
     this.drawRuler(sx, W);
   },
@@ -768,7 +768,7 @@ const PL = {
   drawAudioClip(g, c, x, y, w, hh, W) {
     const smp = clipSample(c);
     const flags = (c.pitch ? ' ' + (c.pitch > 0 ? '+' : '') + c.pitch + 'st' : '') + (c.rev ? ' ◂' : '') + (c.stretch && c.stretch !== 1 ? ' ×' + (+c.stretch).toFixed(2) : '');
-    const name = (SAMPLES[c.smp] ? SAMPLES[c.smp].name : 'Audio mancante') + flags;
+    const name = (SAMPLES[c.smp] ? SAMPLES[c.smp].name : T('Audio mancante')) + flags;
     this.clipFrame(g, c, x, y, w, hh, '#7fb9d9', name, () => {
       if (!smp || !smp.buffer) return;
       const pk = samplePeaks(smp), top = y + 15, bh = hh - 17, mid = top + bh / 2, sw = this.sw;

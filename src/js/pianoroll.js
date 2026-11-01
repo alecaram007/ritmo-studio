@@ -3,18 +3,18 @@
    Tools: draw, paint, delete, mute, slice, select; chord stamp; scale highlighting; velocity lane; editing tools menu. */
 
 const PR_TOOLS = {
-  draw: { label: 'Disegna', hint: 'Clic: aggiungi una nota (o un accordo) e trascinala; bordo destro: allunga' },
-  paint: { label: 'Pennello', hint: 'Trascina per dipingere note in sequenza' },
-  delete: { label: 'Cancella', hint: 'Clic o trascina sulle note per cancellarle' },
-  mute: { label: 'Muta', hint: 'Clic o trascina per mutare / riattivare le note' },
-  slice: { label: 'Taglia', hint: 'Clic su una nota per tagliarla in due al punto della griglia' },
-  select: { label: 'Seleziona', hint: 'Trascina per selezionare; trascina una nota selezionata per spostare' },
-  lasso: { label: 'Lazo', hint: 'Disegna a mano libera intorno alle note da selezionare (Maiusc aggiunge)' },
-  zoom: { label: 'Zoom', hint: 'Trascina sul tratto da ingrandire, clic ingrandisce, clic destro riduce' },
-  play: { label: 'Ascolta', hint: 'Tieni premuto e scorri: suonano le note sotto il cursore' },
+  draw: { label: T('Disegna'), hint: T('Clic: aggiungi una nota (o un accordo) e trascinala; bordo destro: allunga') },
+  paint: { label: T('Pennello'), hint: T('Trascina per dipingere note in sequenza') },
+  delete: { label: T('Cancella'), hint: T('Clic o trascina sulle note per cancellarle') },
+  mute: { label: T('Muta'), hint: T('Clic o trascina per mutare / riattivare le note') },
+  slice: { label: T('Taglia'), hint: T('Clic su una nota per tagliarla in due al punto della griglia') },
+  select: { label: T('Seleziona'), hint: T('Trascina per selezionare; trascina una nota selezionata per spostare') },
+  lasso: { label: T('Lazo'), hint: T('Disegna a mano libera intorno alle note da selezionare (Maiusc aggiunge)') },
+  zoom: { label: T('Zoom'), hint: T('Trascina sul tratto da ingrandire, clic ingrandisce, clic destro riduce') },
+  play: { label: T('Ascolta'), hint: T('Tieni premuto e scorri: suonano le note sotto il cursore') },
 };
 // Event lane under the notes: one note property at a time.
-const PR_LANES = [['v', 'Vel'], ['rel', 'Rilascio'], ['pan', 'Pan'], ['fine', 'Fine'], ['mx', 'Mod X'], ['my', 'Mod Y']];
+const PR_LANES = [['v', T('Vel')], ['rel', T('Rilascio')], ['pan', T('Pan')], ['fine', T('Fine')], ['mx', T('Mod X')], ['my', T('Mod Y')]];
 
 const PR = {
   rowH: 14, lo: 24, hi: 109, // C1 … C8
@@ -58,14 +58,14 @@ const PR = {
     this.vc.addEventListener('pointercancel', vEnd);
     const lane = $('#pr-lane');
     PR_LANES.forEach(([k, l]) => lane.appendChild(new Option(l, k)));
-    lane.addEventListener('change', () => { ui.prLane = lane.value; savePrefs(); this.draw(); hint('Corsia: ' + NOTE_PROPS[this.lane].label + ' — trascina per cambiare, clic destro riporta al valore normale'); });
+    lane.addEventListener('change', () => { ui.prLane = lane.value; savePrefs(); this.draw(); hint(T('Corsia: {0} — trascina per cambiare, clic destro riporta al valore normale', T(NOTE_PROPS[this.lane].label))); });
     this.cv.addEventListener('dblclick', e => {
       const { x, y } = this.pt(e), hit = this.hit(x, y);
       if (hit) openNoteProps(hit.n, e.clientX, e.clientY);
     });
     $('#pr-color').addEventListener('click', e => menuAt(e.currentTarget, noteColorMenu()));
-    $('#pr-slide').addEventListener('click', e => { this.slideMode = !this.slideMode; if (this.slideMode) this.portaMode = false; this.refreshToolbar(); hint(this.slideMode ? 'Slide: le nuove note fanno scivolare l\'intonazione delle note che suonano' : 'Slide disattivato'); });
-    $('#pr-porta').addEventListener('click', e => { this.portaMode = !this.portaMode; if (this.portaMode) this.slideMode = false; this.refreshToolbar(); hint(this.portaMode ? 'Porta: le nuove note partono dall\'intonazione della nota precedente' : 'Porta disattivato'); });
+    $('#pr-slide').addEventListener('click', e => { this.slideMode = !this.slideMode; if (this.slideMode) this.portaMode = false; this.refreshToolbar(); hint(this.slideMode ? T('Slide: le nuove note fanno scivolare l\'intonazione delle note che suonano') : T('Slide disattivato')); });
+    $('#pr-porta').addEventListener('click', e => { this.portaMode = !this.portaMode; if (this.portaMode) this.slideMode = false; this.refreshToolbar(); hint(this.portaMode ? T('Porta: le nuove note partono dall\'intonazione della nota precedente') : T('Porta disattivato')); });
 
     $('#pr-ch').addEventListener('change', e => { Rack.select(e.target.value); this.scrollToNotes(); });
     $('#pr-snap').addEventListener('change', e => { ui.prSnap = +e.target.value; savePrefs(); });
@@ -77,19 +77,19 @@ const PR = {
     $$('[data-prtool]').forEach(b => b.addEventListener('click', () => this.setTool(b.dataset.prtool)));
     $('#pr-tools-menu').addEventListener('click', e => menuAt(e.currentTarget, prToolsMenu()));
     const chordSel = $('#pr-chord');
-    chordSel.appendChild(new Option('Nessun accordo', ''));
-    chordSel.appendChild(new Option('Triade nella scala', 'scale3'));
-    chordSel.appendChild(new Option('Settima nella scala', 'scale4'));
-    Object.entries(CHORDS).forEach(([k, c]) => chordSel.appendChild(new Option(c.label + (c.sym ? ' (' + c.sym + ')' : ''), k)));
-    chordSel.addEventListener('change', () => { this.chord = chordSel.value; hint(this.chord ? 'Chord Stamp: ogni clic inserisce un accordo' : 'Chord Stamp disattivato'); });
+    chordSel.appendChild(new Option(T('Nessun accordo'), ''));
+    chordSel.appendChild(new Option(T('Triade nella scala'), 'scale3'));
+    chordSel.appendChild(new Option(T('Settima nella scala'), 'scale4'));
+    Object.entries(CHORDS).forEach(([k, c]) => chordSel.appendChild(new Option(T(c.label) + (c.sym ? ' (' + c.sym + ')' : ''), k)));
+    chordSel.addEventListener('change', () => { this.chord = chordSel.value; hint(this.chord ? T('Chord Stamp: ogni clic inserisce un accordo') : T('Chord Stamp disattivato')); });
     $('#pr-chord-top').addEventListener('click', e => {
       this.chordTop = !this.chordTop;
       e.currentTarget.setAttribute('aria-pressed', String(this.chordTop));
-      hint(this.chordTop ? 'Chord Stamp dall’alto: la nota cliccata è la voce più acuta' : 'Chord Stamp dal basso: la nota cliccata è la fondamentale');
+      hint(this.chordTop ? T('Chord Stamp dall’alto: la nota cliccata è la voce più acuta') : T('Chord Stamp dal basso: la nota cliccata è la fondamentale'));
     });
     const root = $('#pr-scale-root'), type = $('#pr-scale-type');
     NOTE_NAMES.forEach((n, i) => root.appendChild(new Option(n, i)));
-    Object.entries(SCALES).forEach(([k, s]) => type.appendChild(new Option(s.label, k)));
+    Object.entries(SCALES).forEach(([k, s]) => type.appendChild(new Option(T(s.label), k)));
     const setScale = () => { proj.scale = { root: +root.value, type: type.value }; commit(); this.draw(); };
     root.addEventListener('change', setScale);
     type.addEventListener('change', setScale);
@@ -113,7 +113,7 @@ const PR = {
     $$('[data-prtool]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.prtool === this.tool)));
     $('#pr-lane').value = this.lane;
     $('#pr-color').style.setProperty('--nc', this.color ? NOTE_COLORS[this.color] : (ch ? ch.color : NOTE_COLORS[0]));
-    $('#pr-color').title = 'Colore delle nuove note: ' + (this.color + 1) + ' (canale MIDI ' + (this.color + 1) + ')';
+    $('#pr-color').title = T('Colore delle nuove note: {0} (canale MIDI {0})', this.color + 1);
     $('#pr-slide').setAttribute('aria-pressed', String(this.slideMode));
     $('#pr-porta').setAttribute('aria-pressed', String(this.portaMode));
   },
@@ -192,7 +192,7 @@ const PR = {
   },
   down(e) {
     const ch = chById(ui.selCh);
-    if (!ch) { toast('Seleziona prima un canale nel Channel Rack'); return; }
+    if (!ch) { toast(T('Seleziona prima un canale nel Channel Rack')); return; }
     audioReady();
     const { x, y } = this.pt(e), hit = this.hit(x, y), p = curPat(), q = ui.prSnap, tool = this.tool;
     this.cv.setPointerCapture(e.pointerId);
@@ -220,7 +220,7 @@ const PR = {
           const rest = { ...n, s: cut, l: n.s + n.l - cut };
           n.l = cut - n.s;
           this.ensureNotes().push(rest);
-          hint('Nota tagliata alla battuta ' + barAt(cut, false).bar + ', battito ' + barAt(cut, false).beat);
+          hint(T('Nota tagliata alla battuta {0}, battito {1}', barAt(cut, false).bar, barAt(cut, false).beat));
         }
       }
       this.drag = { mode: 'slice' };
@@ -341,7 +341,7 @@ const PR = {
       if (this.sel.size && !this.sel.has(n)) continue;
       if (Math.abs(x - n.s * sw) <= Math.max(5, sw * 0.4)) { setNoteProp(n, k, v); hitAny = true; }
     }
-    if (hitAny) { hint(P.label + ': ' + fmtNoteProp(k, v)); this.draw(); }
+    if (hitAny) { hint(T(P.label) + ': ' + fmtNoteProp(k, v)); this.draw(); }
   },
   // Play tool: the notes under the pointer sound while it stays on them.
   playAt(x) {
@@ -364,13 +364,13 @@ const PR = {
   },
   quantize(lengthsToo) {
     const notes = this.target();
-    if (!notes.length) { toast('Nessuna nota da quantizzare'); return; }
+    if (!notes.length) { toast(T('Nessuna nota da quantizzare')); return; }
     const q = ui.prSnap;
     notes.forEach(n => {
       n.s = Math.max(0, Math.round(n.s / q) * q);
       if (lengthsToo) n.l = Math.max(q, Math.round(n.l / q) * q);
     });
-    this.applied(notes.length + ' note allineate alla griglia');
+    this.applied(T('{0} note allineate alla griglia', notes.length));
   },
   applied(msg) {
     commit();
@@ -389,7 +389,7 @@ const PR = {
     if (mod && e.code === 'KeyA') { this.sel = new Set(this.notes()); this.draw(); if (window.ChordPanel) ChordPanel.update(); return true; }
     if (mod && e.code === 'KeyC' && this.sel.size) {
       this.clipboard = Array.from(this.sel).map(n => ({ ...n }));
-      toast(this.clipboard.length + ' note copiate');
+      toast(T('{0} note copiate', this.clipboard.length));
       return true;
     }
     if (mod && e.code === 'KeyV' && this.clipboard) {
@@ -483,7 +483,7 @@ const PR = {
     if (!ch) {
       g.fillStyle = TH.dim;
       g.font = '500 14px ' + TH.label;
-      g.fillText('Aggiungi un canale nel Channel Rack per scrivere note.', 16, 28);
+      g.fillText(T('Aggiungi un canale nel Channel Rack per scrivere note.'), 16, 28);
     }
     this.drawKeys();
     this.drawRuler(sx, W, L, pos);
@@ -593,7 +593,7 @@ const PRTools = {
   },
   arpeggiate(rate, mode) {
     const notes = PR.target();
-    if (!notes.length) return toast('Nessuna nota da arpeggiare');
+    if (!notes.length) return toast(T('Nessuna nota da arpeggiare'));
     const out = [];
     for (const chord of this.chords(notes)) {
       const start = chord[0].s, end = Math.max(...chord.map(n => n.s + n.l));
@@ -607,17 +607,17 @@ const PRTools = {
     PR.removeNotes(notes);
     PR.ensureNotes().push(...out);
     PR.sel = new Set(out);
-    PR.applied('Arpeggio creato: ' + out.length + ' note');
+    PR.applied(T('Arpeggio creato: {0} note', out.length));
   },
   strum(amount) {
     const notes = PR.target();
     for (const chord of this.chords(notes)) chord.forEach((n, i) => { const d = i * amount; n.s += d; n.l = Math.max(0.25, n.l - d); });
-    PR.applied('Strum applicato');
+    PR.applied(T('Strum applicato'));
   },
   flam() {
     const notes = PR.target(), add = notes.map(n => ({ s: Math.max(0, n.s - 0.25), l: 0.25, m: n.m, v: n.v * 0.55 }));
     PR.ensureNotes().push(...add);
-    PR.applied('Flam aggiunto a ' + notes.length + ' note');
+    PR.applied(T('Flam aggiunto a {0} note', notes.length));
   },
   chop() {
     const notes = PR.target(), q = ui.prSnap, out = [];
@@ -625,7 +625,7 @@ const PRTools = {
     PR.removeNotes(notes);
     PR.ensureNotes().push(...out);
     PR.sel = new Set(out);
-    PR.applied('Note tagliate in ' + out.length + ' pezzi');
+    PR.applied(T('Note tagliate in {0} pezzi', out.length));
   },
   glue() {
     const notes = PR.target().slice().sort((a, b) => a.m - b.m || a.s - b.s), kill = [];
@@ -634,12 +634,12 @@ const PRTools = {
       if (a.m === b.m && Math.abs(a.s + a.l - b.s) < 1e-6 && !kill.includes(a)) { a.l += b.l; kill.push(b); notes[i] = a; }
     }
     PR.removeNotes(kill);
-    PR.applied(kill.length + ' note unite');
+    PR.applied(T('{0} note unite', kill.length));
   },
   legato() {
     const notes = PR.target().slice().sort((a, b) => a.s - b.s), starts = [...new Set(notes.map(n => n.s))];
     for (const n of notes) { const next = starts.find(s => s > n.s + 1e-6); if (next != null) n.l = next - n.s; }
-    PR.applied('Legato applicato');
+    PR.applied(T('Legato applicato'));
   },
   flip(axis) {
     const notes = PR.target();
@@ -651,7 +651,7 @@ const PRTools = {
       const lo = Math.min(...notes.map(n => n.m)), hi = Math.max(...notes.map(n => n.m));
       notes.forEach(n => { n.m = hi - (n.m - lo); });
     }
-    PR.applied(axis === 'h' ? 'Note capovolte nel tempo' : 'Note capovolte nell’altezza');
+    PR.applied(axis === 'h' ? T('Note capovolte nel tempo') : T('Note capovolte nell’altezza'));
   },
   randomize(what) {
     const notes = PR.target();
@@ -659,23 +659,23 @@ const PRTools = {
       if (what === 'vel') n.v = clamp(n.v + (Math.random() - 0.5) * 0.3, 0.1, 1);
       if (what === 'time') n.s = Math.max(0, n.s + (Math.random() - 0.5) * 0.25);
     });
-    PR.applied(what === 'vel' ? 'Dinamica randomizzata' : 'Tempi umanizzati');
+    PR.applied(what === 'vel' ? T('Dinamica randomizzata') : T('Tempi umanizzati'));
   },
   levels(kind) {
     const notes = PR.target().slice().sort((a, b) => a.s - b.s), n = notes.length;
     notes.forEach((x, i) => { x.v = kind === 'up' ? 0.35 + 0.65 * (i / Math.max(1, n - 1)) : kind === 'down' ? 1 - 0.65 * (i / Math.max(1, n - 1)) : 0.8; });
-    PR.applied(kind === 'up' ? 'Crescendo' : kind === 'down' ? 'Diminuendo' : 'Dinamica uniforme');
+    PR.applied(kind === 'up' ? T('Crescendo') : kind === 'down' ? T('Diminuendo') : T('Dinamica uniforme'));
   },
   limitToScale() {
     const sc = PR.scale;
-    if (sc.type === 'none') return toast('Scegli prima una scala nel Piano Roll');
+    if (sc.type === 'none') return toast(T('Scegli prima una scala nel Piano Roll'));
     PR.target().forEach(n => { n.m = snapToScale(n.m, sc.root, sc.type); });
-    PR.applied('Note limitate alla scala ' + NOTE_NAMES[sc.root] + ' ' + SCALES[sc.type].label.toLowerCase());
+    PR.applied(T('Note limitate alla scala {0} {1}', NOTE_NAMES[sc.root], inSentence(T(SCALES[sc.type].label))));
   },
-  octave(d) { PR.target().forEach(n => { n.m = clamp(n.m + d, PR.lo, PR.hi - 1); }); PR.applied(d > 0 ? 'Un’ottava sopra' : 'Un’ottava sotto'); },
+  octave(d) { PR.target().forEach(n => { n.m = clamp(n.m + d, PR.lo, PR.hi - 1); }); PR.applied(d > 0 ? T('Un’ottava sopra') : T('Un’ottava sotto')); },
   riff(kind) {
     const ch = chById(ui.selCh);
-    if (!ch) return toast('Seleziona un canale');
+    if (!ch) return toast(T('Seleziona un canale'));
     const sc = PR.scale, type = sc.type === 'none' ? 'minor' : sc.type, p = curPat();
     const L = Math.max(16, p.len);
     const notes = kind === 'bass'
@@ -683,7 +683,7 @@ const PRTools = {
       : riffMachine({ steps: L, root: sc.root, type, base: 72, density: 0.6 });
     p.notes[ch.id] = notes;
     PR.sel = new Set(notes);
-    PR.applied('Riff Machine: ' + notes.length + ' note in ' + NOTE_NAMES[sc.root] + ' ' + SCALES[type].label.toLowerCase());
+    PR.applied(T('Riff Machine: {0} note in {1} {2}', notes.length, NOTE_NAMES[sc.root], inSentence(T(SCALES[type].label))));
   },
 };
 
@@ -691,39 +691,39 @@ Object.assign(PRTools, {
   // Articulation: shorter notes, notes that fill their grid cell, or accents on the beats.
   articulate(kind) {
     const notes = PR.target(), q = ui.prSnap;
-    if (!notes.length) return toast('Nessuna nota');
+    if (!notes.length) return toast(T('Nessuna nota'));
     notes.forEach(n => {
       if (kind === 'staccato') n.l = Math.max(0.25, n.l * 0.5);
       if (kind === 'tenuto') n.l = Math.max(q, Math.ceil(n.l / q - 1e-9) * q);
       if (kind === 'accent') { const b = barAt(n.s, false), onBeat = Math.abs((n.s - b.barStart) % b.beatLen) < 1e-6; n.v = clamp(onBeat ? Math.max(n.v, 0.8) * 1.15 : n.v * 0.75, 0.05, 1); }
     });
-    PR.applied({ staccato: 'Staccato', tenuto: 'Tenuto', accent: 'Accenti sui battiti' }[kind]);
+    PR.applied({ staccato: T('Staccato'), tenuto: T('Tenuto'), accent: T('Accenti sui battiti') }[kind]);
   },
   // LFO on the event lane shown: one shape repeated every `period` steps across the notes.
   lfo(shape, period) {
     const notes = PR.target(), k = PR.lane, P = NOTE_PROPS[k], lo = k === 'v' ? 0.3 : P.min, hi = k === 'v' ? 1 : P.max;
-    if (!notes.length) return toast('Nessuna nota');
+    if (!notes.length) return toast(T('Nessuna nota'));
     notes.forEach(n => {
       const ph = ((n.s / period) % 1 + 1) % 1;
       const w = shape === 'sine' ? 0.5 + 0.5 * Math.sin(2 * Math.PI * ph) : shape === 'tri' ? 1 - Math.abs(2 * ph - 1) : shape === 'saw' ? ph : ph < 0.5 ? 1 : 0;
       setNoteProp(n, k, lo + w * (hi - lo));
     });
-    PR.applied('LFO su ' + P.label.toLowerCase());
+    PR.applied(T('LFO su {0}', inSentence(T(P.label))));
   },
   // Interpolate: the lane values go in a straight line from the first note to the last.
   interpolate() {
     const notes = PR.target().slice().sort((a, b) => a.s - b.s), k = PR.lane;
-    if (notes.length < 3) return toast('Servono almeno tre note (selezionale)');
+    if (notes.length < 3) return toast(T('Servono almeno tre note (selezionale)'));
     const a = notes[0], b = notes[notes.length - 1], va = np(a, k), vb = np(b, k), span = b.s - a.s || 1;
     notes.forEach(n => setNoteProp(n, k, va + (vb - va) * (n.s - a.s) / span));
-    PR.applied(NOTE_PROPS[k].label + ' interpolata su ' + notes.length + ' note');
+    PR.applied(T('{0} interpolata su {1} note', T(NOTE_PROPS[k].label), notes.length));
   },
   // Claw machine: keep or remove one group of notes (a chord counts once) in every `every`, in time order.
   claw(keep, every, offset = 0) {
     const groups = this.chords(PR.target()).sort((a, b) => a[0].s - b[0].s), kill = [];
     groups.forEach((g, i) => { const hit = (i - offset) % every === 0 && i >= offset; if (keep ? !hit : hit) kill.push(...g); });
     PR.removeNotes(kill);
-    PR.applied('Claw machine: ' + kill.length + ' note tolte');
+    PR.applied(T('Claw machine: {0} note tolte', kill.length));
   },
   // Quick chop: every note cut into equal parts.
   quickChop(parts) {
@@ -732,7 +732,7 @@ Object.assign(PRTools, {
     PR.removeNotes(notes);
     PR.ensureNotes().push(...out);
     PR.sel = new Set(out);
-    PR.applied('Taglio rapido: ' + out.length + ' note');
+    PR.applied(T('Taglio rapido: {0} note', out.length));
   },
 });
 
@@ -745,7 +745,7 @@ function setNoteProp(n, k, v) {
   else n[k] = Math.round(v * 1000) / 1000;
 }
 function fmtNoteProp(k, v) {
-  if (k === 'pan') return Math.abs(v) < 0.01 ? 'centro' : (v < 0 ? 'S ' : 'D ') + Math.round(Math.abs(v) * 100) + '%';
+  if (k === 'pan') return Math.abs(v) < 0.01 ? T('centro') : (v < 0 ? T('S {0}%', Math.round(Math.abs(v) * 100)) : T('D {0}%', Math.round(Math.abs(v) * 100)));
   if (k === 'fine') return (v > 0 ? '+' : '') + Math.round(v * 100) + ' cent';
   return Math.round(v * 100) + '%';
 }
@@ -774,16 +774,16 @@ function openNoteProps(n, x, y) {
   const ch = chById(ui.selCh), list = PR.sel.has(n) ? [...PR.sel] : [n];
   const box = h('div', 'note-props');
   box.setAttribute('role', 'dialog');
-  box.setAttribute('aria-label', 'Proprietà della nota');
+  box.setAttribute('aria-label', T('Proprietà della nota'));
   const b = barAt(n.s, false);
-  box.appendChild(h('div', 'np-title', noteName(n.m) + ' · battuta ' + b.bar + '.' + b.beat + (list.length > 1 ? ' · ' + list.length + ' note' : '')));
+  box.appendChild(h('div', 'np-title', noteName(n.m) + ' · ' + T('battuta {0}', b.bar + '.' + b.beat) + (list.length > 1 ? ' · ' + T('{0} note', list.length) : '')));
   for (const [k] of PR_LANES) {
     const P = NOTE_PROPS[k], row = h('label', 'np-row'), val = h('span', 'np-val', fmtNoteProp(k, np(n, k)));
     const inp = h('input');
     inp.type = 'range'; inp.min = k === 'v' ? 0.02 : P.min; inp.max = P.max; inp.step = 0.01; inp.value = np(n, k);
     inp.addEventListener('input', () => { list.forEach(o => setNoteProp(o, k, +inp.value)); val.textContent = fmtNoteProp(k, +inp.value); PR.draw(); });
     inp.addEventListener('dblclick', () => { inp.value = P.def; inp.dispatchEvent(new Event('input')); });
-    row.append(h('span', 'np-lbl', P.label), inp, val);
+    row.append(h('span', 'np-lbl', T(P.label)), inp, val);
     box.appendChild(row);
   }
   const cols = h('div', 'np-colors');
@@ -791,20 +791,20 @@ function openNoteProps(n, x, y) {
     const sw = h('button', 'np-swatch' + ((n.col | 0) === i ? ' on' : ''));
     sw.type = 'button';
     sw.style.background = i ? c : ch.color;
-    sw.title = 'Colore ' + (i + 1) + ' (canale MIDI ' + (i + 1) + ')';
+    sw.title = T('Colore {0} (canale MIDI {0})', i + 1);
     sw.addEventListener('click', () => { list.forEach(o => { if (i) o.col = i; else delete o.col; }); cols.querySelectorAll('.np-swatch').forEach(x => x.classList.toggle('on', x === sw)); PR.draw(); });
     cols.appendChild(sw);
   });
   box.appendChild(cols);
   const flags = h('div', 'np-flags');
-  [['slide', 'Slide'], ['porta', 'Porta']].forEach(([k, l]) => {
+  [['slide', T('Slide')], ['porta', T('Porta')]].forEach(([k, l]) => {
     const lab = h('label', 'np-flag'), cb = h('input');
     cb.type = 'checkbox'; cb.checked = !!n[k];
     cb.addEventListener('change', () => { list.forEach(o => { if (cb.checked) o[k] = true; else delete o[k]; if (cb.checked) delete o[k === 'slide' ? 'porta' : 'slide']; }); PR.draw(); });
     lab.append(cb, document.createTextNode(' ' + l));
     flags.appendChild(lab);
   });
-  const reset = h('button', 'tbtn small', 'Valori normali');
+  const reset = h('button', 'tbtn small', T('Valori normali'));
   reset.type = 'button';
   reset.addEventListener('click', () => { list.forEach(o => { ['rel', 'pan', 'fine', 'mx', 'my'].forEach(k => delete o[k]); }); closeNoteProps(); });
   flags.appendChild(reset);
@@ -817,73 +817,73 @@ function openNoteProps(n, x, y) {
 function noteColorMenu() {
   const ch = chById(ui.selCh);
   return [
-    { title: 'Colore delle nuove note' },
-    ...NOTE_COLORS.map((c, i) => ({ label: (i ? 'Colore ' + (i + 1) : 'Colore del canale') + ' · MIDI ' + (i + 1), color: i ? c : (ch ? ch.color : c), checked: PR.color === i, action: () => { PR.color = i; PR.refreshToolbar(); } })),
+    { title: T('Colore delle nuove note') },
+    ...NOTE_COLORS.map((c, i) => ({ label: (i ? T('Colore {0}', i + 1) : T('Colore del canale')) + ' · MIDI ' + (i + 1), color: i ? c : (ch ? ch.color : c), checked: PR.color === i, action: () => { PR.color = i; PR.refreshToolbar(); } })),
     '-',
-    { label: 'Colora le note selezionate', disabled: !PR.sel.size, action: () => { PR.sel.forEach(n => { if (PR.color) n.col = PR.color; else delete n.col; }); PR.applied('Colore applicato'); } },
-    { label: 'Seleziona le note di questo colore', action: () => { PR.sel = new Set(PR.notes().filter(n => (n.col | 0) === PR.color)); PR.draw(); } },
+    { label: T('Colora le note selezionate'), disabled: !PR.sel.size, action: () => { PR.sel.forEach(n => { if (PR.color) n.col = PR.color; else delete n.col; }); PR.applied(T('Colore applicato')); } },
+    { label: T('Seleziona le note di questo colore'), action: () => { PR.sel = new Set(PR.notes().filter(n => (n.col | 0) === PR.color)); PR.draw(); } },
   ];
 }
 
 function prToolsMenu() {
-  const t = PRTools, lane = NOTE_PROPS[PR.lane].label.toLowerCase();
+  const t = PRTools, lane = inSentence(T(NOTE_PROPS[PR.lane].label));
   return [
-    { title: 'Tempo' },
-    { label: 'Quantizza inizi', action: () => PR.quantize(false) },
-    { label: 'Quantizza inizi e durate', action: () => PR.quantize(true) },
-    { label: 'Legato', action: () => t.legato() },
-    { label: 'Taglia sulla griglia (Chop)', action: () => t.chop() },
-    { label: 'Taglio rapido', sub: [2, 3, 4, 8].map(k => ({ label: 'In ' + k + ' parti', action: () => t.quickChop(k) })) },
-    { label: 'Unisci note (Glue)', action: () => t.glue() },
-    { label: 'Umanizza i tempi', action: () => t.randomize('time') },
-    { label: 'Articolazione', sub: [
-      { label: 'Staccato (metà durata)', action: () => t.articulate('staccato') },
-      { label: 'Tenuto (riempie la griglia)', action: () => t.articulate('tenuto') },
-      { label: 'Accenti sui battiti', action: () => t.articulate('accent') },
+    { title: T('Tempo') },
+    { label: T('Quantizza inizi'), action: () => PR.quantize(false) },
+    { label: T('Quantizza inizi e durate'), action: () => PR.quantize(true) },
+    { label: T('Legato'), action: () => t.legato() },
+    { label: T('Taglia sulla griglia (Chop)'), action: () => t.chop() },
+    { label: T('Taglio rapido'), sub: [2, 3, 4, 8].map(k => ({ label: T('In {0} parti', k), action: () => t.quickChop(k) })) },
+    { label: T('Unisci note (Glue)'), action: () => t.glue() },
+    { label: T('Umanizza i tempi'), action: () => t.randomize('time') },
+    { label: T('Articolazione'), sub: [
+      { label: T('Staccato (metà durata)'), action: () => t.articulate('staccato') },
+      { label: T('Tenuto (riempie la griglia)'), action: () => t.articulate('tenuto') },
+      { label: T('Accenti sui battiti'), action: () => t.articulate('accent') },
     ] },
-    { label: 'Claw machine', sub: [
-      { label: 'Tieni 1 nota su 2', action: () => t.claw(true, 2) },
-      { label: 'Tieni 1 nota su 3', action: () => t.claw(true, 3) },
-      { label: 'Tieni 1 nota su 4', action: () => t.claw(true, 4) },
-      { label: 'Togli 1 nota su 2', action: () => t.claw(false, 2, 1) },
-      { label: 'Togli 1 nota su 3', action: () => t.claw(false, 3, 2) },
-      { label: 'Togli 1 nota su 4', action: () => t.claw(false, 4, 3) },
+    { label: T('Claw machine'), sub: [
+      { label: T('Tieni 1 nota su 2'), action: () => t.claw(true, 2) },
+      { label: T('Tieni 1 nota su 3'), action: () => t.claw(true, 3) },
+      { label: T('Tieni 1 nota su 4'), action: () => t.claw(true, 4) },
+      { label: T('Togli 1 nota su 2'), action: () => t.claw(false, 2, 1) },
+      { label: T('Togli 1 nota su 3'), action: () => t.claw(false, 3, 2) },
+      { label: T('Togli 1 nota su 4'), action: () => t.claw(false, 4, 3) },
     ] },
-    { title: 'Corsia degli eventi: ' + lane },
+    { title: T('Corsia degli eventi: {0}', lane) },
     { label: 'LFO', sub: [
-      { label: 'Sinusoide su 1 battuta', action: () => t.lfo('sine', spb()) },
-      { label: 'Sinusoide su 1 battito', action: () => t.lfo('sine', beatSteps()) },
-      { label: 'Triangolo su 2 battute', action: () => t.lfo('tri', 2 * spb()) },
-      { label: 'Dente di sega su 1 battuta', action: () => t.lfo('saw', spb()) },
-      { label: 'Quadra su 1 battito', action: () => t.lfo('square', beatSteps()) },
+      { label: T('Sinusoide su 1 battuta'), action: () => t.lfo('sine', spb()) },
+      { label: T('Sinusoide su 1 battito'), action: () => t.lfo('sine', beatSteps()) },
+      { label: T('Triangolo su 2 battute'), action: () => t.lfo('tri', 2 * spb()) },
+      { label: T('Dente di sega su 1 battuta'), action: () => t.lfo('saw', spb()) },
+      { label: T('Quadra su 1 battito'), action: () => t.lfo('square', beatSteps()) },
     ] },
-    { label: 'Interpola dalla prima all\'ultima nota', action: () => t.interpolate() },
-    { label: 'Proprietà delle note selezionate…', disabled: !PR.sel.size, action: () => { const n = [...PR.sel][0], r = PR.cv.getBoundingClientRect(); openNoteProps(n, r.left + n.s * PR.sw - PR.sc.scrollLeft, r.top + PR.mToY(n.m) - PR.sc.scrollTop); } },
-    { label: 'Colore delle note', sub: noteColorMenu() },
-    { title: 'Accordi' },
-    { label: 'Arpeggio su 1/16 in salita', action: () => t.arpeggiate(1, 'up') },
-    { label: 'Arpeggio su 1/16 in discesa', action: () => t.arpeggiate(1, 'down') },
-    { label: 'Arpeggio su 1/8 su e giù', action: () => t.arpeggiate(2, 'updown') },
-    { label: 'Arpeggio su 1/32 casuale', action: () => t.arpeggiate(0.5, 'random') },
-    { label: 'Strum leggero', action: () => t.strum(0.25) },
-    { label: 'Strum ampio', action: () => t.strum(0.5) },
-    { label: 'Flam', action: () => t.flam() },
-    { label: 'Chord Progression Tool…', action: () => ChordTool.open() },
-    { title: 'Altezza e dinamica' },
-    { label: 'Limita alla scala', action: () => t.limitToScale() },
-    { label: 'Un’ottava sopra', action: () => t.octave(12) },
-    { label: 'Un’ottava sotto', action: () => t.octave(-12) },
-    { label: 'Capovolgi nel tempo', action: () => t.flip('h') },
-    { label: 'Capovolgi nell’altezza', action: () => t.flip('v') },
-    { label: 'Randomizza la dinamica', action: () => t.randomize('vel') },
-    { label: 'Crescendo', action: () => t.levels('up') },
-    { label: 'Diminuendo', action: () => t.levels('down') },
-    { title: 'Genera' },
-    { label: 'Riff Machine: melodia', action: () => t.riff('melody') },
-    { label: 'Riff Machine: linea di basso', action: () => t.riff('bass') },
+    { label: T('Interpola dalla prima all\'ultima nota'), action: () => t.interpolate() },
+    { label: T('Proprietà delle note selezionate…'), disabled: !PR.sel.size, action: () => { const n = [...PR.sel][0], r = PR.cv.getBoundingClientRect(); openNoteProps(n, r.left + n.s * PR.sw - PR.sc.scrollLeft, r.top + PR.mToY(n.m) - PR.sc.scrollTop); } },
+    { label: T('Colore delle note'), sub: noteColorMenu() },
+    { title: T('Accordi') },
+    { label: T('Arpeggio su 1/16 in salita'), action: () => t.arpeggiate(1, 'up') },
+    { label: T('Arpeggio su 1/16 in discesa'), action: () => t.arpeggiate(1, 'down') },
+    { label: T('Arpeggio su 1/8 su e giù'), action: () => t.arpeggiate(2, 'updown') },
+    { label: T('Arpeggio su 1/32 casuale'), action: () => t.arpeggiate(0.5, 'random') },
+    { label: T('Strum leggero'), action: () => t.strum(0.25) },
+    { label: T('Strum ampio'), action: () => t.strum(0.5) },
+    { label: T('Flam'), action: () => t.flam() },
+    { label: T('Chord Progression Tool…'), action: () => ChordTool.open() },
+    { title: T('Altezza e dinamica') },
+    { label: T('Limita alla scala'), action: () => t.limitToScale() },
+    { label: T('Un’ottava sopra'), action: () => t.octave(12) },
+    { label: T('Un’ottava sotto'), action: () => t.octave(-12) },
+    { label: T('Capovolgi nel tempo'), action: () => t.flip('h') },
+    { label: T('Capovolgi nell’altezza'), action: () => t.flip('v') },
+    { label: T('Randomizza la dinamica'), action: () => t.randomize('vel') },
+    { label: T('Crescendo'), action: () => t.levels('up') },
+    { label: T('Diminuendo'), action: () => t.levels('down') },
+    { title: T('Genera') },
+    { label: T('Riff Machine: melodia'), action: () => t.riff('melody') },
+    { label: T('Riff Machine: linea di basso'), action: () => t.riff('bass') },
     '-',
-    { label: 'Metro del progetto: ' + proj.ts.num + '/' + proj.ts.den, sub: metreMenuItems() },
-    { label: 'Allinea alla scala le note suonate dal vivo', checked: !!ui.snapLive, action: () => { ui.snapLive = !ui.snapLive; savePrefs(); hint(ui.snapLive ? 'Tastiera e MIDI suonano solo note della scala del Piano Roll' : 'Tastiera e MIDI suonano tutte le note'); } },
-    { label: 'Nomi di tutte le note sui tasti', checked: !!ui.prAllNames, action: () => { ui.prAllNames = !ui.prAllNames; PR.drawKeys(); } },
+    { label: T('Metro del progetto: {0}', proj.ts.num + '/' + proj.ts.den), sub: metreMenuItems() },
+    { label: T('Allinea alla scala le note suonate dal vivo'), checked: !!ui.snapLive, action: () => { ui.snapLive = !ui.snapLive; savePrefs(); hint(ui.snapLive ? T('Tastiera e MIDI suonano solo note della scala del Piano Roll') : T('Tastiera e MIDI suonano tutte le note')); } },
+    { label: T('Nomi di tutte le note sui tasti'), checked: !!ui.prAllNames, action: () => { ui.prAllNames = !ui.prAllNames; PR.drawKeys(); } },
   ];
 }

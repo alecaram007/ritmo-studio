@@ -95,13 +95,13 @@ const WM = {
   // The small arrow at the left of every title bar: window commands.
   windowMenu(id, anchor) {
     const items = id === 'playlist' ? [
-      { label: 'Porta la Playlist in primo piano', key: 'F5', action: () => this.blur() },
-      { label: 'Ripristina la disposizione delle finestre', action: () => this.resetLayout() },
+      { label: T('Porta la Playlist in primo piano'), key: 'F5', action: () => this.blur() },
+      { label: T('Ripristina la disposizione delle finestre'), action: () => this.resetLayout() },
     ] : [
-      { label: this.el(id).classList.contains('max') ? 'Ripristina dimensione' : 'Ingrandisci', action: () => this.maximize(id) },
-      { label: 'Posizione iniziale', action: () => { delete ui.wins[id]; this.el(id).classList.remove('max'); this.place(id); this.remember(id); savePrefs(); } },
+      { label: this.el(id).classList.contains('max') ? T('Ripristina dimensione') : T('Ingrandisci'), action: () => this.maximize(id) },
+      { label: T('Posizione iniziale'), action: () => { delete ui.wins[id]; this.el(id).classList.remove('max'); this.place(id); this.remember(id); savePrefs(); } },
       '-',
-      { label: 'Chiudi', action: () => this.close(id) },
+      { label: T('Chiudi'), action: () => this.close(id) },
     ];
     menuAt(anchor, items);
   },
@@ -119,7 +119,7 @@ const WM = {
     Object.keys(WIN_DEFAULTS).forEach(id => { if (this.isOpen(id)) this.close(id); });
     ui.wins = { rack: { open: true } };
     this.open('rack');
-    toast('Disposizione delle finestre ripristinata');
+    toast(T('Disposizione delle finestre ripristinata'));
   },
   syncButtons() {
     $$('[data-toggle]').forEach(b => {
@@ -132,16 +132,16 @@ const WM = {
     const chrome = (bar, id, closable) => {
       const menu = h('button', 'win-menu', '▶');
       menu.type = 'button';
-      menu.title = 'Menu della finestra';
-      menu.setAttribute('aria-label', 'Menu della finestra');
+      menu.title = T('Menu della finestra');
+      menu.setAttribute('aria-label', T('Menu della finestra'));
       menu.addEventListener('click', e => { e.stopPropagation(); this.windowMenu(id, menu); });
       bar.prepend(menu);
       if (!closable) return;
       const ctl = h('span', 'win-ctl');
       const btn = (kind, label, fn) => { const b = h('button', 'win-x'); b.type = 'button'; b.innerHTML = WIN_ICON[kind]; b.title = label; b.setAttribute('aria-label', label); b.addEventListener('click', fn); ctl.appendChild(b); return b; };
-      btn('min', 'Riduci', () => this.close(id));
-      btn('max', 'Ingrandisci', () => this.maximize(id));
-      btn('close', 'Chiudi', () => this.close(id)).dataset.close = id;
+      btn('min', T('Riduci'), () => this.close(id));
+      btn('max', T('Ingrandisci'), () => this.maximize(id));
+      btn('close', T('Chiudi'), () => this.close(id)).dataset.close = id;
       bar.appendChild(ctl);
     };
     chrome($('#playlist .win-title'), 'playlist', false);
@@ -223,7 +223,7 @@ function renderTop() {
   WM.syncButtons();
 }
 function updateStatusRight() {
-  $('#sys-audio').textContent = actx ? (actx.sampleRate / 1000).toFixed(1).replace('.', ',') + ' kHz' : 'spento';
+  $('#sys-audio').textContent = actx ? (actx.sampleRate / 1000).toFixed(1).replace('.', ',') + ' kHz' : T('spento');
 }
 let memT = 0;
 function updateMemory(now) {
@@ -254,23 +254,23 @@ const ICONS = {
   auto: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 12 5 6l3 3 3-6 3.5 5"/></svg>',
   star: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="m8 1.8 1.9 4 4.3.5-3.2 3 .9 4.3L8 11.4l-3.9 2.2.9-4.3-3.2-3 4.3-.5z"/></svg>',
 };
-let midiStatus = 'Nessun dispositivo collegato.';
+let midiStatus = T('Nessun dispositivo collegato.');
 // A preset in the browser: click applies it (new channel, first free slot, selected track), drag drops it.
 function presetRow(pr, depth) {
   const Treeadd = Tree._add;
   Treeadd('item', depth, pr.kind === 'channel' ? 'inst' : pr.kind === 'effect' ? 'fx' : 'mixer', pr.name, {
-    title: pr.kind === 'channel' ? 'Clic: nuovo canale da questo preset · trascina su un canale per sostituirlo' : pr.kind === 'effect' ? 'Clic: nello slot libero della traccia selezionata' : 'Clic: applica alla traccia selezionata del mixer',
+    title: pr.kind === 'channel' ? T('Clic: nuovo canale da questo preset · trascina su un canale per sostituirlo') : pr.kind === 'effect' ? T('Clic: nello slot libero della traccia selezionata') : T('Clic: applica alla traccia selezionata del mixer'),
     click: async () => {
       const d = await Presets.read(pr.kind, pr.name);
       if (!d) return;
       if (pr.kind === 'channel') Presets.applyChannel(d, null, pr.name);
-      else if (pr.kind === 'effect') { const i = ui.selMix, k = proj.mixer[i].fx.findIndex(x => !x); if (k < 0) toast('Gli slot di ' + mixerName(i) + ' sono tutti occupati'); else { WM.open('mixer'); Presets.applySlot(d, i, k); } }
+      else if (pr.kind === 'effect') { const i = ui.selMix, k = proj.mixer[i].fx.findIndex(x => !x); if (k < 0) toast(T('Gli slot di {0} sono tutti occupati', mixerName(i))); else { WM.open('mixer'); Presets.applySlot(d, i, k); } }
       else { WM.open('mixer'); Presets.applyTrack(d, ui.selMix); }
     },
     ctx: e => openMenu(e.clientX, e.clientY, [
       { title: pr.name },
-      ...(pr.kind === 'channel' ? [{ label: 'Applica al canale selezionato', disabled: !ui.selCh, action: async () => Presets.applyChannel(await Presets.read('channel', pr.name), chById(ui.selCh), pr.name) }] : []),
-      { label: 'Elimina il preset', danger: true, action: () => Presets.remove(pr.kind, pr.name) },
+      ...(pr.kind === 'channel' ? [{ label: T('Applica al canale selezionato'), disabled: !ui.selCh, action: async () => Presets.applyChannel(await Presets.read('channel', pr.name), chById(ui.selCh), pr.name) }] : []),
+      { label: T('Elimina il preset'), danger: true, action: () => Presets.remove(pr.kind, pr.name) },
     ]),
     drag: { kind: 'preset', preset: pr },
   });
@@ -301,7 +301,7 @@ const Tree = {
       // favourites: a star on the right of the row
       if (o.star) {
         const on = Browser.isStarred(o.star.key), st = h('span', 'star' + (on ? ' on' : ''), on ? '★' : '☆');
-        st.title = on ? 'Togli dai preferiti' : 'Aggiungi ai preferiti';
+        st.title = on ? T('Togli dai preferiti') : T('Aggiungi ai preferiti');
         st.addEventListener('click', e => { e.stopPropagation(); Browser.toggleStar(o.star); });
         b.appendChild(st);
       }
@@ -327,7 +327,7 @@ const Tree = {
       const key = Files.key(e.root, e.rel), kind = fileKind(e.name);
       add('item', depth, FILE_ICON[kind], e.name, {
         sel: Preview.current && Files.key(Preview.current.root, Preview.current.rel) === key,
-        title: kind === 'audio' ? 'Clic: ascolta · doppio clic: nel canale selezionato · trascina sul rack, sulla Playlist o su un canale' : e.name,
+        title: kind === 'audio' ? T('Clic: ascolta · doppio clic: nel canale selezionato · trascina sul rack, sulla Playlist o su un canale') : e.name,
         click: () => { openEntry(e); this.render(); },
         dbl: () => { if (kind !== 'audio') return; const ch = chById(ui.selCh); if (ch && ch.type === 'sampler') entryToChannel(e, ch); else entryToNewChannel(e); },
         ctx: ev => Browser.fileMenu(e, ev.clientX, ev.clientY),
@@ -337,107 +337,107 @@ const Tree = {
     };
     const diskFolder = (rootId, rel, dirPath, depth) => {
       const entries = Files.cache.get(Files.key(rootId, rel));
-      if (!entries) { Files.request(rootId, rel, dirPath); note(depth, 'Lettura della cartella…'); return; }
-      if (!entries.length) note(depth, 'Cartella vuota');
+      if (!entries) { Files.request(rootId, rel, dirPath); note(depth, T('Lettura della cartella…')); return; }
+      if (!entries.length) note(depth, T('Cartella vuota'));
       entries.slice(0, 3000).forEach(e => {
         if (e.dir) folder('disk:' + Files.key(rootId, e.rel), depth, e.name, d => diskFolder(rootId, e.rel, e.path, d));
         else fileRow(e, depth);
       });
-      if (entries.length > 3000) note(depth, 'Mostrati i primi 3000 elementi: usa la ricerca per gli altri.');
+      if (entries.length > 3000) note(depth, T('Mostrati i primi 3000 elementi: usa la ricerca per gli altri.'));
     };
 
     // Search results replace the tree while the search box has text.
     const r = Browser.results;
     if (r) {
       const none = !r.inst.length && !r.fx.length && !r.plugins.length && !r.presets.length && !r.files.length && !r.project.length;
-      if (none) note(0, 'Nessun risultato per “' + Browser.query + '”.');
-      if (r.project.length) { add('folder', 0, 'project', 'Progetto corrente', { open: true, tone: 'project' }); r.project.forEach(x => (x.kind === 'ch'
+      if (none) note(0, T('Nessun risultato per “{0}”.', Browser.query));
+      if (r.project.length) { add('folder', 0, 'project', T('Progetto corrente'), { open: true, tone: 'project' }); r.project.forEach(x => (x.kind === 'ch'
         ? add('item', 1, null, x.ch.name, { color: x.ch.color, click: () => { Rack.select(x.ch.id); openEditor(x.ch.id); } })
         : add('item', 1, null, x.p.name, { color: x.p.color, click: () => selectPattern(x.p.id) }))); }
-      if (r.inst.length) { add('folder', 0, 'plug', 'Generatori', { open: true, tone: 'plugins' }); r.inst.forEach(t => add('item', 1, 'inst', INSTRUMENTS[t].label, { click: () => (t === 'sampler' ? pickAudioFiles() : addChannel(t, {}, true)), drag: { kind: 'inst', type: t } })); }
-      if (r.fx.length) { add('folder', 0, 'plug', 'Effetti', { open: true, tone: 'presets' }); r.fx.forEach(t => add('item', 1, 'fx', FXDEFS[t].label, { click: () => addEffect(t), drag: { kind: 'fx', type: t } })); }
-      if (r.plugins.length) { add('folder', 0, 'plug', 'Plugin', { open: true, tone: 'plugins' }); r.plugins.forEach(pl => add('item', 1, pl.isInstrument ? 'inst' : 'fx', pl.name, { meta: pl.format, click: () => (pl.isInstrument ? NativePlugins.addInstrument(pl) : NativePlugins.addEffect(pl)), drag: { kind: 'plugin', plugin: pl } })); }
-      if (r.presets.length) { add('folder', 0, 'preset', 'Preset', { open: true, tone: 'presets' }); r.presets.forEach(pr => presetRow(pr, 1)); }
-      if (r.files.length) { add('folder', 0, 'recent', 'File', { open: true, tone: 'recent' }); r.files.forEach(e => fileRow(e, 1)); }
+      if (r.inst.length) { add('folder', 0, 'plug', T('Generatori'), { open: true, tone: 'plugins' }); r.inst.forEach(t => add('item', 1, 'inst', INSTRUMENTS[t].label, { click: () => (t === 'sampler' ? pickAudioFiles() : addChannel(t, {}, true)), drag: { kind: 'inst', type: t } })); }
+      if (r.fx.length) { add('folder', 0, 'plug', T('Effetti'), { open: true, tone: 'presets' }); r.fx.forEach(t => add('item', 1, 'fx', FXDEFS[t].label, { click: () => addEffect(t), drag: { kind: 'fx', type: t } })); }
+      if (r.plugins.length) { add('folder', 0, 'plug', T('Plugin'), { open: true, tone: 'plugins' }); r.plugins.forEach(pl => add('item', 1, pl.isInstrument ? 'inst' : 'fx', pl.name, { meta: pl.format, click: () => (pl.isInstrument ? NativePlugins.addInstrument(pl) : NativePlugins.addEffect(pl)), drag: { kind: 'plugin', plugin: pl } })); }
+      if (r.presets.length) { add('folder', 0, 'preset', T('Preset'), { open: true, tone: 'presets' }); r.presets.forEach(pr => presetRow(pr, 1)); }
+      if (r.files.length) { add('folder', 0, 'recent', T('File'), { open: true, tone: 'recent' }); r.files.forEach(e => fileRow(e, 1)); }
       box.scrollTop = 0;
       return;
     }
 
 
-    folder('project', 0, 'Progetto corrente', d => {
-      folder('project/patterns', d, 'Pattern', d2 => proj.patterns.forEach(p => add('item', d2, null, p.name, {
-        color: p.color, sel: p.id === curPat().id, meta: patLen(p) / spb() + ' bt', title: 'Clic: seleziona — doppio clic: rinomina',
+    folder('project', 0, T('Progetto corrente'), d => {
+      folder('project/patterns', d, T('Pattern'), d2 => proj.patterns.forEach(p => add('item', d2, null, p.name, {
+        color: p.color, sel: p.id === curPat().id, meta: T('{0} bt', patLen(p) / spb()), title: T('Clic: seleziona — doppio clic: rinomina'),
         click: () => selectPattern(p.id), dbl: () => renamePattern(p), ctx: e => patternMenu(p, e.clientX, e.clientY),
       })));
-      folder('project/channels', d, 'Canali', d2 => proj.channels.forEach(ch => add('item', d2, null, ch.name, {
+      folder('project/channels', d, T('Canali'), d2 => proj.channels.forEach(ch => add('item', d2, null, ch.name, {
         color: ch.color, sel: ch.id === ui.selCh, meta: INSTRUMENTS[ch.type].glyph, title: INSTRUMENTS[ch.type].label,
         click: () => { Rack.select(ch.id); openEditor(ch.id); }, ctx: e => channelMenu(ch, e.clientX, e.clientY),
       })));
-      folder('project/automation', d, 'Automazioni', d2 => {
-        if (!proj.automation.length) note(d2, 'Clic destro su una manopola › Crea clip di automazione.');
+      folder('project/automation', d, T('Automazioni'), d2 => {
+        if (!proj.automation.length) note(d2, T('Clic destro su una manopola › Crea clip di automazione.'));
         proj.automation.forEach(a => add('item', d2, 'auto', a.name, {
-          color: a.color, title: 'Clic: apri l\'editor della curva — trascinala nella Playlist', click: () => AutoEditor.open(a.id),
+          color: a.color, title: T('Clic: apri l\'editor della curva — trascinala nella Playlist'), click: () => AutoEditor.open(a.id),
         }));
       });
-      add('item', d, 'mixer', 'Mixer', { click: () => WM.open('mixer') });
+      add('item', d, 'mixer', T('Mixer'), { click: () => WM.open('mixer') });
     }, 'project', 'project');
     const starred = ui.starred || [];
-    if (starred.length) folder('starred', 0, 'Preferiti', d => starred.forEach(st => (st.entry ? fileRow(st.entry, d) : null)), 'star', 'project');
-    folder('disk', 0, 'Cartelle', d => {
+    if (starred.length) folder('starred', 0, T('Preferiti'), d => starred.forEach(st => (st.entry ? fileRow(st.entry, d) : null)), 'star', 'project');
+    folder('disk', 0, T('Cartelle'), d => {
       Files.roots.forEach(root => {
         const rkey = 'disk:' + Files.key(root.id, '');
         const open = ui.treeOpen.includes(rkey);
         add('folder', d, 'folder', root.name, {
           open, title: root.id,
           click: () => { ui.treeOpen = open ? ui.treeOpen.filter(k => k !== rkey) : ui.treeOpen.concat(rkey); savePrefs(); this.render(); },
-          ctx: e => openMenu(e.clientX, e.clientY, [{ title: root.name }, { label: 'Aggiorna il contenuto', action: () => { [...Files.cache.keys()].forEach(k => { if (k.startsWith(root.id + '|')) Files.cache.delete(k); }); Files.indexes.delete(root.id); this.render(); } }, { label: 'Togli dal browser', danger: true, action: () => Files.remove(root) }]),
+          ctx: e => openMenu(e.clientX, e.clientY, [{ title: root.name }, { label: T('Aggiorna il contenuto'), action: () => { [...Files.cache.keys()].forEach(k => { if (k.startsWith(root.id + '|')) Files.cache.delete(k); }); Files.indexes.delete(root.id); this.render(); } }, { label: T('Togli dal browser'), danger: true, action: () => Files.remove(root) }]),
         });
         if (open) diskFolder(root.id, '', root.id, d + 1);
       });
-      add('item', d, 'plus', 'Aggiungi una cartella…', { click: () => Files.add(), title: 'Una cartella di campioni, loop o kit: resta nel browser anche alla prossima apertura' });
-      if (!Files.roots.length) note(d, Files.mode === 'input' ? 'In questo browser la cartella resta disponibile solo fino alla chiusura della pagina.' : 'Aggiungi le cartelle dove tieni campioni e loop.');
+      add('item', d, 'plus', T('Aggiungi una cartella…'), { click: () => Files.add(), title: T('Una cartella di campioni, loop o kit: resta nel browser anche alla prossima apertura') });
+      if (!Files.roots.length) note(d, Files.mode === 'input' ? T('In questo browser la cartella resta disponibile solo fino alla chiusura della pagina.') : T('Aggiungi le cartelle dove tieni campioni e loop.'));
     }, 'recent', 'recent');
-    folder('presets', 0, 'Preset', d => {
-      [['channel', 'Preset dei canali'], ['effect', 'Preset degli effetti'], ['mixer', 'Stati delle tracce del mixer']].forEach(([kind, label]) => folder('presets/' + kind, d, label, d2 => {
+    folder('presets', 0, T('Preset'), d => {
+      [['channel', T('Preset dei canali')], ['effect', T('Preset degli effetti')], ['mixer', T('Stati delle tracce del mixer')]].forEach(([kind, label]) => folder('presets/' + kind, d, label, d2 => {
         const list = Presets.of(kind);
-        if (!list.length) note(d2, kind === 'channel' ? 'Clic destro su un canale › Salva preset del canale.' : kind === 'effect' ? 'Menu dello slot › Salva preset.' : 'Clic destro su una traccia del mixer › Salva lo stato.');
+        if (!list.length) note(d2, kind === 'channel' ? T('Clic destro su un canale › Salva preset del canale.') : kind === 'effect' ? T('Menu dello slot › Salva preset.') : T('Clic destro su una traccia del mixer › Salva lo stato.'));
         list.forEach(pr => presetRow(pr, d2));
       }, 'preset', 'presets'));
     }, 'preset', 'presets');
-    folder('recent', 0, 'Progetti demo', d => {
-      add('item', d, 'song', 'Mezzanotte (demo)', { click: loadDemo });
-      add('item', d, 'plus', 'Progetto vuoto', { click: newProject });
-      add('item', d, 'folder', 'Apri un progetto…', { click: openProjectDialog });
+    folder('recent', 0, T('Progetti demo'), d => {
+      add('item', d, 'song', T('Mezzanotte (demo)'), { click: loadDemo });
+      add('item', d, 'plus', T('Progetto vuoto'), { click: newProject });
+      add('item', d, 'folder', T('Apri un progetto…'), { click: openProjectDialog });
     }, 'recent', 'recent');
-    folder('instruments', 0, 'Generatori', d => {
+    folder('instruments', 0, T('Generatori'), d => {
       const groups = {};
       Object.entries(INSTRUMENTS).forEach(([t, def]) => { if (!def.hidden) (groups[def.group] = groups[def.group] || []).push([t, def]); });
-      Object.entries(groups).forEach(([g, list]) => folder('instruments/' + g, d, g, d2 => list.forEach(([t, def]) => add('item', d2, 'inst', def.label, {
-        meta: def.glyph, title: t === 'sampler' ? 'Carica un file audio in un nuovo canale' : 'Aggiungi ' + def.label + ' al Channel Rack (o trascinalo su un canale per sostituirlo)',
+      Object.entries(groups).forEach(([g, list]) => folder('instruments/' + g, d, T(g), d2 => list.forEach(([t, def]) => add('item', d2, 'inst', def.label, {
+        meta: def.glyph, title: t === 'sampler' ? T('Carica un file audio in un nuovo canale') : T('Aggiungi {0} al Channel Rack (o trascinalo su un canale per sostituirlo)', def.label),
         click: () => (t === 'sampler' ? pickAudioFiles() : addChannel(t, {}, true)), drag: t === 'sampler' ? null : { kind: 'inst', type: t },
       }))));
     }, 'plug', 'plugins');
-    folder('effects', 0, 'Effetti', d => {
-      note(d, 'Clic: aggiunge l\'effetto alla traccia selezionata del mixer (' + mixerName(ui.selMix) + ').');
+    folder('effects', 0, T('Effetti'), d => {
+      note(d, T('Clic: aggiunge l\'effetto alla traccia selezionata del mixer ({0}).', mixerName(ui.selMix)));
       Object.entries(FXDEFS).forEach(([k, def]) => { if (!def.hidden) add('item', d, 'fx', def.label, { click: () => addEffect(k), drag: { kind: 'fx', type: k } }); });
     }, 'plug', 'presets');
-    folder('scores', 0, 'Partiture', d => {
-      add('item', d, 'score', 'Score Logger: recupera ciò che hai suonato', { click: () => ScoreLog.dump() });
-      add('item', d, 'midi', 'Importa MIDI…', { click: pickMidiFile });
+    folder('scores', 0, T('Partiture'), d => {
+      add('item', d, 'score', T('Score Logger: recupera ciò che hai suonato'), { click: () => ScoreLog.dump() });
+      add('item', d, 'midi', T('Importa MIDI…'), { click: pickMidiFile });
     }, 'score', 'scores');
-    folder('samples', 0, 'Campioni', d => {
-      add('item', d, 'plus', 'Carica file audio…', { click: () => pickAudioFiles() });
+    folder('samples', 0, T('Campioni'), d => {
+      add('item', d, 'plus', T('Carica file audio…'), { click: () => pickAudioFiles() });
       Object.entries(SAMPLES).forEach(([id, s]) => add('item', d, 'wave', s.name, {
-        meta: s.buffer.duration.toFixed(1) + ' s', title: 'Clic: nuovo canale Sampler con questo campione',
+        meta: s.buffer.duration.toFixed(1) + ' s', title: T('Clic: nuovo canale Sampler con questo campione'),
         click: () => addChannel('sampler', { name: s.name.replace(/\.[^.]+$/, '').slice(0, 30), sample: id }, true),
       }));
     }, 'pack');
-    folder('midi', 0, 'Dispositivi MIDI', d => {
-      add('item', d, 'midi', 'Collega tastiera MIDI', { click: connectMidi });
+    folder('midi', 0, T('Dispositivi MIDI'), d => {
+      add('item', d, 'midi', T('Collega tastiera MIDI'), { click: connectMidi });
       note(d, midiStatus);
     });
     if (window.TreeExtras) window.TreeExtras({ add, folder, note });
-    add('folder', 0, 'help', 'Scorciatoie e aiuto', { click: () => WM.open('help') });
+    add('folder', 0, 'help', T('Scorciatoie e aiuto'), { click: () => WM.open('help') });
     box.scrollTop = keep;
   },
 };
@@ -446,111 +446,113 @@ const Tree = {
 function prCmd(code, key) {
   WM.open('piano');
   const done = PR.key({ code, key: key || '', ctrlKey: code.startsWith('Key'), metaKey: false, shiftKey: false });
-  if (!done) toast('Seleziona prima delle note nel Piano Roll');
+  if (!done) toast(T('Seleziona prima delle note nel Piano Roll'));
 }
 const MENUS = {
   file: () => [
-    { label: 'Nuovo progetto', action: newProject },
-    { label: 'Apri progetto demo', action: loadDemo },
-    { label: 'Apri…', key: 'Ctrl+O', action: openProjectDialog },
-    { label: 'Salva', key: 'Ctrl+S', action: saveProject },
-    { label: 'Progetti precedenti', disabled: !readBackups().length, sub: readBackups().map(b => ({
-      label: b.name + ' · ' + b.channels + ' canali · ' + new Date(b.at).toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+    { label: T('Nuovo progetto'), action: newProject },
+    { label: T('Apri progetto demo'), action: loadDemo },
+    { label: T('Apri…'), key: 'Ctrl+O', action: openProjectDialog },
+    { label: T('Salva'), key: 'Ctrl+S', action: saveProject },
+    { label: T('Progetti precedenti'), disabled: !readBackups().length, sub: readBackups().map(b => ({
+      label: T('{0} · {1} canali · {2}', b.name, b.channels, new Date(b.at).toLocaleString(uiLocale(), { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })),
       action: () => restoreBackup(b),
     })) },
     '-',
-    { label: 'Importa file audio…', action: () => pickAudioFiles() },
-    { label: 'Importa MIDI…', action: pickMidiFile },
+    { label: T('Importa file audio…'), action: () => pickAudioFiles() },
+    { label: T('Importa MIDI…'), action: pickMidiFile },
     '-',
-    { label: 'Esporta audio (WAV, FLAC, OGG, tracce)…', key: 'Ctrl+R', action: exportWav },
-    { label: 'Esporta MIDI…', action: exportMidi },
+    { label: T('Esporta audio (WAV, FLAC, OGG, tracce)…'), key: 'Ctrl+R', action: exportWav },
+    { label: T('Esporta MIDI…'), action: exportMidi },
   ],
   edit: () => [
-    { label: 'Annulla', key: 'Ctrl+Z', disabled: !Hist.undoStack.length, action: () => Hist.undo() },
-    { label: 'Ripeti', key: 'Ctrl+Y', disabled: !Hist.redoStack.length, action: () => Hist.redo() },
+    { label: T('Annulla'), key: 'Ctrl+Z', disabled: !Hist.undoStack.length, action: () => Hist.undo() },
+    { label: T('Ripeti'), key: 'Ctrl+Y', disabled: !Hist.redoStack.length, action: () => Hist.redo() },
     '-',
-    { label: 'Seleziona tutte le note', key: 'Ctrl+A', action: () => prCmd('KeyA') },
-    { label: 'Copia note', key: 'Ctrl+C', action: () => prCmd('KeyC') },
-    { label: 'Incolla note', key: 'Ctrl+V', action: () => prCmd('KeyV') },
-    { label: 'Duplica note', key: 'Ctrl+D', action: () => prCmd('KeyD') },
-    { label: 'Elimina note selezionate', key: 'Canc', action: () => prCmd('Delete', 'Delete') },
+    { label: T('Seleziona tutte le note'), key: 'Ctrl+A', action: () => prCmd('KeyA') },
+    { label: T('Copia note'), key: 'Ctrl+C', action: () => prCmd('KeyC') },
+    { label: T('Incolla note'), key: 'Ctrl+V', action: () => prCmd('KeyV') },
+    { label: T('Duplica note'), key: 'Ctrl+D', action: () => prCmd('KeyD') },
+    { label: T('Elimina note selezionate'), key: T('Canc'), action: () => prCmd('Delete', 'Delete') },
   ],
   add: () => {
     const items = [];
     let group = '';
     for (const [type, def] of Object.entries(INSTRUMENTS)) {
       if (def.hidden) continue;
-      if (def.group !== group) { group = def.group; items.push({ title: group }); }
-      items.push({ label: type === 'sampler' ? 'Sampler da file audio…' : def.label, action: () => (type === 'sampler' ? pickAudioFiles() : addChannel(type, {}, true)) });
+      if (def.group !== group) { group = def.group; items.push({ title: T(group) }); }
+      items.push({ label: type === 'sampler' ? T('Sampler da file audio…') : def.label, action: () => (type === 'sampler' ? pickAudioFiles() : addChannel(type, {}, true)) });
     }
-    if (window.NativePlugins) items.push('-', { label: 'Plugin VST3 / AU / CLAP… (dal browser)', action: () => { ui.treeOpen = ui.treeOpen.concat('plugins'); Tree.render(); toast('Scegli un plugin nella cartella Plugin del browser'); } });
+    if (window.NativePlugins) items.push('-', { label: T('Plugin VST3 / AU / CLAP… (dal browser)'), action: () => { ui.treeOpen = ui.treeOpen.concat('plugins'); Tree.render(); toast(T('Scegli un plugin nella cartella Plugin del browser')); } });
     return items;
   },
   patterns: () => {
     const i = proj.patterns.indexOf(curPat());
     return [
-      { label: 'Nuovo pattern', action: addPattern },
-      { label: 'Clona pattern', action: () => clonePattern() },
-      { label: 'Rinomina pattern', action: () => renamePattern(curPat()) },
-      { label: 'Colore successivo', color: COLORS[(COLORS.indexOf(curPat().color) + 1) % COLORS.length], action: () => nextPatternColor(curPat()) },
+      { label: T('Nuovo pattern'), action: addPattern },
+      { label: T('Clona pattern'), action: () => clonePattern() },
+      { label: T('Rinomina pattern'), action: () => renamePattern(curPat()) },
+      { label: T('Colore successivo'), color: COLORS[(COLORS.indexOf(curPat().color) + 1) % COLORS.length], action: () => nextPatternColor(curPat()) },
       '-',
-      { label: 'Pattern precedente', disabled: i <= 0, action: () => stepPattern(-1) },
-      { label: 'Pattern successivo', disabled: i >= proj.patterns.length - 1, action: () => stepPattern(1) },
+      { label: T('Pattern precedente'), disabled: i <= 0, action: () => stepPattern(-1) },
+      { label: T('Pattern successivo'), disabled: i >= proj.patterns.length - 1, action: () => stepPattern(1) },
       '-',
-      { label: 'Elimina pattern', danger: true, disabled: proj.patterns.length < 2, action: () => deletePattern(curPat()) },
+      { label: T('Elimina pattern'), danger: true, disabled: proj.patterns.length < 2, action: () => deletePattern(curPat()) },
     ];
   },
   view: () => [
-    { label: 'Playlist in primo piano', key: 'F5', action: () => WM.blur() },
-    { label: 'Channel Rack', key: 'F6', checked: WM.isOpen('rack'), action: () => WM.toggle('rack') },
-    { label: 'Piano Roll', key: 'F7', checked: WM.isOpen('piano'), action: () => WM.toggle('piano') },
-    { label: 'Mixer', key: 'F9', checked: WM.isOpen('mixer'), action: () => WM.toggle('mixer') },
-    { label: 'Browser', key: 'Alt+F8', checked: ui.browser, action: toggleBrowser },
-    { label: 'Impostazioni del canale', disabled: !ui.selCh, action: () => openEditor(ui.selCh) },
+    { label: T('Playlist in primo piano'), key: 'F5', action: () => WM.blur() },
+    { label: T('Channel Rack'), key: 'F6', checked: WM.isOpen('rack'), action: () => WM.toggle('rack') },
+    { label: T('Piano Roll'), key: 'F7', checked: WM.isOpen('piano'), action: () => WM.toggle('piano') },
+    { label: T('Mixer'), key: 'F9', checked: WM.isOpen('mixer'), action: () => WM.toggle('mixer') },
+    { label: T('Browser'), key: 'Alt+F8', checked: ui.browser, action: toggleBrowser },
+    { label: T('Impostazioni del canale'), disabled: !ui.selCh, action: () => openEditor(ui.selCh) },
     '-',
-    { label: 'Ripristina disposizione finestre', action: () => WM.resetLayout() },
+    { label: T('Ripristina disposizione finestre'), action: () => WM.resetLayout() },
   ],
   options: () => [
-    { label: 'Metronomo', checked: ui.metro, action: () => { ui.metro = !ui.metro; renderTop(); savePrefs(); } },
-    { label: 'Metro del progetto: ' + proj.ts.num + '/' + proj.ts.den, sub: metreMenuItems() },
-    { label: 'Arrangiamenti', sub: [
+    { label: T('Lingua') + ' · ' + (LANGUAGES.find(l => l[0] === I18N.lang) || ['', 'Italiano'])[1], sub: LANGUAGES.map(([code, name]) => ({ label: name, checked: code === I18N.lang, action: () => { if (code !== I18N.lang) { toast(T('Cambio lingua…')); setLanguage(code); } } })) },
+    '-',
+    { label: T('Metronomo'), checked: ui.metro, action: () => { ui.metro = !ui.metro; renderTop(); savePrefs(); } },
+    { label: T('Metro del progetto: {0}/{1}', proj.ts.num, proj.ts.den), sub: metreMenuItems() },
+    { label: T('Arrangiamenti'), sub: [
       ...proj.arrangements.map(a => ({ label: a.name, checked: a.id === proj.arrId, action: () => switchArrangement(a.id) })),
       '-',
-      { label: 'Nuovo arrangiamento', action: () => newArrangement(false) },
-      { label: 'Clona l\'arrangiamento', action: () => newArrangement(true) },
+      { label: T('Nuovo arrangiamento'), action: () => newArrangement(false) },
+      { label: T('Clona l\'arrangiamento'), action: () => newArrangement(true) },
     ] },
-    { label: 'Tastiera del computer come pianoforte', checked: ui.typing, action: toggleTyping },
-    { label: 'Ottava della tastiera più bassa', key: '−', action: () => shiftOctave(-12) },
-    { label: 'Ottava della tastiera più alta', key: '+', action: () => shiftOctave(12) },
+    { label: T('Tastiera del computer come pianoforte'), checked: ui.typing, action: toggleTyping },
+    { label: T('Ottava della tastiera più bassa'), key: '−', action: () => shiftOctave(-12) },
+    { label: T('Ottava della tastiera più alta'), key: '+', action: () => shiftOctave(12) },
     '-',
-    { label: 'Registrazione armata', checked: ui.rec, action: toggleRec },
-    { label: 'Registra note (tastiera e MIDI nel pattern)', checked: ui.recMode !== 'audio', action: () => setRecMode('notes') },
-    { label: 'Registra audio (ingresso nella Playlist)', checked: ui.recMode === 'audio', action: () => setRecMode('audio') },
+    { label: T('Registrazione armata'), checked: ui.rec, action: toggleRec },
+    { label: T('Registra note (tastiera e MIDI nel pattern)'), checked: ui.recMode !== 'audio', action: () => setRecMode('notes') },
+    { label: T('Registra audio (ingresso nella Playlist)'), checked: ui.recMode === 'audio', action: () => setRecMode('audio') },
     '-',
-    { label: 'Impostazioni audio…', action: () => AudioSettings.open() },
-    { label: 'Collega tastiera MIDI', action: connectMidi },
+    { label: T('Impostazioni audio…'), action: () => AudioSettings.open() },
+    { label: T('Collega tastiera MIDI'), action: connectMidi },
   ],
   tools: () => {
     const ch = chById(ui.selCh);
     return [
-      { label: 'Loop Starter…', action: () => LoopStarter.open() },
-      { label: 'Chord Progression Tool…', action: () => ChordTool.open() },
-      { label: 'Rilevamento accordi', checked: WM.isOpen('chords'), action: () => WM.toggle('chords') },
-      { label: 'Score Logger: recupera le note suonate', disabled: !ch, action: () => ScoreLog.dump() },
-      { label: 'Audio Logger: salva gli ultimi 60 secondi', action: saveAudioLog },
+      { label: T('Loop Starter…'), action: () => LoopStarter.open() },
+      { label: T('Chord Progression Tool…'), action: () => ChordTool.open() },
+      { label: T('Rilevamento accordi'), checked: WM.isOpen('chords'), action: () => WM.toggle('chords') },
+      { label: T('Score Logger: recupera le note suonate'), disabled: !ch, action: () => ScoreLog.dump() },
+      { label: T('Audio Logger: salva gli ultimi 60 secondi'), action: saveAudioLog },
       '-',
-      { label: 'Quantizza note', action: () => { WM.open('piano'); PR.quantize(); } },
-      { label: 'Riempi ogni 2 passi', disabled: !ch, action: () => fillSteps(ch, 2) },
-      { label: 'Riempi ogni 4 passi', disabled: !ch, action: () => fillSteps(ch, 4) },
-      { label: 'Svuota il canale nel pattern', disabled: !ch, action: () => clearChannel(ch) },
+      { label: T('Quantizza note'), action: () => { WM.open('piano'); PR.quantize(); } },
+      { label: T('Riempi ogni 2 passi'), disabled: !ch, action: () => fillSteps(ch, 2) },
+      { label: T('Riempi ogni 4 passi'), disabled: !ch, action: () => fillSteps(ch, 4) },
+      { label: T('Svuota il canale nel pattern'), disabled: !ch, action: () => clearChannel(ch) },
       '-',
-      { label: 'Torna all\'inizio del brano', action: () => { Transport.stop(); ui.songPos = 0; onTransportChange(); } },
+      { label: T('Torna all\'inizio del brano'), action: () => { Transport.stop(); ui.songPos = 0; onTransportChange(); } },
     ];
   },
   help: () => [
-    { label: 'Finestra di benvenuto', action: () => Welcome.open() },
-    { label: 'Scorciatoie e aiuto', action: () => WM.open('help') },
-    { label: 'Informazioni su Ritmo Studio', action: () => toast('Ritmo Studio 1.4 · DAW gratuita e open source · nessun affiliazione con Image-Line') },
+    { label: T('Finestra di benvenuto'), action: () => Welcome.open() },
+    { label: T('Scorciatoie e aiuto'), action: () => WM.open('help') },
+    { label: T('Informazioni su Ritmo Studio'), action: () => toast(T('Ritmo Studio {0} · DAW gratuita e open source · nessuna affiliazione con Image-Line', '1.4')) },
   ],
 };
 let openMenuKey = null;
@@ -566,7 +568,7 @@ function showMainMenu(btn) {
 function setMode(mode) {
   ui.mode = mode;
   renderTop();
-  hint(mode === 'song' ? 'SONG: suona la playlist' : 'PAT: suona il pattern “' + curPat().name + '”');
+  hint(mode === 'song' ? T('SONG: suona la playlist') : T('PAT: suona il pattern “{0}”', curPat().name));
   Transport.restart();
   PL.draw();
   PR.draw();
@@ -593,21 +595,21 @@ function onProjectReplaced() {
   rebuildEngine();
   renderAll();
 }
-function toggleTyping() { ui.typing = !ui.typing; renderTop(); savePrefs(); hint(ui.typing ? 'Tastiera del computer: suona il canale selezionato' : 'Tastiera del computer: disattivata come pianoforte'); }
+function toggleTyping() { ui.typing = !ui.typing; renderTop(); savePrefs(); hint(ui.typing ? T('Tastiera del computer: suona il canale selezionato') : T('Tastiera del computer: disattivata come pianoforte')); }
 function toggleRec() {
   ui.rec = !ui.rec;
   renderTop();
-  hint(!ui.rec ? 'Registrazione disattivata'
-    : ui.recMode === 'audio' ? 'Registrazione audio armata: premi Play, registra l\'ingresso sulla traccia del mixer selezionata'
-      : 'Registrazione armata: avvia in PAT e suona con la tastiera o il MIDI');
+  hint(!ui.rec ? T('Registrazione disattivata')
+    : ui.recMode === 'audio' ? T('Registrazione audio armata: premi Play, registra l\'ingresso sulla traccia del mixer selezionata')
+      : T('Registrazione armata: avvia in PAT e suona con la tastiera o il MIDI'));
 }
 function setRecMode(m) {
   ui.recMode = m;
   savePrefs();
   renderTop();
-  hint(m === 'audio' ? 'Il tasto Rec registra l\'ingresso audio in una clip della Playlist' : 'Il tasto Rec registra le note nel pattern');
+  hint(m === 'audio' ? T('Il tasto Rec registra l\'ingresso audio in una clip della Playlist') : T('Il tasto Rec registra le note nel pattern'));
 }
-function shiftOctave(d) { ui.kbOct = clamp(ui.kbOct + d, 12, 84); hint('Tastiera del computer: da ' + noteName(ui.kbOct) + ' a ' + noteName(ui.kbOct + 28)); }
+function shiftOctave(d) { ui.kbOct = clamp(ui.kbOct + d, 12, 84); hint(T('Tastiera del computer: da {0} a {1}', noteName(ui.kbOct), noteName(ui.kbOct + 28))); }
 
 /* ---------- Channels ---------- */
 function addChannel(type, opts = {}, audition = false) {
@@ -616,7 +618,7 @@ function addChannel(type, opts = {}, audition = false) {
   for (let i = 1; i <= numInserts(); i++) if (!used.has(i)) { mixer = i; break; }
   const ch = newChannel(type, { mixer, color: COLORS[proj.channels.length % COLORS.length], ...opts });
   proj.channels.push(ch);
-  if (mixer && /^Insert \d+$/.test(proj.mixer[mixer].name)) proj.mixer[mixer].name = ch.name;
+  if (mixer && isDefaultInsertName(proj.mixer[mixer].name)) proj.mixer[mixer].name = ch.name;
   ui.selCh = ch.id;
   commit();
   if (!WM.isOpen('rack')) WM.open('rack');
@@ -627,7 +629,7 @@ function addChannel(type, opts = {}, audition = false) {
     const v = engine.noteOn(ch, ch.root, 0.8);
     setTimeout(() => engine.noteOff(v), 350);
   }
-  hint('Aggiunto ' + ch.name + ' → mixer ' + mixerName(mixer));
+  hint(T('Aggiunto {0} → mixer {1}', ch.name, mixerName(mixer)));
   return ch;
 }
 function cloneChannel(ch) {
@@ -648,7 +650,7 @@ function deleteChannel(ch) {
   if (ui.editCh === ch.id) WM.close('inst');
   commit();
   renderAll();
-  toast(ch.name + ' eliminato. Ctrl+Z per annullare.');
+  toast(T('{0} eliminato. Ctrl+Z per annullare.', ch.name));
 }
 function moveChannel(ch, d) {
   const i = proj.channels.indexOf(ch), j = i + d;
@@ -674,12 +676,12 @@ function clearChannel(ch) {
 function addEffect(type) {
   const i = ui.selMix, t = proj.mixer[i], k = t.fx.findIndex(s => !s);
   WM.open('mixer');
-  if (k < 0) { toast('Gli slot di ' + mixerName(i) + ' sono tutti occupati'); return; }
+  if (k < 0) { toast(T('Gli slot di {0} sono tutti occupati', mixerName(i))); return; }
   t.fx[k] = fxSlot(type);
   engine && engine.rebuildFx(i);
   commit();
   Mixer.render();
-  toast(FXDEFS[type].label + ' aggiunto a ' + mixerName(i));
+  toast(T('{0} aggiunto a {1}', FXDEFS[type].label, mixerName(i)));
 }
 
 /* ---------- Patterns ---------- */
@@ -693,14 +695,14 @@ function selectPattern(id, quiet) {
   PR.refreshToolbar();
   PR.draw();
   PL.draw();
-  if (!quiet) hint('Pattern corrente: ' + curPat().name);
+  if (!quiet) hint(T('Pattern corrente: {0}', curPat().name));
 }
 function stepPattern(d) {
   const i = proj.patterns.indexOf(curPat()), j = clamp(i + d, 0, proj.patterns.length - 1);
   if (j !== i) selectPattern(proj.patterns[j].id);
 }
 function addPattern() {
-  const p = newPattern('Pattern ' + (proj.patterns.length + 1), COLORS[proj.patterns.length % COLORS.length]);
+  const p = newPattern(T('Pattern {0}', proj.patterns.length + 1), COLORS[proj.patterns.length % COLORS.length]);
   proj.patterns.push(p);
   commit();
   selectPattern(p.id);
@@ -708,21 +710,21 @@ function addPattern() {
 function clonePattern(src = curPat()) {
   const p = JSON.parse(JSON.stringify(src));
   p.id = uid();
-  p.name = src.name + ' (copia)';
+  p.name = T('{0} (copia)', src.name);
   p.color = COLORS[(COLORS.indexOf(src.color) + 1) % COLORS.length];
   proj.patterns.splice(proj.patterns.indexOf(src) + 1, 0, p);
   commit();
   selectPattern(p.id);
 }
 function deletePattern(p) {
-  if (proj.patterns.length < 2) { toast('Il progetto deve avere almeno un pattern'); return; }
+  if (proj.patterns.length < 2) { toast(T('Il progetto deve avere almeno un pattern')); return; }
   const i = proj.patterns.indexOf(p);
   proj.patterns.splice(i, 1);
   proj.playlist.clips = proj.playlist.clips.filter(c => c.p !== p.id);
   if (ui.selPat === p.id) ui.selPat = (proj.patterns[i] || proj.patterns[i - 1]).id;
   commit();
   renderAll();
-  toast('Pattern “' + p.name + '” eliminato. Ctrl+Z per annullare.');
+  toast(T('Pattern “{0}” eliminato. Ctrl+Z per annullare.', p.name));
 }
 function renamePattern(p) {
   const anchor = $(`.pl-pat[data-id="${p.id}"]`) || $('#pat-select');
@@ -736,12 +738,12 @@ function nextPatternColor(p) {
 function patternMenu(p, x, y) {
   openMenu(x, y, [
     { title: p.name },
-    { label: 'Rinomina', action: () => renamePattern(p) },
-    { label: 'Clona', action: () => clonePattern(p) },
-    { label: 'Colore successivo', color: COLORS[(COLORS.indexOf(p.color) + 1) % COLORS.length], action: () => nextPatternColor(p) },
-    { label: 'Apri nel Piano Roll', action: () => { selectPattern(p.id); WM.open('piano'); } },
+    { label: T('Rinomina'), action: () => renamePattern(p) },
+    { label: T('Clona'), action: () => clonePattern(p) },
+    { label: T('Colore successivo'), color: COLORS[(COLORS.indexOf(p.color) + 1) % COLORS.length], action: () => nextPatternColor(p) },
+    { label: T('Apri nel Piano Roll'), action: () => { selectPattern(p.id); WM.open('piano'); } },
     '-',
-    { label: 'Elimina pattern', danger: true, disabled: proj.patterns.length < 2, action: () => deletePattern(p) },
+    { label: T('Elimina pattern'), danger: true, disabled: proj.patterns.length < 2, action: () => deletePattern(p) },
   ]);
 }
 
@@ -755,7 +757,7 @@ function openEditor(id) {
 function closeEditor() { WM.close('inst'); }
 // Channel settings, in tabs like a hardware sampler: the instrument, the sample, envelopes and filter, LFO, and
 // the settings every channel has (mixer track, voices, glide, choke groups, arpeggiator, note echo).
-const ED_TABS = [['plug', 'Strumento'], ['smp', 'Campione', true], ['env', 'Inviluppo', true], ['lfo', 'LFO', true], ['misc', 'Varie']];
+const ED_TABS = [['plug', T('Strumento')], ['smp', T('Campione'), true], ['env', T('Inviluppo'), true], ['lfo', 'LFO', true], ['misc', T('Varie')]];
 function renderEditor() {
   const ch = chById(ui.editCh);
   if (!ch) { WM.close('inst'); return; }
@@ -809,23 +811,23 @@ function renderEditor() {
     if (ch.type === 'plugin') page.appendChild(pluginBox('ch:' + ch.id, ch.plugin || {}, ch.name));
     const keys = Object.keys(def.params).filter(k => !def.params[k].tab && !(sampler && ['norm', 'loop', 'ftype', 'lshape'].includes(k)));
     if (keys.length) page.appendChild(grid(keys));
-    const kf = h('div', 'ed-field', 'Prova lo strumento');
+    const kf = h('div', 'ed-field', T('Prova lo strumento'));
     kf.appendChild(miniKeyboard(ch));
     page.appendChild(kf);
   } else if (tab === 'smp') {
     page.appendChild(SampleView.box(ch, true));
-    page.appendChild(section('Regione e dissolvenze', grid(['start', 'end', 'fin', 'fout']), grid(['norm'], 'param-grid')));
-    page.appendChild(section('Loop', grid(['loop', 'ls', 'le'])));
-    page.appendChild(h('p', 'tool-intro', 'Trascina i segni sulla forma d\'onda: verde inizio, rosso fine, arancio il loop. Con il loop attivo il suono dura quanto la nota.'));
+    page.appendChild(section(T('Regione e dissolvenze'), grid(['start', 'end', 'fin', 'fout']), grid(['norm'], 'param-grid')));
+    page.appendChild(section(T('Loop'), grid(['loop', 'ls', 'le'])));
+    page.appendChild(h('p', 'tool-intro', T('Trascina i segni sulla forma d\'onda: verde inizio, rosso fine, arancio il loop. Con il loop attivo il suono dura quanto la nota.')));
   } else if (tab === 'env') {
     const cv = h('canvas', 'env-view');
-    page.appendChild(section('Volume (attacco, tenuta, decadimento, sustain, rilascio)', cv, grid(['a', 'h', 'd', 's', 'r'])));
+    page.appendChild(section(T('Volume (attacco, tenuta, decadimento, sustain, rilascio)'), cv, grid(['a', 'h', 'd', 's', 'r'])));
     requestAnimationFrame(() => drawEnvelope(cv, ch.params));
-    page.appendChild(section('Filtro', grid(['ftype', 'fcut', 'fres', 'fenv', 'fa', 'fd', 'fs'])));
-    page.appendChild(section('Intonazione', grid(['penv', 'pd'])));
+    page.appendChild(section(T('Filtro'), grid(['ftype', 'fcut', 'fres', 'fenv', 'fa', 'fd', 'fs'])));
+    page.appendChild(section(T('Intonazione'), grid(['penv', 'pd'])));
   } else if (tab === 'lfo') {
-    page.appendChild(section('LFO (riparte a ogni nota)', grid(['lshape', 'lrate', 'lvol', 'lpan', 'lcut', 'lpit'])));
-    page.appendChild(h('p', 'tool-intro', 'Volume: tremolo · Pan: movimento stereo · Filtro: richiede un filtro attivo nella scheda Inviluppo · Intonazione: vibrato in semitoni.'));
+    page.appendChild(section(T('LFO (riparte a ogni nota)'), grid(['lshape', 'lrate', 'lvol', 'lpan', 'lcut', 'lpit'])));
+    page.appendChild(h('p', 'tool-intro', T('Volume: tremolo · Pan: movimento stereo · Filtro: richiede un filtro attivo nella scheda Inviluppo · Intonazione: vibrato in semitoni.')));
   } else {
     page.appendChild(miscPage(ch));
   }
@@ -854,9 +856,9 @@ function miscPage(ch) {
   };
   const group = title => { const g = h('div', 'ed-section'); g.appendChild(h('div', 'ed-field', title)); page.appendChild(g); return g; };
 
-  const io = group('Uscita');
-  io.appendChild(row('Traccia del mixer', select('ed-mixer', ch.mixer, Array.from({ length: numInserts() + 1 }, (_, i) => [i, mixerName(i)]), v => { ch.mixer = +v; engine && engine.updateChan(ch); commit(); Rack.render(); })));
-  io.appendChild(row('Nota dei passi', select('ed-root', ch.root, Array.from({ length: 73 }, (_, k) => [k + 24, noteName(k + 24)]), v => {
+  const io = group(T('Uscita'));
+  io.appendChild(row(T('Traccia del mixer'), select('ed-mixer', ch.mixer, Array.from({ length: numInserts() + 1 }, (_, i) => [i, mixerName(i)]), v => { ch.mixer = +v; engine && engine.updateChan(ch); commit(); Rack.render(); })));
+  io.appendChild(row(T('Nota dei passi'), select('ed-root', ch.root, Array.from({ length: 73 }, (_, k) => [k + 24, noteName(k + 24)]), v => {
     const old = ch.root;
     ch.root = +v;
     proj.patterns.forEach(p => (p.notes[ch.id] || []).forEach(n => { if (n.m === old) n.m = ch.root; }));
@@ -864,41 +866,41 @@ function miscPage(ch) {
     afterNotesChanged();
   })));
 
-  const voices = group('Voci');
-  voices.appendChild(row('Monofonico', check('ed-mono', ch.mono, v => { ch.mono = v; changed(); })));
+  const voices = group(T('Voci'));
+  voices.appendChild(row(T('Monofonico'), check('ed-mono', ch.mono, v => { ch.mono = v; changed(); })));
   const porta = knob({
-    spec: { label: 'Portamento', min: 0, max: 2, def: 0, unit: 's' }, value: ch.porta, size: 30, showLabel: true, showValue: true,
+    spec: { label: T('Portamento'), min: 0, max: 2, def: 0, unit: 's' }, value: ch.porta, size: 30, showLabel: true, showValue: true,
     onInput: v => { ch.porta = v; }, onCommit: () => changed(),
   });
   voices.appendChild(porta);
-  const groups = [[0, 'Nessuno'], ...Array.from({ length: 16 }, (_, k) => [k + 1, 'Gruppo ' + (k + 1)])];
-  voices.appendChild(row('Gruppo di taglio', select('ed-cutgroup', ch.cutGroup, groups, v => { ch.cutGroup = +v; changed(); })));
-  voices.appendChild(row('Tagliato dal gruppo', select('ed-cutby', ch.cutBy, groups, v => { ch.cutBy = +v; changed(); })));
-  voices.appendChild(h('p', 'tool-intro', 'Esempio: hi-hat chiuso nel gruppo 1, hi-hat aperto “tagliato dal gruppo 1”: il chiuso zittisce l\'aperto.'));
+  const groups = [[0, T('Nessuno')], ...Array.from({ length: 16 }, (_, k) => [k + 1, T('Gruppo {0}', k + 1)])];
+  voices.appendChild(row(T('Gruppo di taglio'), select('ed-cutgroup', ch.cutGroup, groups, v => { ch.cutGroup = +v; changed(); })));
+  voices.appendChild(row(T('Tagliato dal gruppo'), select('ed-cutby', ch.cutBy, groups, v => { ch.cutBy = +v; changed(); })));
+  voices.appendChild(h('p', 'tool-intro', T('Esempio: hi-hat chiuso nel gruppo 1, hi-hat aperto “tagliato dal gruppo 1”: il chiuso zittisce l\'aperto.')));
 
-  const TIMES = [[0.5, '1/32'], [0.667, '1/16 terzina'], [1, '1/16'], [1.333, '1/8 terzina'], [2, '1/8'], [3, '1/8 puntato'], [4, '1/4'], [8, '1/2'], [16, '1 battuta']];
-  const arp = group('Arpeggiatore');
-  arp.appendChild(row('Attivo', check('ed-arp', ch.arp.on, v => { ch.arp.on = v; changed(); afterNotesChanged(); })));
-  arp.appendChild(row('Direzione', select('ed-arp-dir', ch.arp.dir, [['up', 'Su'], ['down', 'Giù'], ['updown', 'Su e giù'], ['downup', 'Giù e su'], ['random', 'Casuale']], v => { ch.arp.dir = v; changed(); })));
-  arp.appendChild(row('Ottave', select('ed-arp-range', ch.arp.range, [[1, '1'], [2, '2'], [3, '3'], [4, '4']], v => { ch.arp.range = +v; changed(); })));
-  arp.appendChild(row('Passo', select('ed-arp-time', ch.arp.time, TIMES, v => { ch.arp.time = +v; changed(); })));
-  arp.appendChild(row('Ripeti ogni nota', select('ed-arp-rep', ch.arp.rep, [1, 2, 3, 4, 6, 8].map(n => [n, n + '×']), v => { ch.arp.rep = +v; changed(); })));
-  arp.appendChild(knob({ spec: { label: 'Durata note', min: 0.05, max: 1, def: 0.5, unit: '%' }, value: ch.arp.gate, size: 30, showLabel: true, showValue: true, onInput: v => { ch.arp.gate = v; }, onCommit: () => changed() }));
+  const TIMES = [[0.5, '1/32'], [0.667, T('1/16 terzina')], [1, '1/16'], [1.333, T('1/8 terzina')], [2, '1/8'], [3, T('1/8 puntato')], [4, '1/4'], [8, '1/2'], [16, T('1 battuta')]];
+  const arp = group(T('Arpeggiatore'));
+  arp.appendChild(row(T('Attivo'), check('ed-arp', ch.arp.on, v => { ch.arp.on = v; changed(); afterNotesChanged(); })));
+  arp.appendChild(row(T('Direzione'), select('ed-arp-dir', ch.arp.dir, [['up', T('Su')], ['down', T('Giù')], ['updown', T('Su e giù')], ['downup', T('Giù e su')], ['random', T('Casuale')]], v => { ch.arp.dir = v; changed(); })));
+  arp.appendChild(row(T('Ottave'), select('ed-arp-range', ch.arp.range, [[1, '1'], [2, '2'], [3, '3'], [4, '4']], v => { ch.arp.range = +v; changed(); })));
+  arp.appendChild(row(T('Passo'), select('ed-arp-time', ch.arp.time, TIMES, v => { ch.arp.time = +v; changed(); })));
+  arp.appendChild(row(T('Ripeti ogni nota'), select('ed-arp-rep', ch.arp.rep, [1, 2, 3, 4, 6, 8].map(n => [n, n + '×']), v => { ch.arp.rep = +v; changed(); })));
+  arp.appendChild(knob({ spec: { label: T('Durata note'), min: 0.05, max: 1, def: 0.5, unit: '%' }, value: ch.arp.gate, size: 30, showLabel: true, showValue: true, onInput: v => { ch.arp.gate = v; }, onCommit: () => changed() }));
 
-  const echo = group('Eco delle note');
-  echo.appendChild(row('Attivo', check('ed-echo', ch.echo.on, v => { ch.echo.on = v; changed(); })));
-  echo.appendChild(row('Ripetizioni', select('ed-echo-count', ch.echo.count, Array.from({ length: 16 }, (_, k) => [k + 1, String(k + 1)]), v => { ch.echo.count = +v; changed(); })));
-  echo.appendChild(row('Distanza', select('ed-echo-time', ch.echo.time, TIMES, v => { ch.echo.time = +v; changed(); })));
-  echo.appendChild(row('Intonazione per eco', select('ed-echo-pitch', ch.echo.pitch, Array.from({ length: 25 }, (_, k) => [k - 12, (k > 12 ? '+' : '') + (k - 12) + ' st']), v => { ch.echo.pitch = +v; changed(); })));
-  echo.appendChild(knob({ spec: { label: 'Ritorno', min: 0, max: 1, def: 0.6, unit: '%' }, value: ch.echo.fb, size: 30, showLabel: true, showValue: true, onInput: v => { ch.echo.fb = v; }, onCommit: () => changed() }));
+  const echo = group(T('Eco delle note'));
+  echo.appendChild(row(T('Attivo'), check('ed-echo', ch.echo.on, v => { ch.echo.on = v; changed(); })));
+  echo.appendChild(row(T('Ripetizioni'), select('ed-echo-count', ch.echo.count, Array.from({ length: 16 }, (_, k) => [k + 1, String(k + 1)]), v => { ch.echo.count = +v; changed(); })));
+  echo.appendChild(row(T('Distanza'), select('ed-echo-time', ch.echo.time, TIMES, v => { ch.echo.time = +v; changed(); })));
+  echo.appendChild(row(T('Intonazione per eco'), select('ed-echo-pitch', ch.echo.pitch, Array.from({ length: 25 }, (_, k) => [k - 12, (k > 12 ? '+' : '') + (k - 12) + ' st']), v => { ch.echo.pitch = +v; changed(); })));
+  echo.appendChild(knob({ spec: { label: T('Ritorno'), min: 0, max: 1, def: 0.6, unit: '%' }, value: ch.echo.fb, size: 30, showLabel: true, showValue: true, onInput: v => { ch.echo.fb = v; }, onCommit: () => changed() }));
 
-  const cf = group('Colore');
+  const cf = group(T('Colore'));
   const sw = h('div', 'swatches');
   COLORS.forEach(c => {
     const b = h('button');
     b.type = 'button';
     b.style.background = c;
-    b.setAttribute('aria-label', 'Colore ' + c);
+    b.setAttribute('aria-label', T('Colore {0}', c));
     b.setAttribute('aria-pressed', String(ch.color === c));
     b.addEventListener('click', () => { ch.color = c; commit(); renderAll(); });
     sw.appendChild(b);
@@ -908,10 +910,10 @@ function miscPage(ch) {
   const acts = h('div', 'ed-actions');
   const mk = (label, cls, fn) => { const b = h('button', 'tbtn small' + cls, label); b.type = 'button'; b.addEventListener('click', fn); return b; };
   acts.append(
-    mk('Piano Roll', '', () => { Rack.select(ch.id); WM.open('piano'); }),
-    mk('Salva preset', '', () => saveChannelPreset(ch)),
-    mk('Clona', '', () => cloneChannel(ch)),
-    mk('Elimina canale', ' danger', () => deleteChannel(ch)),
+    mk(T('Piano Roll'), '', () => { Rack.select(ch.id); WM.open('piano'); }),
+    mk(T('Salva preset'), '', () => saveChannelPreset(ch)),
+    mk(T('Clona'), '', () => cloneChannel(ch)),
+    mk(T('Elimina canale'), ' danger', () => deleteChannel(ch)),
   );
   page.appendChild(acts);
   return page;
@@ -943,7 +945,7 @@ const SampleView = {
   cv: null, ch: null,
   box(ch, markers) {
     const box = h('div', 'sample-box'), smp = ch.sample && SAMPLES[ch.sample];
-    box.appendChild(h('div', 'sample-name', smp ? smp.name + ' · ' + smp.buffer.duration.toFixed(2) + ' s' : 'Nessun campione: trascina qui un suono dal browser o usa Carica'));
+    box.appendChild(h('div', 'sample-name', smp ? smp.name + ' · ' + smp.buffer.duration.toFixed(2) + ' s' : T('Nessun campione: trascina qui un suono dal browser o usa Carica')));
     const cv = h('canvas', 'sample-wave');
     box.appendChild(cv);
     this.cv = cv;
@@ -965,7 +967,7 @@ const SampleView = {
       });
     }
     requestAnimationFrame(() => this.redraw());
-    const acts = h('div', 'ed-actions'), b = h('button', 'tbtn small', smp ? 'Sostituisci campione' : 'Carica campione');
+    const acts = h('div', 'ed-actions'), b = h('button', 'tbtn small', smp ? T('Sostituisci campione') : T('Carica campione'));
     b.type = 'button';
     b.addEventListener('click', () => pickAudioFiles(ch));
     acts.appendChild(b);
@@ -997,20 +999,20 @@ const SampleView = {
 };
 function pluginBox(target, info, title) {
   const box = h('div', 'sample-box');
-  box.appendChild(h('div', 'sample-name', [info.name, info.vendor, info.format].filter(Boolean).join(' · ') || 'Plugin'));
+  box.appendChild(h('div', 'sample-name', [info.name, info.vendor, info.format].filter(Boolean).join(' · ') || T('Plugin')));
   if (window.NativePlugins) {
-    const b = h('button', 'tbtn small', 'Apri interfaccia del plugin');
+    const b = h('button', 'tbtn small', T('Apri interfaccia del plugin'));
     b.type = 'button';
     b.addEventListener('click', () => NativePlugins.open(target, title));
-    const a = h('button', 'tbtn small', 'Automatizza un parametro…');
+    const a = h('button', 'tbtn small', T('Automatizza un parametro…'));
     a.type = 'button';
-    a.title = 'Crea una clip di automazione per un parametro del plugin';
+    a.title = T('Crea una clip di automazione per un parametro del plugin');
     a.addEventListener('click', () => NativePlugins.paramMenu(target, info.name || title));
     const row = h('div', 'ed-actions');
     row.append(b, a);
     box.appendChild(row);
   } else {
-    box.appendChild(h('div', 'tree-note', 'I plugin VST3, AU e CLAP suonano solo nell\'app desktop di Ritmo Studio.'));
+    box.appendChild(h('div', 'tree-note', T('I plugin VST3, AU e CLAP suonano solo nell\'app desktop di Ritmo Studio.')));
   }
   return box;
 }
@@ -1065,7 +1067,7 @@ async function addAudioFiles(files) {
         addChannel('sampler', { name: f.name.replace(/\.[^.]+$/, '').slice(0, 30), sample: id }, true);
       }
     } catch (e) {
-      toast('Impossibile leggere ' + f.name + ': formato audio non supportato');
+      toast(T('Impossibile leggere {0}: formato audio non supportato', f.name));
     }
   }
   samplerTarget = null;
@@ -1081,7 +1083,7 @@ function newProject() {
   onProjectReplaced();
   commit();
   if (!WM.isOpen('rack')) WM.open('rack');
-  toast('Nuovo progetto. Il precedente è in File › Progetti precedenti.');
+  toast(T('Nuovo progetto. Il precedente è in File › Progetti precedenti.'));
 }
 function loadDemo() {
   Transport.stop();
@@ -1091,7 +1093,7 @@ function loadDemo() {
   ui.mode = 'song';
   onProjectReplaced();
   commit();
-  toast('Progetto demo caricato. Premi Spazio per ascoltarlo.');
+  toast(T('Progetto demo caricato. Premi Spazio per ascoltarlo.'));
 }
 async function openProjectFile(file) {
   try {
@@ -1104,9 +1106,9 @@ async function openProjectFile(file) {
     ui.songPos = 0;
     onProjectReplaced();
     commit();
-    toast('Progetto aperto: ' + p.name);
+    toast(T('Progetto aperto: {0}', p.name));
   } catch (e) {
-    toast('Impossibile aprire il file: ' + (e.message || e));
+    toast(T('Impossibile aprire il file: {0}', e.message || e));
   }
 }
 async function restoreBackup(b) {
@@ -1119,8 +1121,8 @@ async function restoreBackup(b) {
     ui.songPos = 0;
     onProjectReplaced();
     commit();
-    toast('Ripristinato: ' + p.name + ' (' + p.channels.length + ' canali)');
-  } catch (e) { toast('Copia non leggibile'); }
+    toast(T('Ripristinato: {0} ({1} canali)', p.name, p.channels.length));
+  } catch (e) { toast(T('Copia non leggibile')); }
 }
 function saveProject() {
   const data = { app: 'ritmo-studio', version: 1, project: proj, samples: serializeSamples() };
@@ -1137,7 +1139,7 @@ function handleFiles(list) {
   if (mid) { importMidiFile(mid); return; }
   const audio = files.filter(isAudioFile);
   if (audio.length) addAudioFiles(audio);
-  else if (files.length) toast('Trascina file audio (WAV, MP3, OGG…) oppure un progetto .json');
+  else if (files.length) toast(T('Trascina file audio (WAV, MP3, OGG…) oppure un progetto .json'));
 }
 
 /* ---------- Live playing: computer keyboard and MIDI ---------- */
@@ -1176,7 +1178,7 @@ const LiveArp = {
 };
 function liveOn(key, m, v) {
   const ch = chById(ui.selCh);
-  if (!ch) { toast('Aggiungi o seleziona un canale per suonare'); return; }
+  if (!ch) { toast(T('Aggiungi o seleziona un canale per suonare')); return; }
   if (held.has(key)) return;
   audioReady();
   // snap to scale: keys and MIDI notes outside the piano roll's scale play the nearest note of the scale
@@ -1208,18 +1210,18 @@ function liveOff(key) {
 }
 function setMidiStatus(t) { midiStatus = t; Tree.render(); hint(t); }
 async function connectMidi() {
-  if (!navigator.requestMIDIAccess) { setMidiStatus('Questo ambiente non supporta il MIDI: usa l\'app desktop, Chrome o Edge.'); return; }
+  if (!navigator.requestMIDIAccess) { setMidiStatus(T('Questo ambiente non supporta il MIDI: usa l\'app desktop, Chrome o Edge.')); return; }
   try {
     const acc = await navigator.requestMIDIAccess();
     const bind = () => {
       const names = [];
       acc.inputs.forEach(inp => { inp.onmidimessage = onMidi; names.push(inp.name); });
-      setMidiStatus(names.length ? 'Collegato: ' + names.join(', ') + '. Suona il canale selezionato.' : 'Nessun dispositivo MIDI trovato. Collegalo e riprova.');
+      setMidiStatus(names.length ? T('Collegato: {0}. Suona il canale selezionato.', names.join(', ')) : T('Nessun dispositivo MIDI trovato. Collegalo e riprova.'));
     };
     bind();
     acc.onstatechange = bind;
   } catch (e) {
-    setMidiStatus('Accesso al MIDI non consentito qui.');
+    setMidiStatus(T('Accesso al MIDI non consentito qui.'));
   }
 }
 function onMidi(ev) {
@@ -1317,7 +1319,7 @@ function drawScope() {
     cv._idle = true;
     g.fillStyle = TH.faint;
     g.font = '600 9px ' + TH.label;
-    g.fillText('OSCILLOSCOPIO', 6, 12);
+    g.fillText(T('OSCILLOSCOPIO'), 6, 12);
     return;
   }
   const s = engine.strips[0];
@@ -1336,7 +1338,7 @@ function drawScope() {
 /* ---------- Wiring ---------- */
 function buildStatic() {
   masterKnob = knob({
-    spec: { label: 'Volume master', min: 0, max: 1.25, def: 0.9, unit: '%' }, value: proj.mixer[0].vol, size: 28,
+    spec: { label: T('Volume master'), min: 0, max: 1.25, def: 0.9, unit: '%' }, value: proj.mixer[0].vol, size: 28,
     onInput: v => { proj.mixer[0].vol = v; engine && engine.updateStrip(0); if (WM.isOpen('mixer')) Mixer.render(); },
     onCommit: commit,
   });
@@ -1348,10 +1350,10 @@ function buildStatic() {
     btn.addEventListener('click', () => { if (openMenuKey === btn.dataset.menu) closeMenu(); else showMainMenu(btn); });
     btn.addEventListener('pointerenter', () => { if (openMenuKey && openMenuKey !== btn.dataset.menu) showMainMenu(btn); });
   });
-  $('#proj-name').addEventListener('change', e => { proj.name = e.target.value.trim() || 'Senza titolo'; commit(); renderTop(); });
+  $('#proj-name').addEventListener('change', e => { proj.name = e.target.value.trim() || T('Senza titolo'); commit(); renderTop(); });
   $('#btn-new').addEventListener('click', e => menuAt(e.currentTarget, [
-    { label: 'Progetto vuoto', action: newProject },
-    { label: 'Progetto demo', action: loadDemo },
+    { label: T('Progetto vuoto'), action: newProject },
+    { label: T('Progetto demo'), action: loadDemo },
   ]));
   $('#btn-open').addEventListener('click', openProjectDialog);
   $('#file-project').addEventListener('change', e => { if (e.target.files[0]) openProjectFile(e.target.files[0]); });
@@ -1367,21 +1369,21 @@ function buildStatic() {
   $('#btn-stop').addEventListener('click', () => Transport.stop());
   $('#btn-rec').addEventListener('click', toggleRec);
   $('#btn-recmode').addEventListener('click', e => menuAt(e.currentTarget, [
-    { title: 'Il tasto Rec registra' },
-    { label: 'Note nel pattern (tastiera e MIDI)', checked: ui.recMode !== 'audio', action: () => setRecMode('notes') },
-    { label: 'Audio dall\'ingresso nella Playlist', checked: ui.recMode === 'audio', action: () => setRecMode('audio') },
+    { title: T('Il tasto Rec registra') },
+    { label: T('Note nel pattern (tastiera e MIDI)'), checked: ui.recMode !== 'audio', action: () => setRecMode('notes') },
+    { label: T('Audio dall\'ingresso nella Playlist'), checked: ui.recMode === 'audio', action: () => setRecMode('audio') },
     '-',
-    { label: 'Impostazioni audio…', action: () => AudioSettings.open() },
+    { label: T('Impostazioni audio…'), action: () => AudioSettings.open() },
   ]));
   $('#btn-metro').addEventListener('click', () => { ui.metro = !ui.metro; renderTop(); savePrefs(); });
   $('#btn-typing').addEventListener('click', toggleTyping);
   $('#lcd').addEventListener('click', () => {
     ui.lcdMode = ui.lcdMode === 'time' ? 'bars' : 'time';
-    $('#lcd-unit').textContent = ui.lcdMode === 'time' ? 'B:B:S' : 'M:S:CS';
+    $('#lcd-unit').textContent = ui.lcdMode === 'time' ? T('B:B:S') : T('M:S:CS');
     lastBig = lastSmall = '';
     savePrefs();
   });
-  $('#lcd-unit').textContent = ui.lcdMode === 'time' ? 'B:B:S' : 'M:S:CS';
+  $('#lcd-unit').textContent = ui.lcdMode === 'time' ? T('B:B:S') : T('M:S:CS');
   const bpm = $('#bpm');
   const setBpm = v => { proj.bpm = clamp(Math.round(v * 1000) / 1000, 40, 300); engine && engine.updateTempo(); };
   bpm.addEventListener('change', () => { setBpm(+bpm.value || proj.bpm); commit(); renderTop(); });
@@ -1390,7 +1392,7 @@ function buildStatic() {
     const lab = e.currentTarget;
     lab.setPointerCapture(e.pointerId);
     let lastY = e.clientY, v = proj.bpm;
-    const move = ev => { v += (lastY - ev.clientY) * (ev.shiftKey ? 0.05 : 0.5); lastY = ev.clientY; setBpm(Math.round(v * 10) / 10); bpm.value = proj.bpm.toFixed(3); hint('Tempo: ' + proj.bpm + ' BPM'); };
+    const move = ev => { v += (lastY - ev.clientY) * (ev.shiftKey ? 0.05 : 0.5); lastY = ev.clientY; setBpm(Math.round(v * 10) / 10); bpm.value = proj.bpm.toFixed(3); hint(T('Tempo: {0} BPM', proj.bpm)); };
     const up = () => { lab.removeEventListener('pointermove', move); lab.removeEventListener('pointerup', up); commit(); };
     lab.addEventListener('pointermove', move);
     lab.addEventListener('pointerup', up);
@@ -1420,7 +1422,7 @@ function buildStatic() {
   window.addEventListener('dragenter', e => {
     if (!hasFiles(e)) return;
     e.preventDefault();
-    if (depth++ === 0) { veil = h('div', 'drop-veil', 'Rilascia file audio o un progetto'); document.body.appendChild(veil); }
+    if (depth++ === 0) { veil = h('div', 'drop-veil', T('Rilascia file audio o un progetto')); document.body.appendChild(veil); }
   });
   window.addEventListener('dragover', e => { if (hasFiles(e)) e.preventDefault(); });
   window.addEventListener('dragleave', () => { if (--depth <= 0) { depth = 0; if (veil) { veil.remove(); veil = null; } } });

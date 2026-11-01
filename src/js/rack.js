@@ -80,20 +80,20 @@ const Rack = {
     });
     $('#rack-len').addEventListener('change', e => { curPat().len = +e.target.value; commit(); afterNotesChanged(); });
     const sw = knob({
-      spec: { label: 'Swing', min: 0, max: 1, def: 0, unit: '%' }, value: proj.swing, size: 24,
+      spec: { label: T('Swing'), min: 0, max: 1, def: 0, unit: '%' }, value: proj.swing, size: 24,
       onInput: v => { proj.swing = v; }, onCommit: commit,
     });
     $('#rack-swing').appendChild(sw);
     this.swingKnob = sw;
     const filter = $('#rack-filter');
-    filter.appendChild(new Option('Tutti i canali', ''));
-    [...new Set(Object.values(INSTRUMENTS).map(d => d.group))].forEach(g => filter.appendChild(new Option(g, g)));
+    filter.appendChild(new Option(T('Tutti i canali'), ''));
+    [...new Set(Object.values(INSTRUMENTS).map(d => d.group))].forEach(g => filter.appendChild(new Option(T(g), g)));
     filter.addEventListener('change', () => { ui.rackFilter = filter.value; this.render(); });
     $('#rack-graph').addEventListener('click', e => {
       ui.rackGraph = !ui.rackGraph;
       e.currentTarget.setAttribute('aria-pressed', String(ui.rackGraph));
       this.render();
-      hint(ui.rackGraph ? 'Graph Editor: trascina sulle barre sotto il canale selezionato' : 'Graph Editor chiuso');
+      hint(ui.rackGraph ? T('Graph Editor: trascina sulle barre sotto il canale selezionato') : T('Graph Editor chiuso'));
     });
     $('#rack-graph-mode').addEventListener('change', e => { ui.rackGraphMode = e.target.value; this.render(); });
   },
@@ -107,7 +107,7 @@ const Rack = {
     lenSel.value = String(p.len);
     this.swingKnob.setValue(proj.swing);
     if (!proj.channels.length) {
-      wrap.appendChild(h('div', 'rack-empty', 'Nessun canale. Aggiungi uno strumento dal browser a sinistra o con il pulsante Canale.'));
+      wrap.appendChild(h('div', 'rack-empty', T('Nessun canale. Aggiungi uno strumento dal browser a sinistra o con il pulsante Canale.')));
       return;
     }
     const filter = ui.rackFilter || '';
@@ -118,31 +118,31 @@ const Rack = {
       const led = h('button', 'ch-led' + (ch.solo ? ' solo' : (ch.mute ? '' : ' on')));
       led.type = 'button';
       led.dataset.act = 'mute';
-      led.title = (ch.mute ? 'Canale spento' : 'Canale attivo') + ' — clic: accendi/spegni, clic destro: solo';
-      led.setAttribute('aria-label', 'Attiva ' + ch.name);
+      led.title = ch.mute ? T('Canale spento — clic: accendi/spegni, clic destro: solo') : T('Canale attivo — clic: accendi/spegni, clic destro: solo');
+      led.setAttribute('aria-label', T('Attiva {0}', ch.name));
       led.setAttribute('aria-pressed', String(!ch.mute));
       const pan = knob({
-        spec: { label: 'Panoramica ' + ch.name, min: -1, max: 1, def: 0, unit: 'pan' }, value: ch.pan, size: 22,
+        spec: { label: T('Panoramica {0}', ch.name), min: -1, max: 1, def: 0, unit: 'pan' }, value: ch.pan, size: 22,
         onInput: v => { ch.pan = v; engine && engine.updateChan(ch); }, onCommit: commit,
       });
       const vol = knob({
-        spec: { label: 'Volume ' + ch.name, min: 0, max: 1, def: 0.78, unit: '%' }, value: ch.vol, size: 22,
+        spec: { label: T('Volume {0}', ch.name), min: 0, max: 1, def: 0.78, unit: '%' }, value: ch.vol, size: 22,
         onInput: v => { ch.vol = v; engine && engine.updateChan(ch); }, onCommit: commit,
       });
       const mix = h('button', 'ch-mix', ch.mixer ? String(ch.mixer) : '—');
       mix.type = 'button';
       mix.dataset.act = 'mixer';
-      mix.title = 'Traccia del mixer: ' + mixerName(ch.mixer) + ' — trascina o usa la rotella per cambiarla, clic per l\'elenco';
+      mix.title = T('Traccia del mixer: {0} — trascina o usa la rotella per cambiarla, clic per l\'elenco', mixerName(ch.mixer));
       const name = h('button', 'ch-name');
       name.type = 'button';
       name.dataset.act = 'name';
       name.style.setProperty('--c', ch.color);
       name.append(h('span', 'dot'), h('span', 'nm', ch.name));
-      name.title = INSTRUMENTS[ch.type].label + ' — clic: impostazioni, clic destro: menu';
+      name.title = T('{0} — clic: impostazioni, clic destro: menu', INSTRUMENTS[ch.type].label);
       const act = h('span', 'ch-act');
       act.dataset.flash = ch.id;
       act.dataset.act = 'select';
-      act.title = 'Seleziona il canale';
+      act.title = T('Seleziona il canale');
       row.append(led, pan, vol, mix, name, act);
       const notes = p.notes[ch.id] || [];
       if (isStepLike(notes, p.len)) {
@@ -160,7 +160,7 @@ const Rack = {
       } else {
         const cv = h('canvas', 'mini-roll');
         cv.dataset.act = 'roll';
-        cv.title = 'Note nel Piano Roll — clic per aprire';
+        cv.title = T('Note nel Piano Roll — clic per aprire');
         row.appendChild(cv);
         drawMiniRoll(cv, ch, p);
       }
@@ -197,7 +197,7 @@ const Rack = {
       });
       gg.fillStyle = TH.faint;
       gg.font = '600 9px ' + TH.label;
-      gg.fillText(mode === 'vel' ? 'VELOCITÀ' : 'INTONAZIONE', 4, 10);
+      gg.fillText(mode === 'vel' ? T('VELOCITÀ') : T('INTONAZIONE'), 4, 10);
     };
     let dragging = false;
     const edit = e => {
@@ -206,8 +206,8 @@ const Rack = {
       L.xs.forEach((sx, i) => { const d = Math.abs(sx - x); if (d < bd) { bd = d; best = i; } });
       const n = (p.notes[ch.id] || []).find(k => k.s === best);
       if (!n || bd > L.bw) return;
-      if (mode === 'vel') { n.v = clamp(1 - y / (H - 2), 0.05, 1); hint('Passo ' + (best + 1) + ': velocità ' + Math.round(n.v * 100) + '%'); }
-      else { n.m = ch.root + Math.round((H / 2 - y) / (H / 2 - 3) * 12); hint('Passo ' + (best + 1) + ': ' + noteName(n.m)); }
+      if (mode === 'vel') { n.v = clamp(1 - y / (H - 2), 0.05, 1); hint(T('Passo {0}: velocità {1}%', best + 1, Math.round(n.v * 100))); }
+      else { n.m = ch.root + Math.round((H / 2 - y) / (H / 2 - 3) * 12); hint(T('Passo {0}: {1}', best + 1, noteName(n.m))); }
       draw();
     };
     cv.addEventListener('pointerdown', e => { dragging = true; cv.setPointerCapture(e.pointerId); edit(e); });
@@ -222,7 +222,7 @@ const Rack = {
     b.classList.toggle('on', !!n);
     b.style.opacity = n ? String(0.55 + 0.45 * n.v) : '';
     b.setAttribute('aria-pressed', String(!!n));
-    b.setAttribute('aria-label', ch.name + ', passo ' + (+b.dataset.i + 1));
+    b.setAttribute('aria-label', T('{0}, passo {1}', ch.name, +b.dataset.i + 1));
   },
   setStep(ch, i, on) {
     const p = curPat(), arr = p.notes[ch.id] || (p.notes[ch.id] = []);
@@ -286,7 +286,7 @@ const Rack = {
       engine && engine.updateAllChans();
       commit();
       this.render();
-      hint(solo ? 'Solo: ' + ch.name : 'Solo disattivato');
+      hint(solo ? T('Solo: {0}', ch.name) : T('Solo disattivato'));
       return;
     }
     channelMenu(ch, e.clientX, e.clientY);
@@ -300,7 +300,7 @@ const Rack = {
     PR.draw();
     Tree.render();
     const ch = chById(id);
-    if (ch) hint('Canale selezionato: ' + ch.name + ' — la tastiera del computer suona questo strumento');
+    if (ch) hint(T('Canale selezionato: {0} — la tastiera del computer suona questo strumento', ch.name));
   },
   // Light the step column under the playhead while a pattern plays.
   showColumn(col) {
@@ -320,51 +320,51 @@ function channelMenu(ch, x, y) {
     let group = '';
     for (const [type, def] of Object.entries(INSTRUMENTS)) {
       if (def.hidden || type === 'sampler') continue;
-      if (def.group !== group) { group = def.group; items.push({ title: group }); }
+      if (def.group !== group) { group = def.group; items.push({ title: T(group) }); }
       items.push({ label: def.label, checked: fn === 'replace' && ch.type === type, action: () => (fn === 'insert' ? insertChannelAfter(ch, type) : replaceChannel(ch, type)) });
     }
     return items;
   };
   const rename = () => { const b = $(`.ch-row[data-id="${ch.id}"] .ch-name`); inlineEdit(b || $('#rack-rows'), ch.name, v => { ch.name = v; commit(); renderAll(); }); };
   openMenu(x, y, [
-    { label: 'Piano roll', checked: !isStepLike(notes, p.len), action: () => { Rack.select(ch.id); WM.open('piano'); } },
-    { label: 'Graph editor', checked: !!ui.rackGraph && ui.selCh === ch.id, action: () => { ui.rackGraph = true; $('#rack-graph').setAttribute('aria-pressed', 'true'); Rack.select(ch.id); Rack.render(); } },
+    { label: T('Piano roll'), checked: !isStepLike(notes, p.len), action: () => { Rack.select(ch.id); WM.open('piano'); } },
+    { label: T('Graph editor'), checked: !!ui.rackGraph && ui.selCh === ch.id, action: () => { ui.rackGraph = true; $('#rack-graph').setAttribute('aria-pressed', 'true'); Rack.select(ch.id); Rack.render(); } },
     '-',
-    { label: 'Rinomina, colore e icona…', action: rename },
-    { label: 'Cambia colore…', sub: COLORS.map((c, i) => ({ label: 'Colore ' + (i + 1), color: c, checked: ch.color === c, action: () => { ch.color = c; commit(); renderAll(); } })) },
+    { label: T('Rinomina, colore e icona…'), action: rename },
+    { label: T('Cambia colore…'), sub: COLORS.map((c, i) => ({ label: T('Colore {0}', i + 1), color: c, checked: ch.color === c, action: () => { ch.color = c; commit(); renderAll(); } })) },
     '-',
-    { label: 'Carica campione…', action: () => { if (ch.type !== 'sampler') replaceChannel(ch, 'sampler', true); pickAudioFiles(ch); } },
-    { label: 'Taglia se stesso', checked: !!ch.cutSelf || !!INSTRUMENTS[ch.type].mono, disabled: !!INSTRUMENTS[ch.type].mono, action: () => { ch.cutSelf = !ch.cutSelf; commit(); hint(ch.cutSelf ? ch.name + ': ogni nota interrompe la precedente' : ch.name + ': le note si sovrappongono'); } },
+    { label: T('Carica campione…'), action: () => { if (ch.type !== 'sampler') replaceChannel(ch, 'sampler', true); pickAudioFiles(ch); } },
+    { label: T('Taglia se stesso'), checked: !!ch.cutSelf || !!INSTRUMENTS[ch.type].mono, disabled: !!INSTRUMENTS[ch.type].mono, action: () => { ch.cutSelf = !ch.cutSelf; commit(); hint(ch.cutSelf ? T('{0}: ogni nota interrompe la precedente', ch.name) : T('{0}: le note si sovrappongono', ch.name)); } },
     '-',
-    { label: 'Inserisci', sub: instList('insert') },
-    { label: 'Sostituisci', sub: instList('replace') },
-    { label: 'Clona', action: () => cloneChannel(ch) },
-    { label: 'Elimina…', danger: true, action: () => deleteChannel(ch) },
+    { label: T('Inserisci'), sub: instList('insert') },
+    { label: T('Sostituisci'), sub: instList('replace') },
+    { label: T('Clona'), action: () => cloneChannel(ch) },
+    { label: T('Elimina…'), danger: true, action: () => deleteChannel(ch) },
     '-',
-    { label: 'Assegna a un nuovo insert del mixer', action: () => assignNewInsert(ch) },
-    { label: 'Sposta su', key: 'Alt+↑', disabled: idx === 0, action: () => moveChannel(ch, -1) },
-    { label: 'Sposta giù', key: 'Alt+↓', disabled: idx === proj.channels.length - 1, action: () => moveChannel(ch, 1) },
+    { label: T('Assegna a un nuovo insert del mixer'), action: () => assignNewInsert(ch) },
+    { label: T('Sposta su'), key: 'Alt+↑', disabled: idx === 0, action: () => moveChannel(ch, -1) },
+    { label: T('Sposta giù'), key: 'Alt+↓', disabled: idx === proj.channels.length - 1, action: () => moveChannel(ch, 1) },
     { col: true },
-    { label: 'Taglia', action: () => { chanClipboard = JSON.parse(JSON.stringify(notes)); clearChannel(ch); } },
-    { label: 'Copia', action: () => { chanClipboard = JSON.parse(JSON.stringify(notes)); hint('Copiate ' + notes.length + ' note di ' + ch.name); } },
-    { label: 'Incolla', disabled: !chanClipboard, action: () => { p.notes[ch.id] = JSON.parse(JSON.stringify(chanClipboard)); commit(); afterNotesChanged(); } },
+    { label: T('Taglia'), action: () => { chanClipboard = JSON.parse(JSON.stringify(notes)); clearChannel(ch); } },
+    { label: T('Copia'), action: () => { chanClipboard = JSON.parse(JSON.stringify(notes)); hint(T('Copiate {0} note di {1}', notes.length, ch.name)); } },
+    { label: T('Incolla'), disabled: !chanClipboard, action: () => { p.notes[ch.id] = JSON.parse(JSON.stringify(chanClipboard)); commit(); afterNotesChanged(); } },
     '-',
-    { label: 'Riempi ogni passo', action: () => fillSteps(ch, 1) },
-    { label: 'Riempi ogni 2 passi', action: () => fillSteps(ch, 2) },
-    { label: 'Riempi ogni 4 passi', action: () => fillSteps(ch, 4) },
-    { label: 'Riempi ogni 8 passi', action: () => fillSteps(ch, 8) },
-    { label: 'Svuota', action: () => clearChannel(ch) },
+    { label: T('Riempi ogni passo'), action: () => fillSteps(ch, 1) },
+    { label: T('Riempi ogni 2 passi'), action: () => fillSteps(ch, 2) },
+    { label: T('Riempi ogni 4 passi'), action: () => fillSteps(ch, 4) },
+    { label: T('Riempi ogni 8 passi'), action: () => fillSteps(ch, 8) },
+    { label: T('Svuota'), action: () => clearChannel(ch) },
     '-',
-    { label: 'Ruota a sinistra', key: 'Maiusc+Ctrl+←', disabled: !notes.length, action: () => rotateChannel(ch, -1) },
-    { label: 'Ruota a destra', key: 'Maiusc+Ctrl+→', disabled: !notes.length, action: () => rotateChannel(ch, 1) },
+    { label: T('Ruota a sinistra'), key: T('Maiusc+Ctrl+←'), disabled: !notes.length, action: () => rotateChannel(ch, -1) },
+    { label: T('Ruota a destra'), key: T('Maiusc+Ctrl+→'), disabled: !notes.length, action: () => rotateChannel(ch, 1) },
     '-',
-    { label: 'Muto', checked: ch.mute, action: () => { ch.mute = !ch.mute; engine && engine.updateAllChans(); commit(); Rack.render(); } },
-    { label: 'Solo', checked: ch.solo, action: () => { const on = !ch.solo; proj.channels.forEach(c => { c.solo = false; }); ch.solo = on; if (on) ch.mute = false; engine && engine.updateAllChans(); commit(); Rack.render(); } },
-    { label: 'Impostazioni strumento…', action: () => openEditor(ch.id) },
-    { label: 'Crea clip di automazione', sub: automationTargetsFor(ch) },
+    { label: T('Muto'), checked: ch.mute, action: () => { ch.mute = !ch.mute; engine && engine.updateAllChans(); commit(); Rack.render(); } },
+    { label: T('Solo'), checked: ch.solo, action: () => { const on = !ch.solo; proj.channels.forEach(c => { c.solo = false; }); ch.solo = on; if (on) ch.mute = false; engine && engine.updateAllChans(); commit(); Rack.render(); } },
+    { label: T('Impostazioni strumento…'), action: () => openEditor(ch.id) },
+    { label: T('Crea clip di automazione'), sub: automationTargetsFor(ch) },
     '-',
-    { label: 'Salva preset del canale', action: () => saveChannelPreset(ch) },
-    { label: 'Carica preset', disabled: !Presets.of('channel').length, sub: Presets.of('channel').map(pr => ({ label: pr.name, action: async () => Presets.applyChannel(await Presets.read('channel', pr.name), ch, pr.name) })) },
+    { label: T('Salva preset del canale'), action: () => saveChannelPreset(ch) },
+    { label: T('Carica preset'), disabled: !Presets.of('channel').length, sub: Presets.of('channel').map(pr => ({ label: pr.name, action: async () => Presets.applyChannel(await Presets.read('channel', pr.name), ch, pr.name) })) },
   ]);
 }
 function insertChannelAfter(ch, type) {
@@ -397,7 +397,7 @@ function setChannelInsert(ch, i, quiet) {
 }
 function assignNewInsert(ch) {
   const i = freeInsert();
-  if (!i) { toast('Tutti gli insert del mixer sono già usati'); return; }
+  if (!i) { toast(T('Tutti gli insert del mixer sono già usati')); return; }
   proj.mixer[i].name = ch.name;
   setChannelInsert(ch, i);
   renderAll();
@@ -411,9 +411,9 @@ function rotateChannel(ch, d) {
 
 function mixerRouteMenu(anchor, ch) {
   const used = new Set(proj.channels.map(c => c.mixer));
-  const items = [{ title: 'Traccia del mixer di ' + ch.name }, { label: 'Master', checked: ch.mixer === 0, action: () => { setChannelInsert(ch, 0); renderAll(); } }];
+  const items = [{ title: T('Traccia del mixer di {0}', ch.name) }, { label: T('Master'), checked: ch.mixer === 0, action: () => { setChannelInsert(ch, 0); renderAll(); } }];
   const free = freeInsert();
-  if (free) items.push({ label: 'Primo insert libero (' + free + ')', action: () => assignNewInsert(ch) });
+  if (free) items.push({ label: T('Primo insert libero ({0})', free), action: () => assignNewInsert(ch) });
   items.push('-');
   for (let i = 1; i <= numInserts(); i++) {
     if (!used.has(i) && i !== free && i > 24) continue;
@@ -427,7 +427,7 @@ function instrumentMenu(anchor) {
   let group = '';
   for (const [type, def] of Object.entries(INSTRUMENTS)) {
     if (def.hidden) continue;
-    if (def.group !== group) { group = def.group; items.push({ title: group }); }
+    if (def.group !== group) { group = def.group; items.push({ title: T(group) }); }
     items.push({ label: def.label, action: () => (type === 'sampler' ? pickAudioFiles() : addChannel(type, {}, true)) });
   }
   menuAt(anchor, items);

@@ -8,6 +8,7 @@
 Fonts come from fonts/ (run fetch_fonts.py once) and are embedded as data URIs.
 """
 import base64
+import json
 import pathlib
 import re
 
@@ -50,6 +51,22 @@ def font_faces() -> str:
     return "<style>\n" + "\n".join(rules) + "\n</style>"
 
 
+def i18n_data() -> None:
+    """Writes src/js/i18n-data.js: the source texts once, then each language as a list in the same order."""
+    folder = SRC / "i18n"
+    src = [e["s"] for e in json.loads((folder / "strings.json").read_text(encoding="utf-8"))]
+    data = {"src": src}
+    for f in sorted(folder.glob("*.json")):
+        if f.name == "strings.json":
+            continue
+        t = json.loads(f.read_text(encoding="utf-8"))
+        data[f.stem] = [t.get(s, "") for s in src]
+    js = "window.RITMO_I18N = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n"
+    (SRC / "js" / "i18n-data.js").write_text(js.replace("</", "<\\/"), encoding="utf-8")
+    print(f"translations: {len(src)} texts, languages {', '.join(k for k in data if k != 'src') or 'none yet'}")
+
+
+i18n_data()
 content = re.sub(r'<script src="([^"]+)"></script>', inline, page)
 content = content.replace("<!--FONTS-->", font_faces())
 

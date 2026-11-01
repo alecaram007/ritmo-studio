@@ -9,3 +9,5 @@ desktop/release/
 desktop/app/
 desktop/engine-bin/
 site/_out/
+src/js/i18n-data.js
+src/i18n/parts/

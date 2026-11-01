@@ -43,7 +43,7 @@ function fmtParam(spec, v) {
     case 'st': return (v > 0 ? '+' : '') + Math.round(v) + ' st';
     case 'ct': return Math.round(v) + ' cent';
     case ':1': return v.toFixed(1) + ':1';
-    case 'pan': return Math.abs(v) < 0.01 ? 'Centro' : Math.round(Math.abs(v) * 100) + '% ' + (v < 0 ? 'sinistra' : 'destra');
+    case 'pan': return Math.abs(v) < 0.01 ? T('Centro') : v < 0 ? T('{0}% sinistra', Math.round(Math.abs(v) * 100)) : T('{0}% destra', Math.round(Math.abs(v) * 100));
     case '%': return Math.round(v * 100) + '%';
   }
   if (spec.step >= 1) return (v > 0 && spec.min < 0 ? '+' : '') + Math.round(v);
@@ -96,7 +96,7 @@ function knob(o) {
     ptr.setAttribute('x2', (16 + 8 * sn).toFixed(2)); ptr.setAttribute('y2', (16 - 8 * cs).toFixed(2));
     const txt = fmtParam(s, value);
     root.setAttribute('aria-valuetext', txt);
-    root.title = s.label + ': ' + txt + ' (doppio clic: valore iniziale)';
+    root.title = T('{0}: {1} (doppio clic: valore iniziale)', s.label, txt);
     if (valEl) valEl.textContent = txt;
   }
   function set(v, fire) {
@@ -153,7 +153,7 @@ function knob(o) {
     e.preventDefault();
     e.stopPropagation();
     if (o.onContext) o.onContext(e);
-    else openMenu(e.clientX, e.clientY, [{ title: s.label }, ...autoMenuItems(o.auto), '-', { label: 'Valore iniziale', action: () => { set(s.def, true); o.onCommit && o.onCommit(value); } }]);
+    else openMenu(e.clientX, e.clientY, [{ title: s.label }, ...autoMenuItems(o.auto), '-', { label: T('Valore iniziale'), action: () => { set(s.def, true); o.onCommit && o.onCommit(value); } }]);
   });
   draw();
   root.setValue = v => { if (v !== value) { value = v; draw(); } };
@@ -184,7 +184,7 @@ function fader(o) {
   const draw = () => {
     root.style.setProperty('--n', String(clamp((value - min) / span, 0, 1)));
     root.setAttribute('aria-valuetext', fmt(value));
-    root.title = o.label + ': ' + fmt(value) + ' (doppio clic: valore iniziale)';
+    root.title = T('{0}: {1} (doppio clic: valore iniziale)', o.label, fmt(value));
   };
   const set = v => { v = clamp(v, min, o.max); if (v === value) return; value = v; draw(); o.onInput && o.onInput(v); hint(o.label + ': ' + fmt(v)); };
   root.addEventListener('pointerdown', e => {

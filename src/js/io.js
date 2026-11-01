@@ -32,30 +32,30 @@ const ExportDialog = {
       return s;
     };
     const set = patch => { ui.exportOpts = { ...this.opts(), ...patch }; savePrefs(); this.render(); };
-    sel('Cosa', o.what, [['song', 'Il brano (Playlist)'], ['pattern', 'Il pattern “' + curPat().name + '”']], v => set({ what: v }));
-    sel('Formato', o.format, [['wav', 'WAV'], ['flac', 'FLAC (senza perdita)', !native], ['ogg', 'OGG Vorbis (compresso)', !native]], v => set({ format: v, bits: v === 'flac' ? Math.min(24, o.bits) : o.bits }));
-    if (o.format === 'ogg') sel('Qualità', o.quality, Array.from({ length: 11 }, (_, q) => [q, q + (q === 6 ? ' (consigliata)' : '') + ' · circa ' + [64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 500][q] + ' kbps']), v => set({ quality: +v }));
-    else sel('Risoluzione', o.bits, [['16', '16 bit (CD)'], ['24', '24 bit'], ['32', '32 bit in virgola mobile', o.format === 'flac']], v => set({ bits: +v }));
+    sel(T('Cosa'), o.what, [['song', T('Il brano (Playlist)')], ['pattern', T('Il pattern “{0}”', curPat().name)]], v => set({ what: v }));
+    sel(T('Formato'), o.format, [['wav', 'WAV'], ['flac', T('FLAC (senza perdita)'), !native], ['ogg', T('OGG Vorbis (compresso)'), !native]], v => set({ format: v, bits: v === 'flac' ? Math.min(24, o.bits) : o.bits }));
+    if (o.format === 'ogg') sel(T('Qualità'), o.quality, Array.from({ length: 11 }, (_, q) => [q, q === 6 ? T('{0} (consigliata) · circa {1} kbps', q, [64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 500][q]) : T('{0} · circa {1} kbps', q, [64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 500][q])]), v => set({ quality: +v }));
+    else sel(T('Risoluzione'), o.bits, [['16', '16 bit (CD)'], ['24', '24 bit'], ['32', T('32 bit in virgola mobile'), o.format === 'flac']], v => set({ bits: +v }));
     body.appendChild(grid);
     const stems = h('label', 'check');
     const cb = h('input');
     cb.type = 'checkbox';
     cb.checked = o.stems;
     cb.addEventListener('change', () => set({ stems: cb.checked }));
-    stems.append(cb, 'Tracce separate: un file per ogni traccia del mixer usata (dopo il fader)');
+    stems.append(cb, T('Tracce separate: un file per ogni traccia del mixer usata (dopo il fader)'));
     body.appendChild(stems);
     if (o.stems) {
       const m = h('label', 'check'), cb2 = h('input');
       cb2.type = 'checkbox';
       cb2.checked = o.master;
       cb2.addEventListener('change', () => set({ master: cb2.checked }));
-      m.append(cb2, 'Includi anche il mix completo (Master)');
+      m.append(cb2, T('Includi anche il mix completo (Master)'));
       body.appendChild(m);
       const used = [...usedTracks()].filter(i => i > 0).sort((a, b) => a - b);
-      body.appendChild(h('p', 'tool-intro', used.length ? 'Tracce: ' + used.map(i => insName(i)).join(', ') : 'Nessuna traccia del mixer riceve suono.'));
+      body.appendChild(h('p', 'tool-intro', used.length ? T('Tracce: {0}', used.map(i => insName(i)).join(', ')) : T('Nessuna traccia del mixer riceve suono.')));
     }
-    if (!native) body.appendChild(h('p', 'tool-intro', 'FLAC e OGG sono disponibili nell\'app desktop. Nel browser le tracce separate arrivano in un unico archivio ZIP.'));
-    const act = h('div', 'form-actions'), go = h('button', 'tbtn', 'Esporta…');
+    if (!native) body.appendChild(h('p', 'tool-intro', T('FLAC e OGG sono disponibili nell\'app desktop. Nel browser le tracce separate arrivano in un unico archivio ZIP.')));
+    const act = h('div', 'form-actions'), go = h('button', 'tbtn', T('Esporta…'));
     go.type = 'button';
     go.addEventListener('click', () => this.run());
     act.appendChild(go);
@@ -65,7 +65,7 @@ const ExportDialog = {
     const o = this.opts();
     if (o.what !== (ui.mode === 'song' ? 'song' : 'pattern')) setMode(o.what);
     const stems = o.stems ? [...usedTracks()].filter(i => i > 0).sort((a, b) => a - b) : [];
-    if (o.stems && !stems.length) { toast('Nessuna traccia del mixer da esportare'); return; }
+    if (o.stems && !stems.length) { toast(T('Nessuna traccia del mixer da esportare')); return; }
     WM.close('export');
     if (Transport.playing) Transport.stop();
     if (window.NativeIO) { await NativeIO.render(o, stems); return; }
@@ -74,14 +74,14 @@ const ExportDialog = {
 };
 
 async function webExport(o, stems) {
-  hint(ui.mode === 'song' ? 'Rendering della playlist in corso…' : 'Rendering del pattern “' + curPat().name + '” in corso…');
+  hint(ui.mode === 'song' ? T('Rendering della playlist in corso…') : T('Rendering del pattern “{0}” in corso…', curPat().name));
   $('#btn-export').disabled = true;
   try {
     const name = safeName(proj.name), bits = o.bits || 16;
     if (!stems.length) {
       const { buf, frames, seconds } = await renderOffline();
       await saveFile(name + '.wav', encodeWav(buf, frames, bits));
-      hint('Esportati ' + seconds.toFixed(1) + ' s di audio');
+      hint(T('Esportati {0} s di audio', seconds.toFixed(1)));
       return;
     }
     const tracks = o.master ? [0, ...stems] : stems, files = [];
@@ -93,9 +93,9 @@ async function webExport(o, stems) {
         const i = part[j], label = i === 0 ? 'Master' : String(i).padStart(3, '0') + ' ' + safeName(proj.mixer[i].name);
         files.push({ name: name + ' - ' + label + '.wav', u8: new Uint8Array(await encodeWav(buf, frames, bits, [j * 2, j * 2 + 1]).arrayBuffer()) });
       }
-      hint('Tracce pronte: ' + files.length + ' di ' + tracks.length);
+      hint(T('Tracce pronte: {0} di {1}', files.length, tracks.length));
     }
-    await saveFile(name + ' - tracce.zip', zipMany(files));
+    await saveFile(name + ' - ' + T('tracce') + '.zip', zipMany(files));
   } catch (e) {
     toast(e.message || String(e));
   } finally {
@@ -116,16 +116,16 @@ const AudioSettings = {
     if (!body) return;
     body.textContent = '';
     if (!window.NativeIO) {
-      body.appendChild(h('p', 'tool-intro', 'Nel browser l\'audio esce dal dispositivo predefinito del sistema. Per scegliere la scheda audio, la frequenza e il buffer usa l\'app desktop.'));
+      body.appendChild(h('p', 'tool-intro', T('Nel browser l\'audio esce dal dispositivo predefinito del sistema. Per scegliere la scheda audio, la frequenza e il buffer usa l\'app desktop.')));
       const g = h('div', 'form-grid');
-      g.append(h('span', null, 'Frequenza'), h('b', null, actx ? actx.sampleRate + ' Hz' : 'audio spento'));
-      g.append(h('span', null, 'Latenza'), h('b', null, actx ? Math.round(((actx.baseLatency || 0) + (actx.outputLatency || 0)) * 1000) + ' ms' : '—'));
-      g.append(h('span', null, 'Ingresso'), h('b', null, 'microfono del browser (chiede il permesso alla prima registrazione)'));
+      g.append(h('span', null, T('Frequenza')), h('b', null, actx ? actx.sampleRate + ' Hz' : T('audio spento')));
+      g.append(h('span', null, T('Latenza')), h('b', null, actx ? Math.round(((actx.baseLatency || 0) + (actx.outputLatency || 0)) * 1000) + ' ms' : '—'));
+      g.append(h('span', null, T('Ingresso')), h('b', null, T('microfono del browser (chiede il permesso alla prima registrazione)')));
       body.appendChild(g);
       return;
     }
     const d = this.devices;
-    if (!d) { body.appendChild(h('p', 'tool-intro', 'Leggo le schede audio…')); return; }
+    if (!d) { body.appendChild(h('p', 'tool-intro', T('Leggo le schede audio…'))); return; }
     const g = h('div', 'form-grid');
     const sel = (label, value, options, onChange) => {
       const s = h('select');
@@ -134,15 +134,15 @@ const AudioSettings = {
       s.addEventListener('change', () => onChange(s.value));
       g.append(h('span', null, label), s);
     };
-    const apply = async patch => { this.devices = await NativeIO.setDevice(patch); if (this.devices && this.devices.error) toast('Scheda audio: ' + this.devices.error); this.render(); };
+    const apply = async patch => { this.devices = await NativeIO.setDevice(patch); if (this.devices && this.devices.error) toast(T('Scheda audio: {0}', this.devices.error)); this.render(); };
     const type = d.types.find(t => t.name === d.type) || d.types[0] || { outputs: [], inputs: [] };
-    sel('Driver', d.type, d.types.map(t => [t.name, t.name]), v => apply({ type: v }));
-    sel('Uscita', d.output, type.outputs.map(n => [n, n]), v => apply({ output: v }));
-    sel('Ingresso', d.input || '', [['', '(nessuno)'], ...type.inputs.map(n => [n, n])], v => apply({ input: v, inputsOn: !!v }));
-    sel('Frequenza', d.sampleRate, d.sampleRates.map(r => [r, r + ' Hz']), v => apply({ sampleRate: +v }));
-    sel('Buffer', d.bufferSize, d.bufferSizes.map(b => [b, b + ' campioni · ' + (b / d.sampleRate * 1000).toFixed(1) + ' ms']), v => apply({ bufferSize: +v }));
+    sel(T('Driver'), d.type, d.types.map(t => [t.name, t.name]), v => apply({ type: v }));
+    sel(T('Uscita'), d.output, type.outputs.map(n => [n, n]), v => apply({ output: v }));
+    sel(T('Ingresso'), d.input || '', [['', T('(nessuno)')], ...type.inputs.map(n => [n, n])], v => apply({ input: v, inputsOn: !!v }));
+    sel(T('Frequenza'), d.sampleRate, d.sampleRates.map(r => [r, r + ' Hz']), v => apply({ sampleRate: +v }));
+    sel(T('Buffer'), d.bufferSize, d.bufferSizes.map(b => [b, T('{0} campioni · {1} ms', b, (b / d.sampleRate * 1000).toFixed(1))]), v => apply({ bufferSize: +v }));
     body.appendChild(g);
-    body.appendChild(h('p', 'tool-intro', 'Latenza complessiva: ' + Math.round(d.latency * 1000) + ' ms. ' + (d.inputsOn ? 'Ingressi attivi: ' + d.inputChannels.slice(0, 8).join(', ') : 'Ingressi spenti: scegli un ingresso per registrare.')));
+    body.appendChild(h('p', 'tool-intro', T('Latenza complessiva: {0} ms.', Math.round(d.latency * 1000)) + ' ' + (d.inputsOn ? T('Ingressi attivi: {0}', d.inputChannels.slice(0, 8).join(', ')) : T('Ingressi spenti: scegli un ingresso per registrare.'))));
   },
 };
 
@@ -153,7 +153,7 @@ function recordTarget() {
   if (i <= 0) i = freeInsert() || 1;
   const t = proj.mixer[i];
   if (!t.input) t.input = 1;
-  if (/^Insert \d+$/.test(t.name)) t.name = 'Registrazione';
+  if (isDefaultInsertName(t.name)) t.name = T('Registrazione');
   return i;
 }
 async function placeRecording(name, u8, buffer, fromStep, latency, insert) {
@@ -162,13 +162,13 @@ async function placeRecording(name, u8, buffer, fromStep, latency, insert) {
   const tracks = proj.playlist.tracks, s = fromStep;
   const l = Math.max(1, Math.ceil(buffer.duration / sd - lat));
   let t = tracks.findIndex((_, k) => !proj.playlist.clips.some(c => c.t === k && c.s < s + l && c.s + c.l > s));
-  if (t < 0) { tracks.push({ name: 'Traccia ' + (tracks.length + 1), mute: false }); t = tracks.length - 1; }
+  if (t < 0) { tracks.push({ name: T('Traccia {0}', tracks.length + 1), mute: false }); t = tracks.length - 1; }
   proj.playlist.clips.push({ id: uid(), smp: id, t, s, l, o: lat, mx: insert, gain: 1 });
   commit();
   PL.renderHeads();
   PL.draw();
   Tree.render();
-  toast('Registrazione aggiunta alla Playlist: ' + buffer.duration.toFixed(1) + ' s su ' + mixerName(insert));
+  toast(T('Registrazione aggiunta alla Playlist: {0} s su {1}', buffer.duration.toFixed(1), mixerName(insert)));
 }
 
 const AudioRec = {
@@ -178,7 +178,7 @@ const AudioRec = {
   async startWeb() {
     let stream;
     try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } }); }
-    catch (e) { toast('Microfono non disponibile: ' + (e.message || e.name)); return false; }
+    catch (e) { toast(T('Microfono non disponibile: {0}', e.message || e.name)); return false; }
     const c = audioReady(), src = c.createMediaStreamSource(stream), sp = c.createScriptProcessor(4096, 2, 2), chunks = [[], []];
     sp.onaudioprocess = e => { for (let k = 0; k < 2; k++) chunks[k].push(new Float32Array(e.inputBuffer.getChannelData(Math.min(k, e.inputBuffer.numberOfChannels - 1)))); };
     src.connect(sp);
@@ -201,7 +201,7 @@ const AudioRec = {
     const buffer = new AudioBuffer({ length: n, numberOfChannels: 2, sampleRate: actx.sampleRate });
     for (let k = 0; k < 2; k++) { let o = 0; for (const ch of r.chunks[k]) { buffer.getChannelData(k).set(ch, o); o += ch.length; } }
     const u8 = new Uint8Array(await encodeWav(buffer, n, 16).arrayBuffer());
-    await placeRecording('Registrazione ' + new Date().toLocaleTimeString().slice(0, 5) + '.wav', u8, buffer, r.from, r.latency, r.insert);
+    await placeRecording(T('Registrazione {0}', new Date().toLocaleTimeString().slice(0, 5)) + '.wav', u8, buffer, r.from, r.latency, r.insert);
   },
 };
 
@@ -211,7 +211,7 @@ if (!window.ritmoNative) {
   Transport.play = function () {
     if (AudioRec.wanted() && !this.playing && !AudioRec.active) {
       if (ui.mode !== 'song') setMode('song');
-      AudioRec.startWeb().then(ok => { if (ok) { play.call(this); hint('Registrazione audio in corso… premi Stop per finire'); } });
+      AudioRec.startWeb().then(ok => { if (ok) { play.call(this); hint(T('Registrazione audio in corso… premi Stop per finire')); } });
       return;
     }
     play.call(this);
